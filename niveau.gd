@@ -38,7 +38,7 @@ func newplants(n):
 
 func fleurattrape(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
-	collect.emit(perso,fleur.flowertype)
+	collect.emit(perso,fleur.flowertype) # Ca ne sert à rien
 	fleur.queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
