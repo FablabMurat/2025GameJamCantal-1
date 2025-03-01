@@ -3,7 +3,7 @@ extends Node2D
 var perso1
 var perso2
 
-var mission = [0,2,0,0]
+var mission : Array
 
 signal collect(perso,flowertype)
 
@@ -11,7 +11,8 @@ signal collect(perso,flowertype)
 func _ready() -> void:
 	semegazon()
 	
-	newplants(100)
+	var inlinesum = func sum(accum, num): return accum+num*20
+	newplants(50+mission.reduce(inlinesum),mission.map(func xx(elt): return elt*2))
 	
 	var persotscn = preload("res://perso.tscn")
 	perso1 = persotscn.instantiate()
@@ -30,56 +31,71 @@ func semegazon() :
 			cells.append(Vector2i(x,y))
 	$TileMap/TileMapLayer.set_cells_terrain_connect(cells,0,0,false)
 
-func newplants(n):
-	var plantetscn = preload("res://plante.tscn")
+var plantetscn = preload("res://plante.tscn")
+	
+func newplants(n, tabspawn : Array):
 	var tilemap = $TileMap/TileMapLayer
 	var map_rect = tilemap.get_used_rect()
-	var cell_size = Vector2(tilemap.tile_set.tile_size)
-	var padding = 8
+	
+	for i in range(tabspawn.size()):
+		if tabspawn[i] >= 0 :
+			var newplant = plantetscn.instantiate()
+			addplant(i+1,newplant,map_rect,tabspawn[i])
 	
 	for i in range(n):
 		var newplant = plantetscn.instantiate()
+
+		var rand = randf()
+		if rand < 0.1:
+			addplant(2,newplant,map_rect,1)
+		elif rand < 0.2:
+			addplant(3,newplant,map_rect,1)
+		else:
+			addplant(1,newplant,map_rect,1)
 		
-		var random_cell = Vector2i(
+
+func addplant(idxplant,newplant,map_rect,nb):
+	var padding = 8
+	var tilemap = $TileMap/TileMapLayer
+	var cell_size = Vector2(tilemap.tile_set.tile_size)
+	
+	var random_cell = Vector2i(
 			randi_range(map_rect.position.x, map_rect.end.x - 1),
 			randi_range(map_rect.position.y, map_rect.end.y - 1)
 		)
 		
-		var base_pos = tilemap.map_to_local(random_cell)
-		newplant.position = base_pos + Vector2(
-			randf_range(padding, cell_size.x - padding),
-			randf_range(padding, cell_size.y - padding)
-		)
+	var base_pos = tilemap.map_to_local(random_cell)
+	newplant.position = base_pos + Vector2(
+		randf_range(padding, cell_size.x - padding),
+		randf_range(padding, cell_size.y - padding)
+	)
+
+	newplant.rotation = randf_range(-0.26, 0.26)
+	newplant.scale *= randf_range(0.9, 1.1)
 		
-		newplant.rotation = randf_range(-0.26, 0.26)
-		newplant.scale *= randf_range(0.9, 1.1)
-		
-		var rand = randf()
-		if rand < 0.1:
-			newplant.choosetype(2)
+	newplant.choosetype(idxplant)
+	match idxplant:
+		1:
+			newplant.nocontact()
+		2:
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrape)
-		elif rand < 0.2:
-			newplant.choosetype(3)
+		3:
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrape)
 			newplant.canStun = true
-		elif rand < 0.3:
-			newplant.choosetype(4)
+		4:
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrape)
 			newplant.canSpeedBoost = true
-		elif rand < 0.4:
-			newplant.choosetype(5)
+		5:
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrape)
 			newplant.swapPosition.connect(swap_player_positions)
 			newplant.canSwapPosition = true
-		else:
-			newplant.choosetype(1)
+		_:
 			newplant.nocontact()
-		
-		add_child(newplant)
+	add_child(newplant)
 
 func setmission(listflowers : Array):
 	mission = listflowers
@@ -92,7 +108,6 @@ func setmission(listflowers : Array):
 
 func fleurattrape(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
-	
 	
 	var ctrlImage = TextureRect.new()
 	ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % fleur.flowertype)
