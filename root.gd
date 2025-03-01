@@ -19,14 +19,14 @@ func runlevel():
 	niveau = niveautscn.instantiate()
 	
 	niveau.collect.connect(collected.bind())
-	
+	niveau.niveaufini.connect(endoflevel.bind())
 	niveau.setmission(missions[level-1])
 	add_child(niveau)
 
-func endoflevel():
+func endoflevel(nperso):
 	level += 1
 	
-	if missions.size() < level :
+	if level <= missions.size() :
 		niveau.queue_free()
 		runlevel()
 

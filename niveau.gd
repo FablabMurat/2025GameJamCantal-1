@@ -6,6 +6,7 @@ var perso2
 var mission : Array
 
 signal collect(perso,flowertype)
+signal niveaufini()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,11 +18,13 @@ func _ready() -> void:
 	var persotscn = preload("res://perso.tscn")
 	perso1 = persotscn.instantiate()
 	perso1.position = $MarkerPerso1.position
-	perso1.start(1)
+	perso1.start(1,mission)
+	perso1.missionfinie.connect(endoflevel.bind())
 	add_child(perso1)
 	perso2 = persotscn.instantiate()
 	perso2.position = $MarkerPerso2.position
-	perso2.start(2)
+	perso2.start(2,mission)
+	perso2.missionfinie.connect(endoflevel.bind())
 	add_child(perso2)
 
 func semegazon() :
@@ -115,16 +118,16 @@ func fleurattrapee(perso, fleur):
 	
 	var ctrlImage = TextureRect.new()
 	ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % fleur.flowertype)
-	#var container : CenterContainer = CenterContainer.new()
-	#container.size.x = 64
-	#container.add_child(ctrlImage)
 	if perso.nperso == 1 :
 		%VBoxContainer1.add_child(ctrlImage)
 	else:
 		%VBoxContainer2.add_child(ctrlImage)
+		
+	perso.fleurattrapee(fleur)
 	fleur.queue_free()
 	
-	
+func endoflevel(nperso):
+	niveaufini.emit(nperso)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

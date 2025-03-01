@@ -12,6 +12,9 @@ const SPEED = 200
 
 var speedMultiplier = 0
 
+var mission : Array
+signal missionfinie(nwinner)
+
 func _init():
 	nperso = 0
 
@@ -19,7 +22,7 @@ func _init():
 func _ready() -> void:
 	pass
 
-func start(np):
+func start(np, _mission):
 	nperso = np
 	bouger_droite = "move_right_%d" %  nperso
 	bouger_gauche = "move_left_%d" %  nperso
@@ -31,7 +34,16 @@ func start(np):
 	rescale = 64.0 / 130 #130 = largeur png (ou c' est degueu)
 	scale.x = rescale
 	scale.y = rescale
+	
+	mission = _mission
 
+func fleurattrapee(fleur : Plante):
+	mission[fleur.flowertype-1] -= 1
+	if mission[fleur.flowertype-1] <= 0 :
+		if mission.all(func (n): return n<=0):
+			# On a fini la mission
+			missionfinie.emit(nperso)
+	
 func _physics_process(delta):
 	if is_stunned:
 		velocity = Vector2.ZERO
