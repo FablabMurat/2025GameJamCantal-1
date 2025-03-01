@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dtdr5is6lfnty"]
+[gd_scene load_steps=14 format=3 uid="uid://dtdr5is6lfnty"]
 
 [ext_resource type="Script" path="res://perso.gd" id="1_bcq8j"]
 [ext_resource type="Texture2D" uid="uid://d3yd0u2mep0kg" path="res://Ressources/Images/character_01_profil_run01.png" id="2_xl8j3"]
@@ -65,12 +65,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cvuxe"]
-radius = 205.156
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2sg6a"]
-radius = 107.0
-height = 790.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3iuav"]
+radius = 12.0
+height = 50.0
 
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 y_sort_enabled = true
@@ -81,19 +78,14 @@ platform_floor_layers = 4294967040
 script = ExtResource("1_bcq8j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -357)
+position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_ips43")
-animation = &"dos"
+animation = &"cote"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-9, -205)
-shape = SubResource("CircleShape2D_cvuxe")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(9, -478)
+position = Vector2(0, -7)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_2sg6a")
+shape = SubResource("CapsuleShape2D_3iuav")
 
 [node name="StunTimer" type="Timer" parent="."]
 
