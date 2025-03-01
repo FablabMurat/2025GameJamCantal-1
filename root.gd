@@ -31,13 +31,12 @@ func endoflevel(nperso):
 		# astuce pas jolie pour attendre que niveau soit détruit avant de passer au niveau suivant
 		$Timer.start()
 
+func _on_timer_timeout() -> void:
+	runlevel() 
+
 func collected(perso, flowertype):
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-
-func _on_timer_timeout() -> void:
-	runlevel() 
