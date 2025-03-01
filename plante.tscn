@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://by526arewt435" path="res://Ressources/Images/flower_01.png" id="2_oprft"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_my7bd"]
-radius = 92.0
-height = 320.0
+radius = 16.0
+height = 48.0
 
 [node name="Plante" type="Area2D"]
 y_sort_enabled = true
@@ -13,11 +13,12 @@ collision_layer = 2
 script = ExtResource("1_dxlyv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2, -153)
+position = Vector2(-4, -24)
 texture = ExtResource("2_oprft")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -155)
+position = Vector2(0, -24)
 shape = SubResource("CapsuleShape2D_my7bd")
+metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
