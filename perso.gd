@@ -10,7 +10,7 @@ var bouger_bas : String
 
 const SPEED = 200
 
-var speedMultiplier = 2
+var speedMultiplier = 0
 
 func _init():
 	nperso = 0
