@@ -8,9 +8,7 @@ var bouger_gauche : String
 var bouger_haut : String
 var bouger_bas : String
 
-const SPEED = 15000
-
-var vitesse = SPEED
+const SPEED = 200
 
 func _init():
 	nperso = 0
@@ -42,9 +40,9 @@ func _physics_process(delta):
 	direction.x = Input.get_axis(bouger_gauche, bouger_droite)
 	direction.y = Input.get_axis(bouger_haut, bouger_bas)
 	
-	velocity = direction.normalized() * vitesse * delta
-	
+	velocity = direction.normalized() * SPEED
 	move_and_slide()
+	
 	#
 	#var collision = get_last_slide_collision()
 	#if collision:
