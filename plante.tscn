@@ -7,15 +7,16 @@
 radius = 25.0
 height = 60.0
 
-[node name="Plante" type="StaticBody2D"]
+[node name="Plante" type="Area2D"]
+collision_layer = 2
 script = ExtResource("1_dxlyv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -32)
-rotation = 3.14159
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_36cbs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -31)
 shape = SubResource("CapsuleShape2D_my7bd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

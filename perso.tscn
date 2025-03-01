@@ -6,7 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_cvuxe"]
 radius = 55.0727
 
-[node name="Perso" type="CharacterBody2D"]
+[node name="Perso" type="CharacterBody2D" groups=["perso"]]
+collision_mask = 3
 script = ExtResource("1_bcq8j")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

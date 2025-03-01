@@ -42,3 +42,7 @@ position = Vector2(109, 168)
 
 [node name="MarkerPerso2" type="Marker2D" parent="."]
 position = Vector2(603, 494)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

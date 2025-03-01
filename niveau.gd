@@ -3,6 +3,8 @@ extends Node2D
 var perso1
 var perso2
 
+signal collect(perso,flowertype)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var persotscn = preload("res://perso.tscn")
@@ -22,13 +24,22 @@ func newplants(n):
 	for i in range(n):
 		var newplant
 		newplant = plantetscn.instantiate()
-		newplant.position.x = randi_range(0,500)
-		newplant.position.y = randi_range(0,500)
+		newplant.position.x = randi_range(32,500)
+		newplant.position.y = randi_range(32,500)
+		
 		if i % 10 == 0 :
+			newplant.choosetype(2)
 			newplant.isspecial()
+			newplant.attrape.connect(fleurattrape.bind())
 		else:
+			newplant.choosetype(1)
 			newplant.nocontact()
 		add_child(newplant)
+
+func fleurattrape(perso, fleur):
+	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
+	collect.emit(perso,fleur.flowertype)
+	fleur.queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
