@@ -6,6 +6,10 @@ var canStun : bool
 var canSpeedBoost : bool
 var canSwapPosition : bool
 
+@export var stun_duration : float = 2
+@export var speed_boost_duration : float = 2
+@export_range(0, 0.5, 0.05) var speed_boost_strength : float = 0.25
+
 signal attrape(perso,plante)
 signal swapPosition()
 
@@ -39,8 +43,8 @@ func _on_body_entered(body: Node2D) -> void:
 		var perso = body as Perso
 		attrape.emit(perso, self)
 		if canStun:
-			perso.apply_stun(0.5)
+			perso.apply_stun(stun_duration)
 		if canSpeedBoost:
-			perso.apply_speed_boost(2, .25) #duration :float, boostStrength :float
+			perso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
 		if canSwapPosition:
 			swapPosition.emit()
