@@ -4,8 +4,10 @@ class_name Plante
 var flowertype : int
 var canStun : bool
 var canSpeedBoost : bool
+var canSwapPosition : bool
 
 signal attrape(perso,plante)
+signal swapPosition()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,3 +42,5 @@ func _on_body_entered(body: Node2D) -> void:
 			perso.apply_stun(0.5)
 		if canSpeedBoost:
 			perso.apply_speed_boost(2, 2)
+		if canSwapPosition:
+			swapPosition.emit()

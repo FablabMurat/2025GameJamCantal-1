@@ -69,6 +69,12 @@ func newplants(n):
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrape)
 			newplant.canSpeedBoost = true
+		elif rand < 0.4:
+			newplant.choosetype(5)
+			newplant.isspecial()
+			newplant.attrape.connect(fleurattrape)
+			newplant.swapPosition.connect(swap_player_positions)
+			newplant.canSwapPosition = true
 		else:
 			newplant.choosetype(1)
 			newplant.nocontact()
@@ -108,3 +114,8 @@ func fleurattrape(perso, fleur):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+func swap_player_positions():
+	var temp_pos = perso1.position
+	perso1.position = perso2.position
+	perso2.position = temp_pos
