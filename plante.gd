@@ -41,6 +41,6 @@ func _on_body_entered(body: Node2D) -> void:
 		if canStun:
 			perso.apply_stun(0.5)
 		if canSpeedBoost:
-			perso.apply_speed_boost(2, 2)
+			perso.apply_speed_boost(2, .25) #duration :float, boostStrength :float
 		if canSwapPosition:
 			swapPosition.emit()
