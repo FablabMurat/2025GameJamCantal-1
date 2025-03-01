@@ -27,8 +27,9 @@ func endoflevel(nperso):
 	level += 1
 	
 	if level <= missions.size() :
-		niveau.queue_free()
-		runlevel()
+		niveau.call_deferred("queue_free")
+		# astuce pas jolie pour attendre que niveau soit détruit avant de passer au niveau suivant
+		$Timer.start()
 
 func collected(perso, flowertype):
 	pass
@@ -36,3 +37,7 @@ func collected(perso, flowertype):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_timer_timeout() -> void:
+	runlevel() 
