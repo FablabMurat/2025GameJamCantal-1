@@ -8,6 +8,7 @@ radius = 92.0
 height = 320.0
 
 [node name="Plante" type="Area2D"]
+y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_dxlyv")
 

@@ -2,6 +2,7 @@ extends Area2D
 class_name Plante
 
 var flowertype : int
+var canStun : bool;
 
 signal attrape(perso,plante)
 
@@ -29,9 +30,13 @@ func choosetype(ft : int):
 func _process(delta: float) -> void:
 	pass
 
-
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("perso") :
 		# La fleur est ramassée par le perso
 		var perso = body as Perso
 		attrape.emit(perso, self)
+		if canStun:
+			perso.apply_stun(0.5)
+		
+func setCanStun(state :bool):
+	canStun = state;

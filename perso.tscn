@@ -11,6 +11,7 @@ radius = 107.0
 height = 790.0
 
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
+y_sort_enabled = true
 collision_layer = 3
 collision_mask = 3
 platform_on_leave = 2
@@ -29,3 +30,7 @@ shape = SubResource("CircleShape2D_cvuxe")
 position = Vector2(9, -478)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_2sg6a")
+
+[node name="StunTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]

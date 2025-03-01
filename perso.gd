@@ -31,6 +31,11 @@ func start(np):
 	scale.y = rescale
 
 func _physics_process(delta):
+	if is_stunned:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+		
 	var direction = Vector2.ZERO
 
 	if nperso == 0:
@@ -50,6 +55,18 @@ func _physics_process(delta):
 		#if plante.is_in_group("plante"):
 			#pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+var is_stunned := false
+@onready var stun_timer := $StunTimer
+
+func apply_stun(duration: float):
+	if not is_stunned:
+		is_stunned = true
+		stun_timer.start(duration)
+		modulate = Color.RED
+
+func _on_stun_timer_timeout():
+	is_stunned = false
+	modulate = Color.WHITE
