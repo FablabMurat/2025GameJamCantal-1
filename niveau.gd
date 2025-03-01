@@ -58,14 +58,13 @@ func setmission(listflowers : Array):
 func fleurattrape(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
 	
-	var ctrlImage : TextureRect = TextureRect.new()
-	ctrlImage.texture = load("res://Ressources/Images/flower_01.png")
-	ctrlImage.expand_mode = TextureRect.EXPAND_FIT_WIDTH
-	ctrlImage.custom_minimum_size.x = 64
-	var container : CenterContainer = CenterContainer.new()
-	container.size.x = 64
-	container.add_child(ctrlImage)
-	%VBoxContainer2.add_child(container)
+	
+	var ctrlImage = TextureRect.new()
+	ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % fleur.flowertype)
+	#var container : CenterContainer = CenterContainer.new()
+	#container.size.x = 64
+	#container.add_child(ctrlImage)
+	%VBoxContainer2.add_child(ctrlImage)
 
 	var fleurtscn = load("res://plante.tscn")
 	var fleurinv : Plante = fleurtscn.instantiate() 
