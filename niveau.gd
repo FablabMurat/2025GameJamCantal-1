@@ -72,11 +72,12 @@ func newplants(n):
 
 func setmission(listflowers : Array):
 	mission = listflowers
-	for i in range(1,listflowers.size()+1) :
-		var ctrlImage = TextureRect.new()
-		ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % i)
-		%HBoxMission.add_child(ctrlImage)
-
+	for i in range(0,listflowers.size()) :
+		if listflowers[i] != 0 : 
+			for n in range(0,listflowers[i]) :
+				var ctrlImage = TextureRect.new()
+				ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % (i+1))
+				%HBoxMission.add_child(ctrlImage)
 
 func fleurattrape(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)

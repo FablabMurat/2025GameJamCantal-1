@@ -1,12 +1,34 @@
 extends Node
 
+var level = 1
+
+var missions : Array
+var niveau : Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-	$Niveau.collect.connect(collected.bind())
+	missions.append([0,1,1,0,0])
+	missions.append([0,2,1,1,0])
+	missions.append([0,3,2,1,0])
 	
-	$Niveau.setmission([1,2,3,4,5])
+	runlevel()
+
+func runlevel():
+	var niveautscn = load("res://niveau.tscn")
+	niveau = niveautscn.instantiate()
+	
+	niveau.collect.connect(collected.bind())
+	
+	niveau.setmission(missions[level-1])
+	add_child(niveau)
+
+func endoflevel():
+	level += 1
+	
+	if missions.size() < level :
+		niveau.queue_free()
+		runlevel()
 
 func collected(perso, flowertype):
 	pass
