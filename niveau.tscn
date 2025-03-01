@@ -1,6 +1,113 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp8fllwg0m5kk"]
+[gd_scene load_steps=9 format=3 uid="uid://cp8fllwg0m5kk"]
 
 [ext_resource type="Script" path="res://niveau.gd" id="1_evebv"]
+[ext_resource type="Texture2D" uid="uid://bwqqukricf0f0" path="res://Ressources/Images/tiles_wip.png" id="2_mrmre"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oeux5"]
+texture = ExtResource("2_mrmre")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+4:0/0/terrain_set = 0
+4:0/0/terrain = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+7:0/0/terrain_set = 0
+7:0/0/terrain = 0
+8:0/0 = 0
+8:0/0/terrain_set = 0
+8:0/0/terrain = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+4:1/0/terrain_set = 0
+4:1/0/terrain = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+7:1/0/terrain_set = 0
+7:1/0/terrain = 0
+8:1/0 = 0
+8:1/0/terrain_set = 0
+8:1/0/terrain = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+4:2/0/terrain_set = 0
+4:2/0/terrain = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+7:2/0/terrain_set = 0
+7:2/0/terrain = 0
+8:2/0 = 0
+8:2/0/terrain_set = 0
+8:2/0/terrain = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+4:3/0/terrain_set = 0
+4:3/0/terrain = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+7:3/0/terrain_set = 0
+7:3/0/terrain = 0
+8:3/0 = 0
+8:3/0/terrain_set = 0
+8:3/0/terrain = 0
+0:4/0 = 0
+1:4/0 = 0
+1:4/0/terrain_set = 0
+1:4/0/terrain = 0
+2:4/0 = 0
+2:4/0/terrain_set = 0
+2:4/0/terrain = 0
+3:4/0 = 0
+4:4/0 = 0
+4:4/0/terrain_set = 0
+4:4/0/terrain = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+7:4/0/terrain_set = 0
+7:4/0/terrain = 0
+8:4/0 = 0
+8:4/0/terrain_set = 0
+8:4/0/terrain = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+4:5/0/terrain_set = 0
+4:5/0/terrain = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+7:5/0/terrain_set = 0
+7:5/0/terrain = 0
+8:5/0 = 0
+8:5/0/terrain_set = 0
+8:5/0/terrain = 0
+
+[sub_resource type="TileSet" id="TileSet_woray"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "gazon"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+sources/2 = SubResource("TileSetAtlasSource_oeux5")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7c3re"]
 size = Vector2(868.5, 30)
@@ -25,6 +132,7 @@ offset_right = 1022.0
 offset_bottom = 556.0
 
 [node name="VBoxContainer1" type="VBoxContainer" parent="PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -46,12 +154,18 @@ layout_mode = 2
 text = "Mission :"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Joueur 2"
+
+[node name="TileMap" type="Node2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="TileMap"]
+tile_set = SubResource("TileSet_woray")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 
@@ -77,4 +191,4 @@ shape = SubResource("RectangleShape2D_c7lvg")
 position = Vector2(109, 168)
 
 [node name="MarkerPerso2" type="Marker2D" parent="."]
-position = Vector2(603, 494)
+position = Vector2(713, 456)

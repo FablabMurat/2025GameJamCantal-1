@@ -1,19 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtdr5is6lfnty"]
+[gd_scene load_steps=5 format=3 uid="uid://dtdr5is6lfnty"]
 
-[ext_resource type="Texture2D" uid="uid://ckby3jke17cda" path="res://Ressources/Images/icon.svg" id="1_8et6c"]
 [ext_resource type="Script" path="res://perso.gd" id="1_bcq8j"]
+[ext_resource type="Texture2D" uid="uid://c6ukonhwxuqiq" path="res://Ressources/Images/character_01_face.png" id="2_1tv8d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cvuxe"]
-radius = 55.0727
+radius = 205.156
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2sg6a"]
+radius = 107.0
+height = 790.0
 
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 collision_mask = 3
 script = ExtResource("1_bcq8j")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -64)
-texture = ExtResource("1_8et6c")
+position = Vector2(0, -357)
+texture = ExtResource("2_1tv8d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -64)
+position = Vector2(-9, -205)
 shape = SubResource("CircleShape2D_cvuxe")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(9, -478)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_2sg6a")

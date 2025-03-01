@@ -8,7 +8,7 @@ var bouger_gauche : String
 var bouger_haut : String
 var bouger_bas : String
 
-const SPEED = 5000
+const SPEED = 15000
 
 var vitesse = SPEED
 
@@ -29,8 +29,8 @@ func start(np):
 	$Sprite2D.texture = load("res://Ressources/Images/character_%02d_face.png" % np)
 	var rescale : float
 	rescale = 64.0 / $Sprite2D.texture.get_width()
-	$Sprite2D.scale.x = rescale
-	$Sprite2D.scale.y = rescale
+	scale.x = rescale
+	scale.y = rescale
 
 func _physics_process(delta):
 	var direction = Vector2.ZERO
@@ -45,12 +45,12 @@ func _physics_process(delta):
 	velocity = direction.normalized() * vitesse * delta
 	
 	move_and_slide()
-	
-	var collision = get_last_slide_collision()
-	if collision:
-		var plante = collision.get_collider()
-		if plante.is_in_group("plante"):
-			pass
+	#
+	#var collision = get_last_slide_collision()
+	#if collision:
+		#var plante = collision.get_collider()
+		#if plante.is_in_group("plante"):
+			#pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -38,6 +38,13 @@ func newplants(n):
 
 func fleurattrape(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
+	var fleurtscn = load("res://Plante.tscn")
+	var fleurinv = fleurtscn.instantiate()
+	fleurinv.choosetype(fleur.flowertype)
+	if perso.nperso == 1 :
+		%VBoxContainer1.call_deferred("add_child",fleurinv)
+	elif perso.nperso == 2 :
+		%VBoxContainer2.call_deferred("add_child",fleurinv)
 	collect.emit(perso,fleur.flowertype) # Ca ne sert à rien
 	fleur.queue_free()
 

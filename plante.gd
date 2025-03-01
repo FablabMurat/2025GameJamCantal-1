@@ -1,4 +1,5 @@
 extends Area2D
+class_name Plante
 
 var flowertype : int
 
@@ -15,10 +16,12 @@ func isspecial():
 	add_to_group("guards")
 
 func choosetype(ft : int):
+	flowertype = ft
 	var icon = load("res://Ressources/Images/flower_%02d.png" % ft)
+
 	$Sprite2D.texture = icon
 	var rescale : float
-	rescale = 32.0 / $Sprite2D.texture.get_width()
+	rescale = 32.0 / icon.get_width()
 	scale.x = rescale
 	scale.y = rescale
 
