@@ -49,10 +49,10 @@ func newplants(n):
 
 func setmission(listflowers : Array):
 	mission = listflowers
-	for i in range(0,listflowers.size()) :
+	for i in range(1,listflowers.size()+1) :
 		var ctrlImage = TextureRect.new()
 		ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % i)
-		%VBoxContainer2.add_child(ctrlImage)
+		%HBoxMission.add_child(ctrlImage)
 
 
 func fleurattrape(perso, fleur):

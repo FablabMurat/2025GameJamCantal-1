@@ -41,10 +41,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainerCenter"]
+[node name="HBoxMission" type="HBoxContainer" parent="PanelContainer/VBoxContainerCenter"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainerCenter/HBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainerCenter/HBoxMission"]
 layout_mode = 2
 text = "Mission :"
 
