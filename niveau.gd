@@ -11,7 +11,7 @@ signal collect(perso,flowertype)
 func _ready() -> void:
 	semegazon()
 	
-	newplants(50)
+	newplants(100)
 	
 	var persotscn = preload("res://perso.tscn")
 	perso1 = persotscn.instantiate()
@@ -32,19 +32,42 @@ func semegazon() :
 
 func newplants(n):
 	var plantetscn = preload("res://plante.tscn")
+	var tilemap = $TileMap/TileMapLayer
+	var map_rect = tilemap.get_used_rect()
+	var cell_size = Vector2(tilemap.tile_set.tile_size)
+	var padding = 8
+	
 	for i in range(n):
-		var newplant
-		newplant = plantetscn.instantiate()
-		newplant.position.x = randi_range(32,500)
-		newplant.position.y = randi_range(32,500)
+		var newplant = plantetscn.instantiate()
 		
-		if i % 10 == 0 :
+		var random_cell = Vector2i(
+			randi_range(map_rect.position.x, map_rect.end.x - 1),
+			randi_range(map_rect.position.y, map_rect.end.y - 1)
+		)
+		
+		var base_pos = tilemap.map_to_local(random_cell)
+		newplant.position = base_pos + Vector2(
+			randf_range(padding, cell_size.x - padding),
+			randf_range(padding, cell_size.y - padding)
+		)
+		
+		newplant.rotation = randf_range(-0.26, 0.26)
+		newplant.scale *= randf_range(0.9, 1.1)
+		
+		var rand = randf()
+		if rand < 0.1:
 			newplant.choosetype(2)
 			newplant.isspecial()
-			newplant.attrape.connect(fleurattrape.bind())
+			newplant.attrape.connect(fleurattrape)
+		elif rand < 0.2:
+			newplant.choosetype(3)
+			newplant.isspecial()
+			newplant.attrape.connect(fleurattrape)
+			newplant.canStun = true
 		else:
 			newplant.choosetype(1)
 			newplant.nocontact()
+		
 		add_child(newplant)
 
 func setmission(listflowers : Array):
