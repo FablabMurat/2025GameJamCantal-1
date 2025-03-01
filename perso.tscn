@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ccurdx7xx6l0b" path="res://Ressources/Images/character_01_profil_run02.png" id="3_bcdbe"]
 [ext_resource type="Texture2D" uid="uid://dvy0if1h2iqxp" path="res://Ressources/Images/character_01_profil_run03.png" id="4_7j0gd"]
 [ext_resource type="Texture2D" uid="uid://50yoxu2j1up8" path="res://Ressources/Images/character_01_profil_run04.png" id="5_1lxcb"]
-[ext_resource type="Texture2D" uid="uid://d07nmpoumw0h1" path="res://Ressources/Images/character_01_face_down.png" id="6_e6rnk"]
+[ext_resource type="Texture2D" uid="uid://cyxgxmtgyu2ub" path="res://Ressources/Images/character_01_dos.png" id="6_kbr4p"]
 [ext_resource type="Texture2D" uid="uid://ydf0a8at7x7j" path="res://Ressources/Images/character_01_face_run01.png" id="7_mble8"]
 [ext_resource type="Texture2D" uid="uid://r4amgs4ni1lg" path="res://Ressources/Images/character_01_face_run02.png" id="8_ac2cw"]
 [ext_resource type="Texture2D" uid="uid://cke3wi2qs3df3" path="res://Ressources/Images/character_01_face_run03.png" id="9_4u07l"]
@@ -33,7 +33,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_e6rnk")
+"texture": ExtResource("6_kbr4p")
 }],
 "loop": true,
 "name": &"dos",
@@ -80,7 +80,7 @@ script = ExtResource("1_bcq8j")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_ips43")
-animation = &"cote"
+animation = &"dos"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
