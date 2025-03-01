@@ -67,7 +67,7 @@ func fleurattrape(perso, fleur):
 	container.add_child(ctrlImage)
 	%VBoxContainer2.add_child(container)
 
-	var fleurtscn = load("res://Plante.tscn")
+	var fleurtscn = load("res://plante.tscn")
 	var fleurinv : Plante = fleurtscn.instantiate() 
 	fleurinv.choosetype(fleur.flowertype)
 	fleurinv.nocontact()
