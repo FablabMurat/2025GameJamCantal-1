@@ -7,6 +7,9 @@ func _ready() -> void:
 func nocontact():
 	$CollisionShape2D.queue_free()
 
+func isspecial():
+	add_to_group("guards")
+
 func choosesprite():
 	var icon = preload("res://Ressources/Images/icon.svg")
 	$Sprite2D.texture = icon

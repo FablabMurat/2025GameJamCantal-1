@@ -24,10 +24,11 @@ func newplants(n):
 		newplant = plantetscn.instantiate()
 		newplant.position.x = randi_range(0,500)
 		newplant.position.y = randi_range(0,500)
-		if i % 10 :
+		if i % 10 == 0 :
+			newplant.isspecial()
+		else:
 			newplant.nocontact()
 		add_child(newplant)
-		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

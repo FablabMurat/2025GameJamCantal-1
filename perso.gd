@@ -7,7 +7,7 @@ var bouger_gauche : String
 var bouger_haut : String
 var bouger_bas : String
 
-const SPEED = 1000
+const SPEED = 5000
 
 var vitesse = SPEED
 
@@ -24,6 +24,12 @@ func start(np):
 	bouger_gauche = "move_left_%d" %  nperso
 	bouger_haut = "move_up_%d" %  nperso
 	bouger_bas = "move_down_%d" %  nperso
+	
+	$Sprite2D.texture = load("res://Ressources/Images/character_%02d_face.png" % np)
+	var rescale : float
+	rescale = 64.0 / $Sprite2D.texture.get_width()
+	$Sprite2D.scale.x = rescale
+	$Sprite2D.scale.y = rescale
 
 func _physics_process(delta):
 	var direction = Vector2.ZERO
