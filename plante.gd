@@ -2,7 +2,8 @@ extends Area2D
 class_name Plante
 
 var flowertype : int
-var canStun : bool;
+var canStun : bool
+var canSpeedBoost : bool
 
 signal attrape(perso,plante)
 
@@ -37,6 +38,5 @@ func _on_body_entered(body: Node2D) -> void:
 		attrape.emit(perso, self)
 		if canStun:
 			perso.apply_stun(0.5)
-		
-func setCanStun(state :bool):
-	canStun = state;
+		if canSpeedBoost:
+			perso.apply_speed_boost(2, 2)

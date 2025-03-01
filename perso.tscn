@@ -34,4 +34,7 @@ shape = SubResource("CapsuleShape2D_2sg6a")
 
 [node name="StunTimer" type="Timer" parent="."]
 
+[node name="SpeedBoostTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
+[connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]

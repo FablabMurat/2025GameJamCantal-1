@@ -10,6 +10,8 @@ var bouger_bas : String
 
 const SPEED = 200
 
+var speedMultiplier = 2
+
 func _init():
 	nperso = 0
 
@@ -45,7 +47,7 @@ func _physics_process(delta):
 	direction.x = Input.get_axis(bouger_gauche, bouger_droite)
 	direction.y = Input.get_axis(bouger_haut, bouger_bas)
 	
-	velocity = direction.normalized() * SPEED
+	velocity = direction.normalized() * (SPEED * (speedMultiplier + 1))
 	move_and_slide()
 	
 	#
@@ -70,3 +72,11 @@ func apply_stun(duration: float):
 func _on_stun_timer_timeout():
 	is_stunned = false
 	modulate = Color.WHITE
+
+@onready var speed_boost_timer := $SpeedBoostTimer
+func apply_speed_boost(duration :float, boostStrength :float):
+	speedMultiplier = boostStrength
+	speed_boost_timer.start(duration)
+
+func _on_speed_boost_timer_timeout() -> void:
+	speedMultiplier = 0

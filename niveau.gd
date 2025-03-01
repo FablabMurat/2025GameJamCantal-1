@@ -64,6 +64,11 @@ func newplants(n):
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrape)
 			newplant.canStun = true
+		elif rand < 0.3:
+			newplant.choosetype(4)
+			newplant.isspecial()
+			newplant.attrape.connect(fleurattrape)
+			newplant.canSpeedBoost = true
 		else:
 			newplant.choosetype(1)
 			newplant.nocontact()
