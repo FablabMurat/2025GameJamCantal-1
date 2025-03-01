@@ -7,6 +7,10 @@ signal collect(perso,flowertype)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	semegazon()
+	
+	newplants(50)
+	
 	var persotscn = preload("res://perso.tscn")
 	perso1 = persotscn.instantiate()
 	perso1.position = $MarkerPerso1.position
@@ -16,8 +20,13 @@ func _ready() -> void:
 	perso2.position = $MarkerPerso2.position
 	perso2.start(2)
 	add_child(perso2)
-	
-	newplants(50)
+
+func semegazon() :
+	var cells = Array()
+	for x in range(0,13):
+		for y in range(0,10):
+			cells.append(Vector2i(x,y))
+	$TileMap/TileMapLayer.set_cells_terrain_connect(cells,0,0,false)
 
 func newplants(n):
 	var plantetscn = preload("res://plante.tscn")
@@ -39,8 +48,9 @@ func newplants(n):
 func fleurattrape(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
 	var fleurtscn = load("res://Plante.tscn")
-	var fleurinv = fleurtscn.instantiate()
+	var fleurinv : Plante = fleurtscn.instantiate() 
 	fleurinv.choosetype(fleur.flowertype)
+	fleurinv.nocontact()
 	if perso.nperso == 1 :
 		%VBoxContainer1.call_deferred("add_child",fleurinv)
 	elif perso.nperso == 2 :
