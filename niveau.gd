@@ -50,6 +50,10 @@ func newplants(n, tabspawn : Array):
 			addplant(2,newplant,map_rect,1)
 		elif rand < 0.2:
 			addplant(3,newplant,map_rect,1)
+		elif rand < 0.25:
+			addplant(4,newplant,map_rect,1)
+		elif rand < 0.3:
+			addplant(5,newplant,map_rect,1)
 		else:
 			addplant(1,newplant,map_rect,1)
 		
@@ -79,18 +83,18 @@ func addplant(idxplant,newplant,map_rect,nb):
 			newplant.nocontact()
 		2:
 			newplant.isspecial()
-			newplant.attrape.connect(fleurattrape)
+			newplant.attrape.connect(fleurattrapee)
 		3:
 			newplant.isspecial()
-			newplant.attrape.connect(fleurattrape)
+			newplant.attrape.connect(fleurattrapee)
 			newplant.canStun = true
 		4:
 			newplant.isspecial()
-			newplant.attrape.connect(fleurattrape)
+			newplant.attrape.connect(fleurattrapee)
 			newplant.canSpeedBoost = true
 		5:
 			newplant.isspecial()
-			newplant.attrape.connect(fleurattrape)
+			newplant.attrape.connect(fleurattrapee)
 			newplant.swapPosition.connect(swap_player_positions)
 			newplant.canSwapPosition = true
 		_:
@@ -106,7 +110,7 @@ func setmission(listflowers : Array):
 				ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % (i+1))
 				%HBoxMission.add_child(ctrlImage)
 
-func fleurattrape(perso, fleur):
+func fleurattrapee(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
 	
 	var ctrlImage = TextureRect.new()
@@ -114,18 +118,14 @@ func fleurattrape(perso, fleur):
 	#var container : CenterContainer = CenterContainer.new()
 	#container.size.x = 64
 	#container.add_child(ctrlImage)
-	%VBoxContainer2.add_child(ctrlImage)
-
-	var fleurtscn = load("res://plante.tscn")
-	var fleurinv : Plante = fleurtscn.instantiate() 
-	fleurinv.choosetype(fleur.flowertype)
-	fleurinv.nocontact()
 	if perso.nperso == 1 :
-		%VBoxContainer1.call_deferred("add_child",fleurinv)
-	elif perso.nperso == 2 :
-		%VBoxContainer2.call_deferred("add_child",fleurinv)
-	collect.emit(perso,fleur.flowertype) # Ca ne sert à rien
+		%VBoxContainer1.add_child(ctrlImage)
+	else:
+		%VBoxContainer2.add_child(ctrlImage)
 	fleur.queue_free()
+	
+	
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
