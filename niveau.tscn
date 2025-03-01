@@ -60,7 +60,7 @@ text = "Joueur 2"
 
 [node name="TileMap" type="Node2D" parent="."]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="TileMap"]
+[node name="LayerGazon" type="TileMapLayer" parent="TileMap"]
 tile_set = ExtResource("2_r4xy5")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]

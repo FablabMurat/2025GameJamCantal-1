@@ -6,6 +6,20 @@
 script = ExtResource("1_1h7cp")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+offset_left = 551.0
+offset_top = 276.0
+offset_right = 626.0
+offset_bottom = 316.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Patience !"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

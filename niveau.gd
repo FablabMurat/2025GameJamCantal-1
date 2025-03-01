@@ -32,12 +32,20 @@ func semegazon() :
 	for x in range(0,13):
 		for y in range(0,10):
 			cells.append(Vector2i(x,y))
-	$TileMap/TileMapLayer.set_cells_terrain_connect(cells,0,0,false)
+	$TileMap/LayerGazon.set_cells_terrain_connect(cells,0,0,false)
+
+func addmurs(steps) :
+	var cells : Array
+	
+	#cells.append(steps[0])
+	#for i in steps :
+		#for j in range(0,)
+	#$TileMap/LayerGazon.set_cells_terrain_path(steps,0,1,false)
 
 var plantetscn = preload("res://plante.tscn")
 	
 func newplants(n, tabspawn : Array):
-	var tilemap = $TileMap/TileMapLayer
+	var tilemap = $TileMap/LayerGazon
 	var map_rect = tilemap.get_used_rect()
 	
 	for i in range(tabspawn.size()):
@@ -63,7 +71,7 @@ func newplants(n, tabspawn : Array):
 
 func addplant(idxplant,newplant,map_rect,nb):
 	var padding = 8
-	var tilemap = $TileMap/TileMapLayer
+	var tilemap = $TileMap/LayerGazon
 	var cell_size = Vector2(tilemap.tile_set.tile_size)
 	
 	var random_cell = Vector2i(
