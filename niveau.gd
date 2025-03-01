@@ -3,6 +3,8 @@ extends Node2D
 var perso1
 var perso2
 
+var mission = [0,2,0,0]
+
 signal collect(perso,flowertype)
 
 # Called when the node enters the scene tree for the first time.
@@ -45,19 +47,36 @@ func newplants(n):
 			newplant.nocontact()
 		add_child(newplant)
 
+func setmission(listflowers : Array):
+	mission = listflowers
+	for i in range(0,listflowers.size()) :
+		var ctrlImage = TextureRect.new()
+		ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % i)
+		%VBoxContainer2.add_child(ctrlImage)
+
+
 func fleurattrape(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
-	#var fleurtscn = load("res://Plante.tscn")
-	#var fleurinv : Plante = fleurtscn.instantiate() 
-	#fleurinv.choosetype(fleur.flowertype)
-	#fleurinv.nocontact()
-	#if perso.nperso == 1 :
-		#%VBoxContainer1.call_deferred("add_child",fleurinv)
-	#elif perso.nperso == 2 :
-		#%VBoxContainer2.call_deferred("add_child",fleurinv)
-	#collect.emit(perso,fleur.flowertype) # Ca ne sert à rien
-	#fleur.queue_free()
+	
+	var ctrlImage : TextureRect = TextureRect.new()
+	ctrlImage.texture = load("res://Ressources/Images/flower_01.png")
+	ctrlImage.expand_mode = TextureRect.EXPAND_FIT_WIDTH
+	ctrlImage.custom_minimum_size.x = 64
+	var container : CenterContainer = CenterContainer.new()
+	container.size.x = 64
+	container.add_child(ctrlImage)
+	%VBoxContainer2.add_child(container)
 
+	var fleurtscn = load("res://Plante.tscn")
+	var fleurinv : Plante = fleurtscn.instantiate() 
+	fleurinv.choosetype(fleur.flowertype)
+	fleurinv.nocontact()
+	if perso.nperso == 1 :
+		%VBoxContainer1.call_deferred("add_child",fleurinv)
+	elif perso.nperso == 2 :
+		%VBoxContainer2.call_deferred("add_child",fleurinv)
+	collect.emit(perso,fleur.flowertype) # Ca ne sert à rien
+	fleur.queue_free()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

@@ -7,4 +7,3 @@
 script = ExtResource("1_1h7cp")
 
 [node name="Niveau" parent="." instance=ExtResource("2_xdtwy")]
-y_sort_enabled = true

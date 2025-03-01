@@ -5,6 +5,8 @@ extends Node
 func _ready() -> void:
 	pass # Replace with function body.
 	$Niveau.collect.connect(collected.bind())
+	
+	
 
 func collected(perso, flowertype):
 	pass
