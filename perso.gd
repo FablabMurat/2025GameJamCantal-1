@@ -26,9 +26,9 @@ func start(np):
 	bouger_haut = "move_up_%d" %  nperso
 	bouger_bas = "move_down_%d" %  nperso
 	
-	$Sprite2D.texture = load("res://Ressources/Images/character_%02d_face.png" % np)
+	#$Sprite2D.texture = load("res://Ressources/Images/character_%02d_face.png" % np)
 	var rescale : float
-	rescale = 64.0 / $Sprite2D.texture.get_width()
+	rescale = 64.0 / 130 #130 = largeur png (ou c' est degueu)
 	scale.x = rescale
 	scale.y = rescale
 
@@ -49,6 +49,18 @@ func _physics_process(delta):
 	
 	velocity = direction.normalized() * (SPEED * (speedMultiplier + 1))
 	move_and_slide()
+	
+	$AnimatedSprite2D.play()
+	if !velocity :
+		$AnimatedSprite2D.animation = "idle"
+	elif velocity :
+		if velocity.x != 0:
+			$AnimatedSprite2D.animation = "cote"
+			$AnimatedSprite2D.flip_h = velocity.x < 0
+		elif velocity.y > 0:
+			$AnimatedSprite2D.animation = "face"
+		elif velocity.y < 0:
+			$AnimatedSprite2D.animation = "dos"
 	
 	#
 	#var collision = get_last_slide_collision()
