@@ -14,6 +14,20 @@ func _ready() -> void:
 	perso2.position = $MarkerPerso2.position
 	perso2.start(2)
 	add_child(perso2)
+	
+	newplants(50)
+
+func newplants(n):
+	var plantetscn = preload("res://plante.tscn")
+	for i in range(n):
+		var newplant
+		newplant = plantetscn.instantiate()
+		newplant.position.x = randi_range(0,500)
+		newplant.position.y = randi_range(0,500)
+		if i % 10 :
+			newplant.nocontact()
+		add_child(newplant)
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
