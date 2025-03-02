@@ -31,6 +31,7 @@ func start(np, _mission):
 	bouger_haut = "move_up_%d" %  nperso
 	bouger_bas = "move_down_%d" %  nperso
 	
+	$AnimatedSprite2D.sprite_frames = load("res://joueur_%d.tres" % nperso)
 	#$Sprite2D.texture = load("res://Ressources/Images/character_%02d_face.png" % np)
 	#var rescale : float
 	#rescale = 64.0 / 130 #130 = largeur png (ou c' est degueu)
