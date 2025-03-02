@@ -13,7 +13,8 @@ func _ready() -> void:
 	missions.append([0,3,2,1,1])
 	missions.append([0,2,2,2,1])
 	
-	runlevel()
+	$CenterContainer.show()
+	$StartTimer.start(4.0)
 
 func runlevel():
 	$CenterContainer.visible = true
@@ -49,3 +50,8 @@ func collected(perso, flowertype):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_start_timer_timeout() -> void:
+	$CenterContainer.hide()
+	runlevel()

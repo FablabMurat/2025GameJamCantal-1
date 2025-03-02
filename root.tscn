@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ci206nb0ldfju"]
+[gd_scene load_steps=3 format=3 uid="uid://ci206nb0ldfju"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_1h7cp"]
+[ext_resource type="Texture2D" uid="uid://dfn7pwk6rhdg1" path="res://Ressources/Images/titre.png" id="2_2v8v8"]
 
 [node name="Root" type="Node"]
 script = ExtResource("1_1h7cp")
@@ -10,16 +11,29 @@ wait_time = 3.0
 one_shot = true
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-offset_left = 551.0
-offset_top = 276.0
-offset_right = 626.0
-offset_bottom = 316.0
+offset_left = 68.0
+offset_top = 38.0
+offset_right = 1245.0
+offset_bottom = 706.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1200, 675)
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_2v8v8")
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Patience !"
 
+[node name="StartTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
