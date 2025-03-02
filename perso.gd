@@ -8,7 +8,7 @@ var bouger_gauche : String
 var bouger_haut : String
 var bouger_bas : String
 
-var dir : String = "down"
+var dir : String = "bas"
 
 const SPEED = 200
 const PAUSESTUN = 3.0
@@ -25,7 +25,7 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	$AnimatedSprite2D.animation = "idle_bas"
 	$FX_animation.animation = "none"
 	$PauseBar.hide()
 
