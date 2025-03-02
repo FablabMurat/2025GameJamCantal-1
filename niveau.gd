@@ -12,10 +12,10 @@ signal niveaufini()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	semegazon()
+	#semegazon()
 	
 	var inlinesum = func sum(accum, num): return accum+num*20
-	newplants(50+mission.reduce(inlinesum),mission.map(func xx(elt): return elt*2))
+	newplants(30,mission.map(func xx(elt): return elt*2))
 	
 
 func semegazon() :
@@ -26,13 +26,14 @@ func semegazon() :
 	$ZoneJeu/LayerGazon.set_cells_terrain_connect(cells,0,0,false)
 
 var plantetscn = preload("res://plante.tscn")
+var used_cells
 	
 func newplants(n, tabspawn : Array):
-	for i in range(tabspawn.size()):
-		if tabspawn[i] >= 0 :
-			var newplant = plantetscn.instantiate()
-			addplant(i+1,newplant,tabspawn[i])
-	
+	#for i in range(tabspawn.size()):
+		#if tabspawn[i] >= 0 :
+			#var newplant = plantetscn.instantiate()
+			#addplant(i+1,newplant,tabspawn[i])
+	used_cells = {}
 	for i in range(n):
 		var newplant = plantetscn.instantiate()
 
@@ -49,25 +50,26 @@ func newplants(n, tabspawn : Array):
 			addplant(1,newplant,1)
 		
 
-func addplant(idxplant,newplant,nb):
-	var padding = 8
-	var tilemap = $ZoneJeu/LayerGazon
-	var cell_size = Vector2(tilemap.tile_set.tile_size)
+func addplant(idxplant, newplant, nb):
+	var fleurs_tilemap = $ZoneJeu/MarkerLevel.get_child(0).get_node("Fleurs")
 	
-	var random_cell = Vector2i(
-			randi_range(map_rect.position.x, map_rect.end.x - 1),
-			randi_range(map_rect.position.y, map_rect.end.y - 1)
-		)
-		
-	var base_pos = tilemap.map_to_local(random_cell)
-	newplant.position = base_pos + Vector2(
-		randf_range(padding, cell_size.x - padding),
-		randf_range(padding, cell_size.y - padding)
+	var all_cells = fleurs_tilemap.get_used_cells()
+	var available_cells = all_cells.filter(func(cell): return not used_cells.has(cell))
+	
+	if available_cells.size() == 0:
+		push_warning("No available cells!")
+		return
+	
+	var random_cell = available_cells[randi() % available_cells.size()]
+	used_cells[random_cell] = true
+	
+	newplant.global_position = fleurs_tilemap.to_global(
+		fleurs_tilemap.map_to_local(random_cell)
 	)
 
-	newplant.rotation = randf_range(-0.26, 0.26)
-	newplant.scale *= randf_range(0.9, 1.1)
-		
+	#newplant.y_sort_enabled = true
+	#newplant.z_index = 1
+
 	newplant.choosetype(idxplant)
 	match idxplant:
 		1:
