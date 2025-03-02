@@ -30,11 +30,11 @@ func start(np, _mission):
 	bouger_bas = "move_down_%d" %  nperso
 	
 	#$Sprite2D.texture = load("res://Ressources/Images/character_%02d_face.png" % np)
-	var rescale : float
-	rescale = 64.0 / 130 #130 = largeur png (ou c' est degueu)
-	scale.x = rescale
-	scale.y = rescale
-	
+	#var rescale : float
+	#rescale = 64.0 / 130 #130 = largeur png (ou c' est degueu)
+	#scale.x = rescale
+	#scale.y = rescale
+	#
 	mission = _mission
 
 func fleurattrapee(fleur : Plante):

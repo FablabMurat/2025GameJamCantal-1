@@ -125,10 +125,10 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/1 = SubResource("TileSetAtlasSource_yc6gp")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7c3re"]
-size = Vector2(868.5, 30)
+size = Vector2(928, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tiqlh"]
-size = Vector2(42, 553)
+size = Vector2(42, 582)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h4iau"]
 size = Vector2(76, 563)
@@ -185,6 +185,7 @@ text = "Joueur 2"
 tile_set = ExtResource("2_r4xy5")
 
 [node name="LayerMur" type="TileMapLayer" parent="TileMap"]
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAD/////AQABAAUAAAAAAP//AQACAAcAAAABAP//AQACAAUAAAACAP//AQACAAcAAAADAP//AQACAAcAAAAEAP//AQACAAcAAAAFAP//AQACAAcAAAAGAP//AQACAAcAAAAHAP//AQACAAUAAAAIAP//AQACAAcAAAAJAP//AQACAAUAAAAKAP//AQACAAcAAAALAP//AQACAAUAAAAMAP//AQACAAcAAAANAP//AQADAAUAAAANAAAAAQADAAYAAAANAAEAAQADAAYAAAANAAIAAQADAAYAAAANAAQAAQADAAYAAAANAAUAAQADAAYAAAANAAYAAQADAAYAAAANAAcAAQADAAYAAAANAAgAAQADAAcAAAANAAMAAQADAAYAAAD//wAAAQABAAYAAAD//wEAAQABAAYAAAD//wIAAQABAAYAAAD//wMAAQABAAYAAAD//wQAAQABAAYAAAD//wUAAQABAAYAAAD//wYAAQABAAYAAAD//wcAAQABAAYAAAD//wgAAQABAAcAAAALAAgAAQACAAcAAAAKAAgAAQACAAcAAAAJAAgAAQACAAcAAAAIAAgAAQACAAcAAAAHAAgAAQACAAcAAAAGAAgAAQACAAcAAAAFAAgAAQACAAcAAAAEAAgAAQACAAcAAAADAAgAAQACAAUAAAACAAgAAQACAAcAAAABAAgAAQACAAcAAAAAAAgAAQACAAcAAAAMAAgAAQACAAcAAAA=")
 tile_set = SubResource("TileSet_3chyh")
 
@@ -193,11 +194,11 @@ tile_set = SubResource("TileSet_3chyh")
 [node name="Area2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(434.75, -19)
+position = Vector2(405, -19)
 shape = SubResource("RectangleShape2D_7c3re")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-48, 276.5)
+position = Vector2(-48, 262)
 shape = SubResource("RectangleShape2D_tiqlh")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Area2D"]
