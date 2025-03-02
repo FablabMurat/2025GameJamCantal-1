@@ -52,10 +52,9 @@ func newplants(n, tabspawn : Array):
 
 func addplant(idxplant, newplant, nb):
 	var fleurs_tilemap = $ZoneJeu/MarkerLevel.get_child(0).get_node("Fleurs")
-	
 	var all_cells = fleurs_tilemap.get_used_cells()
 	var available_cells = all_cells.filter(func(cell): return not used_cells.has(cell))
-	
+	fleurs_tilemap.visible = false
 	if available_cells.size() == 0:
 		push_warning("No available cells!")
 		return
