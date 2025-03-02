@@ -4,7 +4,9 @@ var perso1
 var perso2
 
 var mission : Array
-
+var sollayer : TileMapLayer
+var map_rect : Rect2
+	
 signal collect(perso,flowertype)
 signal niveaufini()
 
@@ -29,52 +31,36 @@ func _ready() -> void:
 
 func semegazon() :
 	var cells = Array()
-	for x in range(0,13):
-		for y in range(0,10):
+	for x in range(-2,15):
+		for y in range(-1,10):
 			cells.append(Vector2i(x,y))
 	$TileMap/LayerGazon.set_cells_terrain_connect(cells,0,0,false)
-
-func addmurs(steps) :
-	var cells : Array
-	
-	cells.append(steps[0])
-	var prevcell = steps[0]
-	for v in steps :
-		for posx in range(prevcell.x,v.x+1) :
-			for posy in range(prevcell.y,v.y+1) :
-				cells.append(Vector2i(posx,posy))
-		prevcell = v
-	print ("CElls",cells)
-	$TileMap/LayerGazon.set_cells_terrain_path(cells,0,1,false)
 
 var plantetscn = preload("res://plante.tscn")
 	
 func newplants(n, tabspawn : Array):
-	var tilemap = $TileMap/LayerGazon
-	var map_rect = tilemap.get_used_rect()
-	
 	for i in range(tabspawn.size()):
 		if tabspawn[i] >= 0 :
 			var newplant = plantetscn.instantiate()
-			addplant(i+1,newplant,map_rect,tabspawn[i])
+			addplant(i+1,newplant,tabspawn[i])
 	
 	for i in range(n):
 		var newplant = plantetscn.instantiate()
 
 		var rand = randf()
 		if rand < 0.1:
-			addplant(2,newplant,map_rect,1)
+			addplant(2,newplant,1)
 		elif rand < 0.2:
-			addplant(3,newplant,map_rect,1)
+			addplant(3,newplant,1)
 		elif rand < 0.25:
-			addplant(4,newplant,map_rect,1)
+			addplant(4,newplant,1)
 		elif rand < 0.3:
-			addplant(5,newplant,map_rect,1)
+			addplant(5,newplant,1)
 		else:
-			addplant(1,newplant,map_rect,1)
+			addplant(1,newplant,1)
 		
 
-func addplant(idxplant,newplant,map_rect,nb):
+func addplant(idxplant,newplant,nb):
 	var padding = 8
 	var tilemap = $TileMap/LayerGazon
 	var cell_size = Vector2(tilemap.tile_set.tile_size)
@@ -125,6 +111,13 @@ func setmission(listflowers : Array):
 				var ctrlImage = TextureRect.new()
 				ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % (i+1))
 				%HBoxMission.add_child(ctrlImage)
+
+func addlevelmap(level: int):
+	var leveltscn = load("res://niveau_%d.tscn" % level)
+	var levelmap : Node2D = leveltscn.instanciate()
+	sollayer = levelmap.get_child(0).get_child(0)
+	map_rect = sollayer.get_used_rect()
+	$TileMap/MarkerLevel.add_child(levelmap)
 
 func fleurattrapee(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)

@@ -2,7 +2,6 @@ extends Node
 
 var level = 1
 
-var murs : Array
 var missions : Array
 var niveau : Node2D
 
@@ -12,18 +11,15 @@ func _ready() -> void:
 	missions.append([0,2,1,1,0])
 	missions.append([0,3,2,1,0])
 	
-	murs.append([Vector2i(5,5),Vector2i(8,5),Vector2i(8,3)])
-	
 	runlevel()
 
 func runlevel():
 	$CenterContainer.visible = true
 	var niveautscn = load("res://niveau.tscn")
 	niveau = niveautscn.instantiate()
-	if murs.size() >= level :
-		niveau.addmurs(murs[level-1])
 	niveau.collect.connect(collected.bind())
 	niveau.niveaufini.connect(endoflevel.bind())
+	niveau.addlevelmap(level)
 	niveau.setmission(missions[level-1])
 	add_child(niveau)
 
