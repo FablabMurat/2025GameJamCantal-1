@@ -19,22 +19,22 @@ func _ready() -> void:
 	
 	var persotscn = preload("res://perso.tscn")
 	perso1 = persotscn.instantiate()
-	perso1.position = $MarkerPerso1.position
+	perso1.position = $ZoneJeu/MarkerPerso1.position
 	perso1.start(1,mission)
 	perso1.missionfinie.connect(endoflevel.bind())
-	add_child(perso1)
+	$ZoneJeu.add_child(perso1)
 	perso2 = persotscn.instantiate()
-	perso2.position = $MarkerPerso2.position
+	perso2.position = $ZoneJeu/MarkerPerso2.position
 	perso2.start(2,mission)
 	perso2.missionfinie.connect(endoflevel.bind())
-	add_child(perso2)
+	$ZoneJeu.add_child(perso2)
 
 func semegazon() :
 	var cells = Array()
-	for x in range(-2,15):
+	for x in range(-3,17):
 		for y in range(-1,10):
 			cells.append(Vector2i(x,y))
-	$TileMap/LayerGazon.set_cells_terrain_connect(cells,0,0,false)
+	$ZoneJeu/LayerGazon.set_cells_terrain_connect(cells,0,0,false)
 
 var plantetscn = preload("res://plante.tscn")
 	
@@ -62,7 +62,7 @@ func newplants(n, tabspawn : Array):
 
 func addplant(idxplant,newplant,nb):
 	var padding = 8
-	var tilemap = $TileMap/LayerGazon
+	var tilemap = $ZoneJeu/LayerGazon
 	var cell_size = Vector2(tilemap.tile_set.tile_size)
 	
 	var random_cell = Vector2i(
@@ -114,10 +114,10 @@ func setmission(listflowers : Array):
 
 func addlevelmap(level: int):
 	var leveltscn = load("res://niveau_%d.tscn" % level)
-	var levelmap : Node2D = leveltscn.instanciate()
-	sollayer = levelmap.get_child(0).get_child(0)
+	var levelmap : Node2D = leveltscn.instantiate()
+	sollayer = levelmap.get_child(0)
 	map_rect = sollayer.get_used_rect()
-	$TileMap/MarkerLevel.add_child(levelmap)
+	%MarkerLevel.add_child(levelmap)
 
 func fleurattrapee(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
