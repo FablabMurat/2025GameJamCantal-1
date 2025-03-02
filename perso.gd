@@ -9,6 +9,7 @@ var bouger_haut : String
 var bouger_bas : String
 
 const SPEED = 200
+const PAUSEMAX = 3.0
 
 var speedMultiplier = 0
 
@@ -23,6 +24,7 @@ func _init():
 func _ready() -> void:
 	pass
 	$FX_animation.animation = "none"
+	$PauseBar.hide()
 
 func start(np, _mission):
 	nperso = np
@@ -95,13 +97,30 @@ func _physics_process(delta):
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("cueillir_%d" % nperso):
 		# Cueillette
-		$FX_animation.play("pickup")
-		if $AreaCueillette2D.has_overlapping_areas():
-			for i in $AreaCueillette2D.get_overlapping_areas():
-				if i is Plante :
-					var plante = i as Plante
-					#if plante.flowertype > 1 :
-					plante.cueillir(self)
+		cueillette()
+	if $PauseBar.visible :
+		$PauseBar.value = $CueilletteTimer.time_left
+		
+
+func cueillette():
+	speedMultiplier = -1.0  # avec le +1, çà bloque le perso
+	$PauseBar.max_value = int(PAUSEMAX)
+	$CueilletteTimer.start()
+	$FX_animation.play("pickup")
+	$PauseBar.show()
+	if $AreaCueillette2D.has_overlapping_areas():
+		for i in $AreaCueillette2D.get_overlapping_areas():
+			if i is Plante :
+				var plante = i as Plante
+				#if plante.flowertype > 1 :
+				plante.cueillir(self)
+	
+	
+func _on_cuillette_timer_timeout() -> void:
+	speedMultiplier = 0.0
+	$FX_animation.play("none")
+	$PauseBar.hide()
+	pass # Replace with function body.
 
 var is_stunned := false
 @onready var stun_timer := $StunTimer

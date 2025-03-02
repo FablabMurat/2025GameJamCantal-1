@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dtdr5is6lfnty"]
+[gd_scene load_steps=16 format=3 uid="uid://dtdr5is6lfnty"]
 
 [ext_resource type="Script" path="res://perso.gd" id="1_bcq8j"]
 [ext_resource type="SpriteFrames" path="res://joueur_2.tres" id="2_ubsce"]
@@ -66,6 +66,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_et1fq"]
+bg_color = Color(0.227522, 0.392765, 0.08283, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gm12"]
+bg_color = Color(0.785284, 0.534156, 0.375194, 1)
+
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 z_index = 1
 z_as_relative = false
@@ -89,6 +95,10 @@ wait_time = 3.0
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 
+[node name="CueilletteTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [node name="AreaCueillette2D" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 2
@@ -102,8 +112,18 @@ debug_color = Color(0.860324, 0.302182, 0.51819, 0.42)
 z_index = 1
 position = Vector2(0, -63)
 sprite_frames = SubResource("SpriteFrames_5medq")
-animation = &"none"
+animation = &"pickup"
+
+[node name="PauseBar" type="ProgressBar" parent="."]
+offset_left = -28.0
+offset_top = -130.0
+offset_right = 29.0
+offset_bottom = -109.0
+theme_override_styles/background = SubResource("StyleBoxFlat_et1fq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7gm12")
+show_percentage = false
 
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
+[connection signal="timeout" from="CueilletteTimer" to="." method="_on_cuillette_timer_timeout"]
 [connection signal="input_event" from="AreaCueillette2D" to="." method="_on_input_event"]
