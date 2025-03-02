@@ -15,6 +15,10 @@ run/main_scene="res://root.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Ressources/Images/icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [input]
 
 move_right_1={

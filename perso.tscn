@@ -1,16 +1,23 @@
 [gd_scene load_steps=15 format=3 uid="uid://dtdr5is6lfnty"]
 
+
 [ext_resource type="Script" path="res://perso.gd" id="1_bcq8j"]
 [ext_resource type="Texture2D" uid="uid://d3yd0u2mep0kg" path="res://Ressources/Images/character_01_profil_run01.png" id="2_xl8j3"]
 [ext_resource type="Texture2D" uid="uid://ccurdx7xx6l0b" path="res://Ressources/Images/character_01_profil_run02.png" id="3_bcdbe"]
 [ext_resource type="Texture2D" uid="uid://dvy0if1h2iqxp" path="res://Ressources/Images/character_01_profil_run03.png" id="4_7j0gd"]
 [ext_resource type="Texture2D" uid="uid://50yoxu2j1up8" path="res://Ressources/Images/character_01_profil_run04.png" id="5_1lxcb"]
-[ext_resource type="Texture2D" uid="uid://cyxgxmtgyu2ub" path="res://Ressources/Images/character_01_dos.png" id="6_kbr4p"]
+[ext_resource type="Texture2D" uid="uid://doqq0pcvbat65" path="res://Ressources/Images/character_01_dos_run01.png" id="6_7wrv2"]
+[ext_resource type="Texture2D" uid="uid://b6dif5v0qecc7" path="res://Ressources/Images/character_01_dos_run02.png" id="7_fwhpe"]
 [ext_resource type="Texture2D" uid="uid://ydf0a8at7x7j" path="res://Ressources/Images/character_01_face_run01.png" id="7_mble8"]
+[ext_resource type="Texture2D" uid="uid://b7uomlm0cmrey" path="res://Ressources/Images/character_01_dos_run03.png" id="8_8jhs3"]
 [ext_resource type="Texture2D" uid="uid://r4amgs4ni1lg" path="res://Ressources/Images/character_01_face_run02.png" id="8_ac2cw"]
 [ext_resource type="Texture2D" uid="uid://cke3wi2qs3df3" path="res://Ressources/Images/character_01_face_run03.png" id="9_4u07l"]
+[ext_resource type="Texture2D" uid="uid://dndjequkbfp10" path="res://Ressources/Images/character_01_dos_run04.png" id="9_jidxt"]
 [ext_resource type="Texture2D" uid="uid://kfij4eyoxqsw" path="res://Ressources/Images/character_01_face_run04.png" id="10_pohih"]
 [ext_resource type="Texture2D" uid="uid://baxqdmr75ebpo" path="res://Ressources/Images/character_01_face_idle.png" id="11_2kb85"]
+[ext_resource type="Texture2D" uid="uid://b0dr03mjgsjel" path="res://Ressources/Images/character_01_profil_down.png" id="15_154t4"]
+[ext_resource type="Texture2D" uid="uid://c333eel2twcje" path="res://Ressources/Images/character_01_dos_down.png" id="16_uphs0"]
+[ext_resource type="Texture2D" uid="uid://d07nmpoumw0h1" path="res://Ressources/Images/character_01_face_down.png" id="17_2j8yq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ips43"]
 animations = [{
@@ -33,7 +40,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_kbr4p")
+"texture": ExtResource("6_7wrv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_fwhpe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8jhs3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_jidxt")
 }],
 "loop": true,
 "name": &"dos",
@@ -63,6 +79,30 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_154t4")
+}],
+"loop": true,
+"name": &"pickup_cote",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_uphs0")
+}],
+"loop": true,
+"name": &"pickup_dos",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_2j8yq")
+}],
+"loop": true,
+"name": &"pickup_face",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3iuav"]
@@ -81,7 +121,7 @@ script = ExtResource("1_bcq8j")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_ips43")
-animation = &"dos"
+animation = &"pickup_dos"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
