@@ -9,7 +9,7 @@ height = 48.0
 
 [node name="Plante" type="Area2D"]
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 3
 script = ExtResource("1_dxlyv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -22,3 +22,4 @@ shape = SubResource("CapsuleShape2D_my7bd")
 metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

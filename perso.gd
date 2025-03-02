@@ -82,7 +82,14 @@ func _physics_process(delta):
 			#pass
 
 func _process(delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("cueillir_%d" % nperso):
+		# Cueillette
+		if $AreaCueillette2D.has_overlapping_areas():
+			for i in $AreaCueillette2D.get_overlapping_areas():
+				if i is Plante :
+					var plante = i as Plante
+					#if plante.flowertype > 1 :
+					plante.cueillir(self)
 
 var is_stunned := false
 @onready var stun_timer := $StunTimer

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dtdr5is6lfnty"]
+[gd_scene load_steps=15 format=3 uid="uid://dtdr5is6lfnty"]
 
 [ext_resource type="Script" path="res://perso.gd" id="1_bcq8j"]
 [ext_resource type="Texture2D" uid="uid://d3yd0u2mep0kg" path="res://Ressources/Images/character_01_profil_run01.png" id="2_xl8j3"]
@@ -69,10 +69,11 @@ animations = [{
 radius = 12.0
 height = 50.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_owj8a"]
+radius = 32.0156
+
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 y_sort_enabled = true
-collision_layer = 3
-collision_mask = 3
 platform_on_leave = 2
 platform_floor_layers = 4294967040
 script = ExtResource("1_bcq8j")
@@ -91,5 +92,15 @@ shape = SubResource("CapsuleShape2D_3iuav")
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 
+[node name="AreaCueillette2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CueilletteShape2D" type="CollisionShape2D" parent="AreaCueillette2D"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_owj8a")
+debug_color = Color(0.860324, 0.302182, 0.51819, 0.42)
+
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
+[connection signal="input_event" from="AreaCueillette2D" to="." method="_on_input_event"]

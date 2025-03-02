@@ -5,6 +5,7 @@ var flowertype : int
 var canStun : bool
 var canSpeedBoost : bool
 var canSwapPosition : bool
+var pickable : bool = false
 
 @export var stun_duration : float = 2
 @export var speed_boost_duration : float = 2
@@ -19,6 +20,7 @@ func _ready() -> void:
 
 func nocontact():
 	$CollisionShape2D.queue_free()
+	self.monitorable = false
 
 func isspecial():
 	add_to_group("guards")
@@ -38,7 +40,10 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("perso") :
+	pickable = true
+	
+func cueillir(body):
+	#if body.is_in_group("perso") :
 		# La fleur est ramassée par le perso
 		var perso = body as Perso
 		attrape.emit(perso, self)
@@ -48,3 +53,7 @@ func _on_body_entered(body: Node2D) -> void:
 			perso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
 		if canSwapPosition:
 			swapPosition.emit()
+
+func _on_body_exited(body: Node2D) -> void:
+	pickable = false
+	pass # Replace with function body.
