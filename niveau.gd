@@ -51,7 +51,8 @@ func newplants(n, tabspawn : Array):
 		
 
 func addplant(idxplant, newplant, nb):
-	var fleurs_tilemap = $ZoneJeu/MarkerLevel.get_child(0).get_node("Fleurs")
+	var niveau = $ZoneJeu/MarkerLevel.get_child(0)
+	var fleurs_tilemap = niveau.get_node("Fleurs")
 	var all_cells = fleurs_tilemap.get_used_cells()
 	var available_cells = all_cells.filter(func(cell): return not used_cells.has(cell))
 	fleurs_tilemap.visible = false
@@ -62,9 +63,7 @@ func addplant(idxplant, newplant, nb):
 	var random_cell = available_cells[randi() % available_cells.size()]
 	used_cells[random_cell] = true
 	
-	newplant.global_position = fleurs_tilemap.to_global(
-		fleurs_tilemap.map_to_local(random_cell)
-	)
+	newplant.position = fleurs_tilemap.map_to_local(random_cell);
 
 	#newplant.y_sort_enabled = true
 	#newplant.z_index = 1
@@ -91,7 +90,7 @@ func addplant(idxplant, newplant, nb):
 			newplant.canSwapPosition = true
 		_:
 			newplant.nocontact()
-	add_child(newplant)
+	$ZoneJeu/MarkerLevel.get_child(0).add_child(newplant)
 
 func setmission(listflowers : Array):
 	mission = listflowers
@@ -125,15 +124,15 @@ func spawnpersos():
 	perso1.start(1,mission)
 	perso1.updatepanier.connect(removeflower.bind())
 	perso1.missionfinie.connect(endoflevel.bind())
-	
-	$ZoneJeu.add_child(perso1)
+
+	$ZoneJeu/MarkerLevel.get_child(0).add_child(perso1)
 	posj = %MarkerLevel.get_child(0).get_node("Pos_J2")
 	perso2 = persotscn.instantiate()
 	perso2.position = posj.position
 	perso2.start(2,mission)
 	perso2.updatepanier.connect(removeflower.bind())
 	perso2.missionfinie.connect(endoflevel.bind())
-	$ZoneJeu.add_child(perso2)
+	$ZoneJeu/MarkerLevel.get_child(0).add_child(perso2)
 
 func fleurattrapee(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)

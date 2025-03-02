@@ -15,8 +15,8 @@ collision_layer = 3
 script = ExtResource("1_dxlyv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-4, -24)
 texture = ExtResource("2_oprft")
+offset = Vector2(-4, -27.14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -24)
