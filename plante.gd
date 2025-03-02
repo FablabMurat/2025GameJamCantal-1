@@ -30,10 +30,10 @@ func choosetype(ft : int):
 	var icon = load("res://Ressources/Images/flower_%02d.png" % ft)
 
 	$Sprite2D.texture = icon
-	var rescale : float
-	rescale = 32.0 / icon.get_width()
-	scale.x = rescale
-	scale.y = rescale
+	#var rescale : float
+	#rescale = 32.0 / icon.get_width()
+	#scale.x = rescale
+	#scale.y = rescale
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
