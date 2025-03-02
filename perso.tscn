@@ -44,7 +44,7 @@ animations = [{
 "duration": 1.0,
 "texture": null
 }],
-"loop": false,
+"loop": true,
 "name": &"pickup",
 "speed": 5.0
 }, {
@@ -113,6 +113,8 @@ z_index = 1
 position = Vector2(0, -63)
 sprite_frames = SubResource("SpriteFrames_5medq")
 animation = &"pickup"
+frame = 4
+frame_progress = 1.0
 
 [node name="PauseBar" type="ProgressBar" parent="."]
 offset_left = -28.0
