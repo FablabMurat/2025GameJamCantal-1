@@ -40,7 +40,18 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_body_entered(body: Node2D) -> void:
-	pickable = true
+	if body.is_in_group("perso") :
+		# La fleur est ramassée par le perso
+		var perso = body as Perso
+		#attrape.emit(perso, self)
+		if canStun:
+			perso.apply_stun(0.5)
+		if canSpeedBoost:
+			perso.apply_speed_boost(2, 2)
+		if canSwapPosition:
+			swapPosition.emit()
+
+	
 	
 func cueillir(body):
 	#if body.is_in_group("perso") :
