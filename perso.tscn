@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dtdr5is6lfnty"]
+[gd_scene load_steps=30 format=3 uid="uid://dtdr5is6lfnty"]
 
 [ext_resource type="Script" path="res://perso.gd" id="1_bcq8j"]
 [ext_resource type="Texture2D" uid="uid://d3yd0u2mep0kg" path="res://Ressources/Images/character_01_profil_run01.png" id="2_xl8j3"]
@@ -17,14 +17,14 @@
 [ext_resource type="Texture2D" uid="uid://b0dr03mjgsjel" path="res://Ressources/Images/character_01_profil_down.png" id="15_154t4"]
 [ext_resource type="Texture2D" uid="uid://c333eel2twcje" path="res://Ressources/Images/character_01_dos_down.png" id="16_uphs0"]
 [ext_resource type="Texture2D" uid="uid://d07nmpoumw0h1" path="res://Ressources/Images/character_01_face_down.png" id="17_2j8yq"]
-[ext_resource type="Texture2D" uid="uid://cvv3pv4mqdpfc" path="res://Ressources/Images/fx_pickup_01.png" id="18_261hm"]
-[ext_resource type="Texture2D" uid="uid://bdgdgrppi2uhj" path="res://Ressources/Images/fx_pickup_02.png" id="19_1cyvp"]
-[ext_resource type="Texture2D" uid="uid://bge04f3kaj06d" path="res://Ressources/Images/fx_pickup_03.png" id="20_yli2l"]
-[ext_resource type="Texture2D" uid="uid://cqkatkpud6pdl" path="res://Ressources/Images/fx_pickup_04.png" id="21_djuwk"]
-[ext_resource type="Texture2D" uid="uid://crsrb6tot3o78" path="res://Ressources/Images/fx_stun_01.png" id="22_nu0n6"]
-[ext_resource type="Texture2D" uid="uid://cwg141vr8ofy" path="res://Ressources/Images/fx_stun_02.png" id="23_mit7u"]
-[ext_resource type="Texture2D" uid="uid://cyxu5gijpvoqh" path="res://Ressources/Images/fx_stun_03.png" id="24_x1qe8"]
-[ext_resource type="Texture2D" uid="uid://hs4b3sa6oc4u" path="res://Ressources/Images/fx_stun_04.png" id="25_ftnlp"]
+[ext_resource type="Texture2D" uid="uid://cvv3pv4mqdpfc" path="res://Ressources/Images/fx_pickup_01.png" id="18_wwlvt"]
+[ext_resource type="Texture2D" uid="uid://bdgdgrppi2uhj" path="res://Ressources/Images/fx_pickup_02.png" id="19_kmbmr"]
+[ext_resource type="Texture2D" uid="uid://bge04f3kaj06d" path="res://Ressources/Images/fx_pickup_03.png" id="20_ynva4"]
+[ext_resource type="Texture2D" uid="uid://cqkatkpud6pdl" path="res://Ressources/Images/fx_pickup_04.png" id="21_i5lvs"]
+[ext_resource type="Texture2D" uid="uid://crsrb6tot3o78" path="res://Ressources/Images/fx_stun_01.png" id="22_dqf2m"]
+[ext_resource type="Texture2D" uid="uid://cwg141vr8ofy" path="res://Ressources/Images/fx_stun_02.png" id="23_ued8j"]
+[ext_resource type="Texture2D" uid="uid://cyxu5gijpvoqh" path="res://Ressources/Images/fx_stun_03.png" id="24_106ei"]
+[ext_resource type="Texture2D" uid="uid://hs4b3sa6oc4u" path="res://Ressources/Images/fx_stun_04.png" id="25_p5wiy"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ips43"]
 animations = [{
@@ -119,6 +119,43 @@ height = 50.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_owj8a"]
 radius = 32.0156
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_5medq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_wwlvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_kmbmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ynva4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_i5lvs")
+}],
+"loop": true,
+"name": &"pickup",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_dqf2m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ued8j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_106ei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_p5wiy")
+}],
+"loop": true,
+"name": &"stun",
+"speed": 5.0
+}]
+
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 y_sort_enabled = true
 platform_on_leave = 2
@@ -128,7 +165,7 @@ script = ExtResource("1_bcq8j")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_ips43")
-animation = &"pickup_dos"
+animation = &"cote"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
@@ -148,6 +185,12 @@ position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_owj8a")
 debug_color = Color(0.860324, 0.302182, 0.51819, 0.42)
 
+[node name="FX_animation" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(0, -63)
+sprite_frames = SubResource("SpriteFrames_5medq")
+animation = &"stun"
+frame_progress = 0.866751
 
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
