@@ -121,6 +121,11 @@ radius = 32.0156
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5medq"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"aucun",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("18_wwlvt")
@@ -133,8 +138,11 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("21_i5lvs")
+}, {
+"duration": 1.0,
+"texture": null
 }],
-"loop": true,
+"loop": false,
 "name": &"pickup",
 "speed": 5.0
 }, {
@@ -189,8 +197,7 @@ debug_color = Color(0.860324, 0.302182, 0.51819, 0.42)
 z_index = 1
 position = Vector2(0, -63)
 sprite_frames = SubResource("SpriteFrames_5medq")
-animation = &"stun"
-frame_progress = 0.866751
+animation = &"pickup"
 
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]

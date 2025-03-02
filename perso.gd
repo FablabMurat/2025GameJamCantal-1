@@ -21,6 +21,7 @@ func _init():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
+	$FX_animation.animation = "none"
 
 func start(np, _mission):
 	nperso = np
@@ -46,9 +47,11 @@ func fleurattrapee(fleur : Plante):
 	
 func _physics_process(delta):
 	if is_stunned:
+		$FX_animation.play("stun")
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
+		
 		
 	var direction = Vector2.ZERO
 
@@ -84,6 +87,7 @@ func _physics_process(delta):
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("cueillir_%d" % nperso):
 		# Cueillette
+		$FX_animation.play("pickup")
 		if $AreaCueillette2D.has_overlapping_areas():
 			for i in $AreaCueillette2D.get_overlapping_areas():
 				if i is Plante :
@@ -103,6 +107,7 @@ func apply_stun(duration: float):
 func _on_stun_timer_timeout():
 	is_stunned = false
 	modulate = Color.WHITE
+	$FX_animation.animation = "none"
 
 @onready var speed_boost_timer := $SpeedBoostTimer
 func apply_speed_boost(duration :float, boostStrength :float):
