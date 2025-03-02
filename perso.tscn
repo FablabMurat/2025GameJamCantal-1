@@ -1,6 +1,5 @@
 [gd_scene load_steps=15 format=3 uid="uid://dtdr5is6lfnty"]
 
-
 [ext_resource type="Script" path="res://perso.gd" id="1_bcq8j"]
 [ext_resource type="Texture2D" uid="uid://d3yd0u2mep0kg" path="res://Ressources/Images/character_01_profil_run01.png" id="2_xl8j3"]
 [ext_resource type="Texture2D" uid="uid://ccurdx7xx6l0b" path="res://Ressources/Images/character_01_profil_run02.png" id="3_bcdbe"]
@@ -18,6 +17,14 @@
 [ext_resource type="Texture2D" uid="uid://b0dr03mjgsjel" path="res://Ressources/Images/character_01_profil_down.png" id="15_154t4"]
 [ext_resource type="Texture2D" uid="uid://c333eel2twcje" path="res://Ressources/Images/character_01_dos_down.png" id="16_uphs0"]
 [ext_resource type="Texture2D" uid="uid://d07nmpoumw0h1" path="res://Ressources/Images/character_01_face_down.png" id="17_2j8yq"]
+[ext_resource type="Texture2D" uid="uid://cvv3pv4mqdpfc" path="res://Ressources/Images/fx_pickup_01.png" id="18_261hm"]
+[ext_resource type="Texture2D" uid="uid://bdgdgrppi2uhj" path="res://Ressources/Images/fx_pickup_02.png" id="19_1cyvp"]
+[ext_resource type="Texture2D" uid="uid://bge04f3kaj06d" path="res://Ressources/Images/fx_pickup_03.png" id="20_yli2l"]
+[ext_resource type="Texture2D" uid="uid://cqkatkpud6pdl" path="res://Ressources/Images/fx_pickup_04.png" id="21_djuwk"]
+[ext_resource type="Texture2D" uid="uid://crsrb6tot3o78" path="res://Ressources/Images/fx_stun_01.png" id="22_nu0n6"]
+[ext_resource type="Texture2D" uid="uid://cwg141vr8ofy" path="res://Ressources/Images/fx_stun_02.png" id="23_mit7u"]
+[ext_resource type="Texture2D" uid="uid://cyxu5gijpvoqh" path="res://Ressources/Images/fx_stun_03.png" id="24_x1qe8"]
+[ext_resource type="Texture2D" uid="uid://hs4b3sa6oc4u" path="res://Ressources/Images/fx_stun_04.png" id="25_ftnlp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ips43"]
 animations = [{
@@ -140,6 +147,7 @@ collision_mask = 2
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_owj8a")
 debug_color = Color(0.860324, 0.302182, 0.51819, 0.42)
+
 
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
