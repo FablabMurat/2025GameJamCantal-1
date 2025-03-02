@@ -8,6 +8,8 @@ var bouger_gauche : String
 var bouger_haut : String
 var bouger_bas : String
 
+var dir : String = "down"
+
 const SPEED = 200
 const PAUSEMAX = 3.0
 
@@ -76,18 +78,25 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	$AnimatedSprite2D.play()
-	if !velocity :
-		$AnimatedSprite2D.animation = "idle"
-	elif velocity :
-		if velocity.x != 0:
-			$AnimatedSprite2D.animation = "cote"
-			$AnimatedSprite2D.flip_h = velocity.x < 0
-		elif velocity.y > 0:
-			$AnimatedSprite2D.animation = "face"
-		elif velocity.y < 0:
-			$AnimatedSprite2D.animation = "dos"
-	
-	#
+	#if !velocity :
+		#$AnimatedSprite2D.animation = "idle"
+	#elif velocity :
+		#if velocity.x != 0:
+			#$AnimatedSprite2D.animation = "cote"
+			#$AnimatedSprite2D.flip_h = velocity.x < 0
+		#elif velocity.y > 0:
+			#$AnimatedSprite2D.animation = "face"
+		#elif velocity.y < 0:
+			#$AnimatedSprite2D.animation = "dos"
+
+	if velocity:
+		if velocity.x < 0: dir = "gauche"
+		elif velocity.x > 0: dir = "droite"
+		elif velocity.y > 0: dir = "bas"
+		elif velocity.y < 0: dir = "haut"
+		$AnimatedSprite2D.play("run_" + dir)
+	else :
+		$AnimatedSprite2D.play("idle_" + dir)
 	#var collision = get_last_slide_collision()
 	#if collision:
 		#var plante = collision.get_collider()
@@ -97,6 +106,7 @@ func _physics_process(delta):
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned:
 		# Cueillette
+
 		cueillette()
 	if $PauseBar.visible :
 		if is_stunned :
@@ -108,7 +118,7 @@ func cueillette():
 	speedMultiplier = -1.0  # avec le +1, çà bloque le perso
 	$PauseBar.max_value = int(PAUSEMAX)
 	$CueilletteTimer.start()
-	$FX_animation.play("pickup")
+	$FX_animation.play("pickup" + dir)
 	$PauseBar.show()
 	if $AreaCueillette2D.has_overlapping_areas():
 		for i in $AreaCueillette2D.get_overlapping_areas():
@@ -123,6 +133,7 @@ func _on_cuillette_timer_timeout() -> void:
 	$FX_animation.play("none")
 	$PauseBar.hide()
 	pass # Replace with function body.
+
 
 var is_stunned := false
 @onready var stun_timer := $StunTimer

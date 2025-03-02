@@ -12,8 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://hs4b3sa6oc4u" path="res://Ressources/Images/fx_stun_04.png" id="25_p5wiy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3iuav"]
-radius = 12.0
-height = 50.0
+radius = 9.0
+height = 48.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_owj8a"]
 radius = 32.0156
@@ -82,7 +82,7 @@ script = ExtResource("1_bcq8j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_ubsce")
-animation = &"pickup_face"
+animation = &"pickup_haut"
 offset = Vector2(0, -50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
