@@ -95,12 +95,14 @@ func _physics_process(delta):
 			#pass
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("cueillir_%d" % nperso):
+	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned:
 		# Cueillette
 		cueillette()
 	if $PauseBar.visible :
-		$PauseBar.value = $CueilletteTimer.time_left
-		
+		if is_stunned :
+			$PauseBar.value = $StunTimer.time_left
+		else:
+			$PauseBar.value = $CueilletteTimer.time_left
 
 func cueillette():
 	speedMultiplier = -1.0  # avec le +1, çà bloque le perso
@@ -130,11 +132,15 @@ func apply_stun(duration: float):
 		is_stunned = true
 		stun_timer.start(duration)
 		modulate = Color.RED
+		$PauseBar.max_value = int(PAUSEMAX)
+		$PauseBar.show()
+
 
 func _on_stun_timer_timeout():
 	is_stunned = false
 	modulate = Color.WHITE
 	$FX_animation.animation = "none"
+	$PauseBar.hide()
 
 @onready var speed_boost_timer := $SpeedBoostTimer
 func apply_speed_boost(duration :float, boostStrength :float):
