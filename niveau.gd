@@ -29,11 +29,12 @@ var plantetscn = preload("res://plante.tscn")
 var used_cells
 	
 func newplants(n, tabspawn : Array):
-	#for i in range(tabspawn.size()):
-		#if tabspawn[i] >= 0 :
-			#var newplant = plantetscn.instantiate()
-			#addplant(i+1,newplant,tabspawn[i])
 	used_cells = {}
+	for i in range(tabspawn.size()):
+		if tabspawn[i] >= 0 :
+			var newplant = plantetscn.instantiate()
+			addplant(i+1,newplant,tabspawn[i])
+
 	for i in range(n):
 		var newplant = plantetscn.instantiate()
 
