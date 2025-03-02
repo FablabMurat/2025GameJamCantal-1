@@ -74,6 +74,7 @@ size_flags_vertical = 0
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer1"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_j6o1o")
 theme_override_font_sizes/font_size = 36
 text = "  Joueur 1"
@@ -101,6 +102,7 @@ size_flags_horizontal = 8
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer2"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.709804, 1)
 theme_override_fonts/font = ExtResource("2_j6o1o")
 theme_override_font_sizes/font_size = 36
 text = "Joueur 2"

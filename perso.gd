@@ -11,7 +11,8 @@ var bouger_bas : String
 var dir : String = "down"
 
 const SPEED = 200
-const PAUSEMAX = 3.0
+const PAUSESTUN = 3.0
+const PAUSECUEILLE = 1.5
 
 var speedMultiplier = 0
 
@@ -106,7 +107,6 @@ func _physics_process(delta):
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned:
 		# Cueillette
-
 		cueillette()
 	if $PauseBar.visible :
 		if is_stunned :
@@ -116,8 +116,8 @@ func _process(delta: float) -> void:
 
 func cueillette():
 	speedMultiplier = -1.0  # avec le +1, çà bloque le perso
-	$PauseBar.max_value = int(PAUSEMAX)
-	$CueilletteTimer.start()
+	$PauseBar.max_value = int(PAUSECUEILLE)
+	$CueilletteTimer.start(PAUSECUEILLE)
 	$FX_animation.play("pickup" + dir)
 	$PauseBar.show()
 	if $AreaCueillette2D.has_overlapping_areas():
@@ -143,7 +143,7 @@ func apply_stun(duration: float):
 		is_stunned = true
 		stun_timer.start(duration)
 		modulate = Color.RED
-		$PauseBar.max_value = int(PAUSEMAX)
+		$PauseBar.max_value = int(duration)
 		$PauseBar.show()
 
 
