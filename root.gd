@@ -51,7 +51,6 @@ func collected(perso, flowertype):
 func _process(delta: float) -> void:
 	pass
 
-
 func _on_start_timer_timeout() -> void:
 	$CenterContainer.hide()
 	runlevel()

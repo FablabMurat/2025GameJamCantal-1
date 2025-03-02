@@ -83,6 +83,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainerCenter" type="VBoxContainer" parent="PanelContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
