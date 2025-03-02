@@ -19,8 +19,8 @@ func runlevel():
 	niveau = niveautscn.instantiate()
 	niveau.collect.connect(collected.bind())
 	niveau.niveaufini.connect(endoflevel.bind())
-	niveau.addlevelmap(level)
 	niveau.setmission(missions[level-1])
+	niveau.addlevelmap(level)
 	add_child(niveau)
 
 func endoflevel(nperso):

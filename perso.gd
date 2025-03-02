@@ -13,6 +13,7 @@ const SPEED = 200
 var speedMultiplier = 0
 
 var mission : Array
+signal updatepanier(nperso,flowertype)
 signal missionfinie(nwinner)
 
 func _init():
@@ -39,7 +40,13 @@ func start(np, _mission):
 	mission = _mission
 
 func fleurattrapee(fleur : Plante):
+	if mission[fleur.flowertype-1] > 0 :
+		# il faut en supprimer une du panier
+		updatepanier.emit(nperso,fleur.flowertype)
+
 	mission[fleur.flowertype-1] -= 1
+	#
+	# Vérifie si on a rempli la mission
 	if mission[fleur.flowertype-1] <= 0 :
 		if mission.all(func (n): return n<=0):
 			# On a fini la mission

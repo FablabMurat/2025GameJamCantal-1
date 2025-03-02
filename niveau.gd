@@ -20,8 +20,8 @@ func _ready() -> void:
 
 func semegazon() :
 	var cells = Array()
-	for x in range(-3,17):
-		for y in range(-1,10):
+	for x in range(-3,22):
+		for y in range(-1,13):
 			cells.append(Vector2i(x,y))
 	$ZoneJeu/LayerGazon.set_cells_terrain_connect(cells,0,0,false)
 
@@ -94,12 +94,17 @@ func addplant(idxplant,newplant,nb):
 
 func setmission(listflowers : Array):
 	mission = listflowers
-	for i in range(0,listflowers.size()) :
-		if listflowers[i] != 0 : 
-			for n in range(0,listflowers[i]) :
-				var ctrlImage = TextureRect.new()
-				ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % (i+1))
-				%HBoxMission.add_child(ctrlImage)
+	for nj in range(1,2) :
+		for i in range(0,listflowers.size()) :
+			if listflowers[i] != 0 : 
+				for n in range(0,listflowers[i]) :
+					var ctrlImage = TextureRectFlower.new()
+					ctrlImage.flowertype = i + 1
+					ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % (i+1))
+					if nj == 1 :
+						%VBoxContainer1.add_child(ctrlImage)
+					elif nj == 2 :
+						%VBoxContainer2.add_child(ctrlImage)
 
 func addlevelmap(level: int):
 	var leveltscn = load("res://niveau_%d.tscn" % level)
@@ -117,27 +122,43 @@ func spawnpersos():
 	perso1 = persotscn.instantiate()
 	perso1.position = posj.position
 	perso1.start(1,mission)
+	perso1.updatepanier.connect(removeflower.bind())
 	perso1.missionfinie.connect(endoflevel.bind())
+	
 	$ZoneJeu.add_child(perso1)
 	posj = %MarkerLevel.get_child(0).get_node("Pos_J2")
 	perso2 = persotscn.instantiate()
 	perso2.position = posj.position
 	perso2.start(2,mission)
+	perso2.updatepanier.connect(removeflower.bind())
 	perso2.missionfinie.connect(endoflevel.bind())
 	$ZoneJeu.add_child(perso2)
 
 func fleurattrapee(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
 	
-	var ctrlImage = TextureRect.new()
-	ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % fleur.flowertype)
-	if perso.nperso == 1 :
-		%VBoxContainer1.add_child(ctrlImage)
-	else:
-		%VBoxContainer2.add_child(ctrlImage)
+	#var ctrlImage = TextureRect.new()
+	#ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % fleur.flowertype)
+	#if perso.nperso == 1 :
+		#%VBoxContainer1.add_child(ctrlImage)
+	#else:
+		#%VBoxContainer2.add_child(ctrlImage)
 		
 	perso.fleurattrapee(fleur)
 	fleur.queue_free()
+
+func removeflower(nperso,flowertype):
+	if nperso == 1 :
+		for vb in %VBoxContainer1.get_children() :
+			if vb is TextureRectFlower :
+				if vb.flowertype == flowertype :
+					vb.queue_free()
+	elif nperso == 2:
+		for vb in %VBoxContainer2.get_children() :
+			if vb is TextureRectFlower :
+				if vb.flowertype == flowertype :
+					vb.queue_free()
+			
 	
 func endoflevel(nperso):
 	niveaufini.emit(nperso)
