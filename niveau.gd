@@ -13,10 +13,20 @@ signal niveaufini()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#semegazon()
-	
+	setupLevelYSort()
 	var inlinesum = func sum(accum, num): return accum+num*20
 	newplants(30,mission.map(func xx(elt): return elt*2))
 	
+func setupLevelYSort():
+	var niveau: CanvasItem = $ZoneJeu/MarkerLevel.get_child(0)
+	niveau.z_index = 0
+	niveau.y_sort_enabled = true
+	niveau.z_as_relative = false
+	
+	var obstacles = $ZoneJeu/MarkerLevel.get_child(0).get_node("Obstacles")
+	obstacles.z_index = 1
+	obstacles.y_sort_enabled = true
+	obstacles.z_as_relative = false
 
 func semegazon() :
 	var cells = Array()
