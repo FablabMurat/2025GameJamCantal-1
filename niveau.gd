@@ -17,17 +17,6 @@ func _ready() -> void:
 	var inlinesum = func sum(accum, num): return accum+num*20
 	newplants(50+mission.reduce(inlinesum),mission.map(func xx(elt): return elt*2))
 	
-	var persotscn = preload("res://perso.tscn")
-	perso1 = persotscn.instantiate()
-	perso1.position = $ZoneJeu/MarkerPerso1.position
-	perso1.start(1,mission)
-	perso1.missionfinie.connect(endoflevel.bind())
-	$ZoneJeu.add_child(perso1)
-	perso2 = persotscn.instantiate()
-	perso2.position = $ZoneJeu/MarkerPerso2.position
-	perso2.start(2,mission)
-	perso2.missionfinie.connect(endoflevel.bind())
-	$ZoneJeu.add_child(perso2)
 
 func semegazon() :
 	var cells = Array()
@@ -118,6 +107,24 @@ func addlevelmap(level: int):
 	sollayer = levelmap.get_child(0)
 	map_rect = sollayer.get_used_rect()
 	%MarkerLevel.add_child(levelmap)
+	
+	spawnpersos()
+
+func spawnpersos():
+	var persotscn = preload("res://perso.tscn")
+	var posj
+	posj = %MarkerLevel.get_child(0).get_node("Pos_J1")
+	perso1 = persotscn.instantiate()
+	perso1.position = posj.position
+	perso1.start(1,mission)
+	perso1.missionfinie.connect(endoflevel.bind())
+	$ZoneJeu.add_child(perso1)
+	posj = %MarkerLevel.get_child(0).get_node("Pos_J2")
+	perso2 = persotscn.instantiate()
+	perso2.position = posj.position
+	perso2.start(2,mission)
+	perso2.missionfinie.connect(endoflevel.bind())
+	$ZoneJeu.add_child(perso2)
 
 func fleurattrapee(perso, fleur):
 	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
