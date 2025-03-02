@@ -94,7 +94,7 @@ func addplant(idxplant,newplant,nb):
 
 func setmission(listflowers : Array):
 	mission = listflowers
-	for nj in range(1,2) :
+	for nj in range(1,3) :
 		for i in range(0,listflowers.size()) :
 			if listflowers[i] != 0 : 
 				for n in range(0,listflowers[i]) :
