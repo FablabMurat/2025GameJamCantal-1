@@ -37,10 +37,15 @@ func semegazon() :
 func addmurs(steps) :
 	var cells : Array
 	
-	#cells.append(steps[0])
-	#for i in steps :
-		#for j in range(0,)
-	#$TileMap/LayerGazon.set_cells_terrain_path(steps,0,1,false)
+	cells.append(steps[0])
+	var prevcell = steps[0]
+	for v in steps :
+		for posx in range(prevcell.x,v.x+1) :
+			for posy in range(prevcell.y,v.y+1) :
+				cells.append(Vector2i(posx,posy))
+		prevcell = v
+	print ("CElls",cells)
+	$TileMap/LayerGazon.set_cells_terrain_path(cells,0,1,false)
 
 var plantetscn = preload("res://plante.tscn")
 	
