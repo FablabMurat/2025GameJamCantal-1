@@ -85,6 +85,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3iuav")
 
 [node name="StunTimer" type="Timer" parent="."]
+wait_time = 3.0
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 

@@ -45,7 +45,7 @@ func _on_body_entered(body: Node2D) -> void:
 		var perso = body as Perso
 		#attrape.emit(perso, self)
 		if canStun:
-			perso.apply_stun(0.5)
+			perso.apply_stun(2)
 		if canSpeedBoost:
 			perso.apply_speed_boost(2, 2)
 		if canSwapPosition:
