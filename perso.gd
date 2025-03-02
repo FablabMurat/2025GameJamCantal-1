@@ -131,7 +131,6 @@ func cueillette():
 				#if plante.flowertype > 1 :
 				plante.cueillir(self)
 	
-	
 func _on_cuillette_timer_timeout() -> void:
 	speedMultiplier = 0.0
 	$FX_animation.play("none")
