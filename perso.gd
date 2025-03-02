@@ -9,6 +9,7 @@ var bouger_haut : String
 var bouger_bas : String
 
 var dir : String = "bas"
+var picking = false
 
 const SPEED = 200
 const PAUSESTUN = 3.0
@@ -96,6 +97,8 @@ func _physics_process(delta):
 		elif velocity.y > 0: dir = "bas"
 		elif velocity.y < 0: dir = "haut"
 		$AnimatedSprite2D.play("run_" + dir)
+	elif picking:
+		$AnimatedSprite2D.play("pickup_" + dir)
 	else :
 		$AnimatedSprite2D.play("idle_" + dir)
 	#var collision = get_last_slide_collision()
@@ -115,10 +118,11 @@ func _process(delta: float) -> void:
 			$PauseBar.value = $CueilletteTimer.time_left
 
 func cueillette():
+	picking = true
 	speedMultiplier = -1.0  # avec le +1, çà bloque le perso
 	$PauseBar.max_value = int(PAUSECUEILLE)
 	$CueilletteTimer.start(PAUSECUEILLE)
-	$FX_animation.play("pickup" + dir)
+	$FX_animation.play("pickup")
 	$PauseBar.show()
 	if $AreaCueillette2D.has_overlapping_areas():
 		for i in $AreaCueillette2D.get_overlapping_areas():
@@ -132,7 +136,7 @@ func _on_cuillette_timer_timeout() -> void:
 	speedMultiplier = 0.0
 	$FX_animation.play("none")
 	$PauseBar.hide()
-	pass # Replace with function body.
+	picking = false
 
 
 var is_stunned := false
