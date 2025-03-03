@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://beuuxgq2vt1fr"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://beuuxgq2vt1fr"]
 
 [ext_resource type="Texture2D" uid="uid://d3yd0u2mep0kg" path="res://Ressources/Images/character_01_profil_run01.png" id="1_t153x"]
 [ext_resource type="Texture2D" uid="uid://cc7fyfqd41oys" path="res://Ressources/Images/character_01_profil_idle.png" id="2_oj1w7"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://doqq0pcvbat65" path="res://Ressources/Images/character_01_dos_run01.png" id="5_7dkkx"]
 [ext_resource type="Texture2D" uid="uid://b6dif5v0qecc7" path="res://Ressources/Images/character_01_dos_run02.png" id="6_a5vng"]
 [ext_resource type="Texture2D" uid="uid://b7uomlm0cmrey" path="res://Ressources/Images/character_01_dos_run03.png" id="7_l0vva"]
+[ext_resource type="Texture2D" uid="uid://bppfceqsc7ixo" path="res://Ressources/Images/character_01_gauche_down.png" id="7_ydg3d"]
 [ext_resource type="Texture2D" uid="uid://dndjequkbfp10" path="res://Ressources/Images/character_01_dos_run04.png" id="8_yyns1"]
 [ext_resource type="Texture2D" uid="uid://ydf0a8at7x7j" path="res://Ressources/Images/character_01_face_run01.png" id="9_h1jot"]
 [ext_resource type="Texture2D" uid="uid://r4amgs4ni1lg" path="res://Ressources/Images/character_01_face_run02.png" id="10_lt3nj"]
@@ -72,6 +73,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"pickup_droite",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_ydg3d")
+}],
+"loop": true,
+"name": &"pickup_gauche",
 "speed": 5.0
 }, {
 "frames": [{

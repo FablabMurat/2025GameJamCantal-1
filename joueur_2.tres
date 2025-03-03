@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://liaqabry7qcs"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://liaqabry7qcs"]
 
 [ext_resource type="Texture2D" uid="uid://bilr2fvsyrv7e" path="res://Ressources/Images/character_02_profil_run01.png" id="1_5mswf"]
 [ext_resource type="Texture2D" uid="uid://dap8kxhwu40md" path="res://Ressources/Images/character_02_profil_idle.png" id="2_62hpt"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dg6mv6dgnd2fh" path="res://Ressources/Images/character_02_dos_run01.png" id="5_m6fpg"]
 [ext_resource type="Texture2D" uid="uid://drmsxnnpmjq8b" path="res://Ressources/Images/character_02_dos_run02.png" id="6_64jr8"]
 [ext_resource type="Texture2D" uid="uid://cix0tf5nswge0" path="res://Ressources/Images/character_02_dos_run03.png" id="7_o1htd"]
+[ext_resource type="Texture2D" uid="uid://d2yeqjjkxh370" path="res://Ressources/Images/character_02_gauche_down.png" id="7_ud1kt"]
 [ext_resource type="Texture2D" uid="uid://ds5sleufb47px" path="res://Ressources/Images/character_02_dos_run04.png" id="8_ter7j"]
 [ext_resource type="Texture2D" uid="uid://fee6n5vvxqst" path="res://Ressources/Images/character_02_face_run01.png" id="9_gi5uk"]
 [ext_resource type="Texture2D" uid="uid://b26smrbk56p03" path="res://Ressources/Images/character_02_face_run02.png" id="10_mpogi"]
@@ -76,7 +77,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("14_llwr4")
+"texture": ExtResource("7_ud1kt")
 }],
 "loop": true,
 "name": &"pickup_gauche",
