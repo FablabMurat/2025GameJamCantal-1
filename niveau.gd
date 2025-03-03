@@ -164,11 +164,13 @@ func removeflower(nperso,flowertype):
 			if vb is TextureRectFlower :
 				if vb.flowertype == flowertype :
 					vb.queue_free()
+					return
 	elif nperso == 2:
 		for vb in %VBoxContainer2.get_children() :
 			if vb is TextureRectFlower :
 				if vb.flowertype == flowertype :
 					vb.queue_free()
+					return
 			
 	
 func endoflevel(nperso):
