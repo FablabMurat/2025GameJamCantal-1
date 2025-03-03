@@ -82,7 +82,7 @@ script = ExtResource("1_bcq8j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_ubsce")
-animation = &"pickup_haut"
+animation = &"pickup_gauche"
 offset = Vector2(0, -50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -113,8 +113,6 @@ z_index = 1
 position = Vector2(0, -63)
 sprite_frames = SubResource("SpriteFrames_5medq")
 animation = &"pickup"
-frame = 4
-frame_progress = 1.0
 
 [node name="PauseBar" type="ProgressBar" parent="."]
 offset_left = -28.0

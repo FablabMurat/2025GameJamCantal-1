@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://bbrnp08ndov3k"]
+[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://liaqabry7qcs"]
 
 [ext_resource type="Texture2D" uid="uid://bilr2fvsyrv7e" path="res://Ressources/Images/character_02_profil_run01.png" id="1_5mswf"]
 [ext_resource type="Texture2D" uid="uid://dap8kxhwu40md" path="res://Ressources/Images/character_02_profil_idle.png" id="2_62hpt"]
@@ -72,6 +72,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"pickup_droite",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_llwr4")
+}],
+"loop": true,
+"name": &"pickup_gauche",
 "speed": 5.0
 }, {
 "frames": [{
