@@ -17,7 +17,7 @@ func _ready() -> void:
 	$StartTimer.start(4.0)
 
 func runlevel():
-	#$CenterContainer.visible = true
+	$CenterContainer.hide()
 	var niveautscn = load("res://niveau.tscn")
 	niveau = niveautscn.instantiate()
 	niveau.collect.connect(collected.bind())
@@ -31,8 +31,8 @@ func endoflevel(nperso):
 	niveau.call_deferred("queue_free")
 	# astuce pas jolie pour attendre que niveau soit détruit avant de passer au niveau suivant
 	$Timer.start()
-	#$CenterContainer.visible = true
-	#$CenterContainer/Label.text = "Niveau terminé  !"
+	$CenterContainer.show()
+	%Label.text = "Niveau terminé  !"
 	## TODO :Afficher aussi des scores
 		
 
@@ -40,8 +40,8 @@ func _on_timer_timeout() -> void:
 	if level <= missions.size() :
 		runlevel()
 	else:
-		$CenterContainer.visible = true
-		$CenterContainer/Label.text = "-- FIN DE PARTIE --"
+		$CenterContainer.show()
+		%Label.text = "-- FIN DE PARTIE --"
 		# TODO :Afficher aussi des scores
 
 func collected(perso, flowertype):
@@ -53,5 +53,4 @@ func _process(delta: float) -> void:
 
 func _on_start_timer_timeout() -> void:
 	$CenterContainer.hide()
-	$CenterContainer.queue_free()
 	runlevel()
