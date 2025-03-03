@@ -80,17 +80,6 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	$AnimatedSprite2D.play()
-	#if !velocity :
-		#$AnimatedSprite2D.animation = "idle"
-	#elif velocity :
-		#if velocity.x != 0:
-			#$AnimatedSprite2D.animation = "cote"
-			#$AnimatedSprite2D.flip_h = velocity.x < 0
-		#elif velocity.y > 0:
-			#$AnimatedSprite2D.animation = "face"
-		#elif velocity.y < 0:
-			#$AnimatedSprite2D.animation = "dos"
-
 	if velocity:
 		if velocity.x < 0: dir = "gauche"
 		elif velocity.x > 0: dir = "droite"
@@ -148,6 +137,7 @@ func apply_stun(duration: float):
 		modulate = Color.RED
 		$PauseBar.max_value = int(duration)
 		$PauseBar.show()
+		$AnimatedSprite2D.stop()
 
 
 func _on_stun_timer_timeout():
@@ -155,6 +145,7 @@ func _on_stun_timer_timeout():
 	modulate = Color.WHITE
 	$FX_animation.animation = "none"
 	$PauseBar.hide()
+	$AnimatedSprite2D.play()
 
 @onready var speed_boost_timer := $SpeedBoostTimer
 func apply_speed_boost(duration :float, boostStrength :float):
