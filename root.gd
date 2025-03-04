@@ -4,7 +4,6 @@ var level = 1
 
 @export var intro_timer : float = 4.0 
 @export var newlevel_timer : float = 3.0
-var newlevel_ui = false
 
 var missions : Array
 var niveau : Node2D
@@ -18,7 +17,7 @@ func _ready() -> void:
 	missions.append([0,2,2,2,1])
 	
 	$CenterContainer.show()
-	$StartTimer.start(intro_timer)
+	startCountdown(intro_timer)
 
 func runlevel():
 	$CenterContainer.hide()
@@ -34,31 +33,44 @@ func endoflevel(nperso):
 	level += 1
 	niveau.call_deferred("queue_free")
 	# astuce pas jolie pour attendre que niveau soit détruit avant de passer au niveau suivant
-	$Timer.start(newlevel_timer)
+	# Mais ça permet aussi aux joueurs de se préparer
 	$CenterContainer.show()
-	newlevel_ui = true
-	#%Label.text = str($Timer.time_left) #"Niveau terminé  !"
-	## TODO :Afficher aussi des scores
-		
+	%Label.text = "Niveau terminé  !"
+	## TODO :Afficher aussi des scores,; un gagnant
+	startCountdown(newlevel_timer)
 
 func _on_timer_timeout() -> void:
-	newlevel_ui = false
 	if level <= missions.size() :
 		runlevel()
 	else:
 		$CenterContainer.show()
 		%Label.text = "-- FIN DE PARTIE --"
-		# TODO :Afficher aussi des scores
+		# TODO :Afficher aussi le scores final, puis le Top
 
 func collected(perso, flowertype):
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if newlevel_ui:
-		%Label.text = str(int($Timer.time_left) + 1) # -1 pour que le niveau commence pile sur le 0
-	pass
+	if %CountdownCenterContainer.visible :
+		%CountdownProgressBar.value = $StartTimer.time_left * 100
+		%CountdownLabel.text = "%d" % roundi($StartTimer.time_left)
+		if %CountdownProgressBar.value == 0 :
+			%CountdownProgressBar.hide()
+
+func startCountdown(timeout):
+	%CountdownCenterContainer.show()
+	%CountdownProgressBar.show()
+	%CountdownProgressBar.value = timeout*100
+	%CountdownProgressBar.max_value = timeout*100
+	%CountdownLabel.text = "%d" % roundi(timeout)
+	$StartTimer.start(timeout)
 
 func _on_start_timer_timeout() -> void:
-	$CenterContainer.hide()
-	runlevel()
+	%CountdownCenterContainer.show()
+	if level <= missions.size() :
+		runlevel()
+	else:
+		$CenterContainer.show()
+		%Label.text = "-- FIN DE PARTIE --"
+		# TODO :Afficher aussi des scores
