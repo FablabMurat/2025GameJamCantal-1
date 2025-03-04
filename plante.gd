@@ -43,25 +43,20 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("perso") :
 		# La fleur est ramassée par le perso
 		var perso = body as Perso
-		#attrape.emit(perso, self)
-		if canStun:
-			perso.apply_stun(stun_duration)
-		if canSpeedBoost:
-			perso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
-		if canSwapPosition:
-			swapPosition.emit()
-
-	
+		effetspecial(perso)
 	
 func cueillir(body):
 	#if body.is_in_group("perso") :
 		# La fleur est ramassée par le perso
 		var perso = body as Perso
 		attrape.emit(perso, self)
+		effetspecial(perso)
+
+func effetspecial(surperso):
 		if canStun:
-			perso.apply_stun(stun_duration)
+			surperso.apply_stun(stun_duration)
 		if canSpeedBoost:
-			perso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
+			surperso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
 		if canSwapPosition:
 			swapPosition.emit()
 
