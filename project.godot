@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="GameJamFlower"
+config/name="Flower Chasers"
 run/main_scene="res://root.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://Ressources/Images/icon.svg"
+config/icon="res://Ressources/Images/character_02_face_idle.png"
 
 [display]
 
