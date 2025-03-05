@@ -6,7 +6,9 @@ var perso2
 var mission : Array
 var sollayer : TileMapLayer
 var map_rect : Rect2
-	
+
+const RANDFLOWERS = 25
+
 signal collect(perso,flowertype)
 signal niveaufini()
 
@@ -14,8 +16,8 @@ signal niveaufini()
 func _ready() -> void:
 	semegazon()
 	setupLevelYSort()
-	var inlinesum = func sum(accum, num): return accum+num*20
-	newplants(30,mission.map(func xx(elt): return elt*2))
+	#var nbtotal = mission.reduce(func sum(total,nb): return total+nb*2) + 15
+	newplants(mission.map(func xx(elt): return elt*2),RANDFLOWERS)
 	
 func setupLevelYSort():
 	var niveau: CanvasItem = $ZoneJeu/MarkerLevel.get_child(0)
@@ -38,30 +40,38 @@ func semegazon() :
 var plantetscn = preload("res://plante.tscn")
 var used_cells
 	
-func newplants(n, tabspawn : Array):
+func newplants(tabspawn : Array, nrandom : int):
 	used_cells = {}
+	# plantes pour la mission
 	for i in range(tabspawn.size()):
-		if tabspawn[i] >= 0 :
-			var newplant = plantetscn.instantiate()
-			addplant(i+1,newplant,tabspawn[i])
+		if tabspawn[i] > 0 :
+			for nbplants in range(tabspawn[i]) :
+				var newplant = plantetscn.instantiate()
+				addplant(i+1,newplant)
 
-	for i in range(n):
+	# plantes supplémentaires (décor et effets)
+	for i in range(nrandom):
 		var newplant = plantetscn.instantiate()
 
 		var rand = randf()
 		if rand < 0.1:
-			addplant(2,newplant,1)
+			# 10% de plantes de téléportation
+			addplant(5,newplant)
 		elif rand < 0.2:
-			addplant(3,newplant,1)
-		elif rand < 0.25:
-			addplant(4,newplant,1)
-		elif rand < 0.3:
-			addplant(5,newplant,1)
+			# 10% de plantes de speedboost
+			addplant(4,newplant)
+		elif rand < 0.35:
+			# 15% de plantes de stun
+			addplant(3,newplant)
+		elif rand < 0.5:
+			# 15% de plantes bleues à collecter, sans effet
+			addplant(2,newplant)
 		else:
-			addplant(1,newplant,1)
+			# 70% de plantes de décoration, sans effet
+			addplant(1,newplant)
 		
 
-func addplant(idxplant, newplant, nb):
+func addplant(idxplant, newplant):
 	var niveau = $ZoneJeu/MarkerLevel.get_child(0)
 	var fleurs_tilemap = niveau.get_node("Fleurs")
 	var all_cells = fleurs_tilemap.get_used_cells()
@@ -81,20 +91,20 @@ func addplant(idxplant, newplant, nb):
 
 	newplant.choosetype(idxplant)
 	match idxplant:
-		1:
+		1:  # décoration, sans effet
 			newplant.nocontact()
-		2:
+		2:  # sans effet, mais ramassables
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrapee)
-		3:
+		3:  # stun, mais ramassables
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrapee)
 			newplant.canStun = true
-		4:
+		4:  # speedboost, mais ramassables
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrapee)
 			newplant.canSpeedBoost = true
-		5:
+		5:  # téléportation par swap, mais ramassables
 			newplant.isspecial()
 			newplant.attrape.connect(fleurattrapee)
 			newplant.swapPosition.connect(swap_player_positions)
