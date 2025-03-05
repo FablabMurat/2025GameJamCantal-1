@@ -17,12 +17,14 @@ func _ready() -> void:
 	missions.append([0,2,2,2,1])
 	
 	$CenterContainer.show()
-	$PanelContainer/TextureRect.show()
+	$PanelContainer/TextureRectIntro.show()
+	$PanelContainer/TextureRectInter.hide()
 	startCountdown(intro_timer)
 
 func runlevel():
 	$CenterContainer.hide()
-	$PanelContainer/TextureRect.hide()
+	$PanelContainer/TextureRectIntro.hide()
+	$PanelContainer/TextureRectInter.hide()
 	var niveautscn = load("res://niveau.tscn")
 	niveau = niveautscn.instantiate()
 	niveau.collect.connect(collected.bind())
@@ -36,7 +38,7 @@ func endoflevel(nperso):
 	niveau.call_deferred("queue_free")
 	# astuce pas jolie pour attendre que niveau soit détruit avant de passer au niveau suivant
 	# Mais ça permet aussi aux joueurs de se préparer
-	$PanelContainer/TextureRect.show()
+	$PanelContainer/TextureRectInter.show()
 	$CenterContainer.show()
 	%Label.text = "Niveau terminé  !"
 	## TODO :Afficher aussi des scores,; un gagnant
