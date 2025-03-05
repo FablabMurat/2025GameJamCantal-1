@@ -67,7 +67,7 @@ func newplants(tabspawn : Array, nrandom : int):
 			# 15% de plantes bleues à collecter, sans effet
 			addplant(2,newplant)
 		else:
-			# 70% de plantes de décoration, sans effet
+			# 50% de plantes de décoration, sans effet
 			addplant(1,newplant)
 		
 
