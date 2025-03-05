@@ -12,7 +12,7 @@ signal niveaufini()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#semegazon()
+	semegazon()
 	setupLevelYSort()
 	var inlinesum = func sum(accum, num): return accum+num*20
 	newplants(30,mission.map(func xx(elt): return elt*2))

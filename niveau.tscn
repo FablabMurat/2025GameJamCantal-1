@@ -47,12 +47,7 @@ y_sort_enabled = true
 script = ExtResource("1_evebv")
 
 [node name="ZoneJeu" type="Node2D" parent="."]
-position = Vector2(150, 0)
-
-[node name="MarkerPerso1" type="Marker2D" parent="ZoneJeu"]
-
-[node name="MarkerPerso2" type="Marker2D" parent="ZoneJeu"]
-position = Vector2(593, 392)
+position = Vector2(150, 40)
 
 [node name="LayerGazon" type="TileMapLayer" parent="ZoneJeu"]
 position = Vector2(-120, -64)
@@ -62,6 +57,7 @@ tile_set = ExtResource("2_r4xy5")
 unique_name_in_owner = true
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+top_level = true
 offset_right = 1296.0
 offset_bottom = 741.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_npq7m")
