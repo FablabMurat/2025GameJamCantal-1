@@ -33,15 +33,20 @@ func runlevel():
 	niveau.addlevelmap(level)
 	add_child(niveau)
 
-func endoflevel(nperso):
-	level += 1
+func endoflevel(winner):
+	if winner == 0 :
+		# ni 1 ni 2, donc pas de gagnant car jeu bloqué
+		%Label.text = "Match nul !   Même niveau..."
+	else:
+		%Label.text = "Victoire Joueur %d !   Niveau suivant..." % winner
+		level += 1
+	## TODO :Afficher aussi des scores ?
+	
 	niveau.call_deferred("queue_free")
 	# astuce pas jolie pour attendre que niveau soit détruit avant de passer au niveau suivant
 	# Mais ça permet aussi aux joueurs de se préparer
 	$PanelContainer/TextureRectInter.show()
 	$CenterContainer.show()
-	%Label.text = "Niveau terminé  !"
-	## TODO :Afficher aussi des scores,; un gagnant
 	startCountdown(newlevel_timer)
 
 func _on_timer_timeout() -> void:

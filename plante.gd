@@ -27,7 +27,7 @@ func nocontact():
 func isspecial():
 	add_to_group("guards")
 
-func choosetype(ft : int):
+func settype(ft : int):
 	flowertype = ft
 	var icon = load("res://Ressources/Images/flower_%02d.png" % ft)
 

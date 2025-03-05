@@ -44,16 +44,16 @@ func start(np, _mission):
 	#scale.x = rescale
 	#scale.y = rescale
 	#
-	mission = _mission
+	mission = _mission.duplicate()
 
 func fleurattrapee(fleur : Plante):
 	if mission[fleur.flowertype-1] > 0 :
 		# il faut en supprimer une du panier
 		updatepanier.emit(nperso,fleur.flowertype)
-
-	mission[fleur.flowertype-1] -= 1
+		mission[fleur.flowertype-1] -= 1
 	#
 	# Vérifie si on a rempli la mission
+	#print("%d : " % nperso, mission)
 	if mission[fleur.flowertype-1] <= 0 :
 		if mission.all(func (n): return n<=0):
 			# On a fini la mission

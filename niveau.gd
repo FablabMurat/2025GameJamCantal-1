@@ -6,11 +6,12 @@ var perso2
 var mission : Array
 var sollayer : TileMapLayer
 var map_rect : Rect2
+var allflowers : Array[int]
 
-const RANDFLOWERS = 25
+const RANDFLOWERS = 25 
 
 signal collect(perso,flowertype)
-signal niveaufini()
+signal niveaufini(winner : Perso)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -89,7 +90,7 @@ func addplant(idxplant, newplant):
 	#newplant.y_sort_enabled = true
 	#newplant.z_index = 1
 
-	newplant.choosetype(idxplant)
+	newplant.settype(idxplant)
 	match idxplant:
 		1:  # décoration, sans effet
 			newplant.nocontact()
@@ -112,13 +113,16 @@ func addplant(idxplant, newplant):
 		_:
 			newplant.nocontact()
 	$ZoneJeu/MarkerLevel.get_child(0).add_child(newplant)
+	allflowers[idxplant-1] += 1
 
 func setmission(listflowers : Array):
-	mission = listflowers
+	mission = listflowers.duplicate()
+	allflowers.resize(mission.size())
+	
 	for nj in range(1,3) :
-		for i in range(0,listflowers.size()) :
-			if listflowers[i] != 0 : 
-				for n in range(0,listflowers[i]) :
+		for i in range(0,mission.size()) :
+			if mission[i] != 0 : 
+				for n in range(0,mission[i]) :
 					var ctrlImage = TextureRectFlower.new(i+1)
 					if nj == 1 :
 						%VBoxContainer1.add_child(ctrlImage)
@@ -154,16 +158,14 @@ func spawnpersos():
 	$ZoneJeu/MarkerLevel.get_child(0).add_child(perso2)
 
 func fleurattrapee(perso, fleur):
-	print ("Fleur ",fleur.flowertype," attrapé par ",perso.nperso)
+	#print ("Fleur ",fleur.flowertype," attrapée par ",perso.nperso)
+	#print("1 : ",perso1.mission)
+	#print("2 : ",perso2.mission)
 	
-	#var ctrlImage = TextureRect.new()
-	#ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % fleur.flowertype)
-	#if perso.nperso == 1 :
-		#%VBoxContainer1.add_child(ctrlImage)
-	#else:
-		#%VBoxContainer2.add_child(ctrlImage)
-		
 	perso.fleurattrapee(fleur)
+	allflowers[fleur.flowertype -1 ] -= 1
+	if checkmatchnul() :
+		niveaufini.emit(0)
 	fleur.queue_free()
 
 func removeflower(nperso,flowertype):
@@ -179,8 +181,16 @@ func removeflower(nperso,flowertype):
 				if vb.flowertype == flowertype :
 					vb.queue_free()
 					return
-			
-	
+
+func checkmatchnul():
+	for perso in [perso1,perso2] :
+		for idx in range(perso.mission.size()) :
+			if perso.mission[idx] > 0  and allflowers[idx] >= perso.mission[idx] :
+				# Un personnage peut encore gagner
+				#print ("%d peut gagner grace à %d" % [perso.nperso,idx])
+				return false
+	return true
+
 func endoflevel(nperso):
 	niveaufini.emit(nperso)
 	
