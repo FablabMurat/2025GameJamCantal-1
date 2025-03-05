@@ -32,19 +32,15 @@ func _ready() -> void:
 
 func start(np, _mission):
 	nperso = np
+	mission = _mission.duplicate()
+
 	bouger_droite = "move_right_%d" %  nperso
 	bouger_gauche = "move_left_%d" %  nperso
 	bouger_haut = "move_up_%d" %  nperso
 	bouger_bas = "move_down_%d" %  nperso
 	
 	$AnimatedSprite2D.sprite_frames = load("res://joueur_%d.tres" % nperso)
-	#$Sprite2D.texture = load("res://Ressources/Images/character_%02d_face.png" % np)
-	#var rescale : float
-	#rescale = 64.0 / 130 #130 = largeur png (ou c' est degueu)
-	#scale.x = rescale
-	#scale.y = rescale
-	#
-	mission = _mission.duplicate()
+	
 
 func fleurattrapee(fleur : Plante):
 	if mission[fleur.flowertype-1] > 0 :
@@ -65,7 +61,6 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
-		
 		
 	var direction = Vector2.ZERO
 
@@ -90,11 +85,6 @@ func _physics_process(delta):
 		$AnimatedSprite2D.play("pickup_" + dir)
 	else :
 		$AnimatedSprite2D.play("idle_" + dir)
-	#var collision = get_last_slide_collision()
-	#if collision:
-		#var plante = collision.get_collider()
-		#if plante.is_in_group("plante"):
-			#pass
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned:

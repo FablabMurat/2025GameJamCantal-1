@@ -7,6 +7,7 @@ var level = 1
 
 var missions : Array
 var niveau : Node2D
+var score : Array[int]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,6 +17,10 @@ func _ready() -> void:
 	missions.append([0,3,2,1,1])
 	missions.append([0,2,2,2,1])
 	
+	start()
+	
+func start():
+	score = [0,0]
 	$CenterContainer.show()
 	$PanelContainer/TextureRectIntro.show()
 	$PanelContainer/TextureRectInter.hide()
@@ -38,9 +43,11 @@ func endoflevel(winner):
 		# ni 1 ni 2, donc pas de gagnant car jeu bloqué
 		%Label.text = "Match nul !   Même niveau..."
 	else:
-		%Label.text = "Victoire Joueur %d !   Niveau suivant..." % winner
+		score[winner-1] += 1
+		%Label.text = "Victoire Joueur %d !" % winner + "\nNiveau suivant..." 
 		level += 1
-	## TODO :Afficher aussi des scores ?
+	%LabelScore.text = "Joueur 1 : %d \nJoueur 2 : %d" % score
+	## TODO :Afficher aussi des scores en plus joli?
 	
 	niveau.call_deferred("queue_free")
 	# astuce pas jolie pour attendre que niveau soit détruit avant de passer au niveau suivant
@@ -55,7 +62,8 @@ func _on_timer_timeout() -> void:
 	else:
 		$CenterContainer.show()
 		%Label.text = "-- FIN DE PARTIE --"
-		# TODO :Afficher aussi le scores final, puis le Top
+		%LabelScore.text = "Joueur 1 : %d \nJoueur 2 : %d" % score
+	# TODO : Gérer le Restart
 
 func collected(perso, flowertype):
 	pass

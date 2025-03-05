@@ -77,6 +77,13 @@ theme_override_font_sizes/font_size = 36
 text = "Prêts ?"
 horizontal_alignment = 1
 
+[node name="LabelScore" type="Label" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.588235, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+justification_flags = 160
+
 [node name="StartTimer" type="Timer" parent="."]
 process_callback = 0
 one_shot = true
