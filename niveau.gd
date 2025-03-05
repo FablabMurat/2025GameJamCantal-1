@@ -109,9 +109,7 @@ func setmission(listflowers : Array):
 		for i in range(0,listflowers.size()) :
 			if listflowers[i] != 0 : 
 				for n in range(0,listflowers[i]) :
-					var ctrlImage = TextureRectFlower.new()
-					ctrlImage.flowertype = i + 1
-					ctrlImage.texture = load("res://Ressources/Images/flower_%02d.png" % (i+1))
+					var ctrlImage = TextureRectFlower.new(i+1)
 					if nj == 1 :
 						%VBoxContainer1.add_child(ctrlImage)
 					elif nj == 2 :
