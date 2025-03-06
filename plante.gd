@@ -2,6 +2,15 @@ extends Area2D
 class_name Plante
 
 var flowertype : int
+
+var growspeed : int = 5
+var diespeed : int = 15
+var picklimit : float = 0.5
+var visiblelimit : float = 0.1
+var growdirection : int = 0
+
+var cangrow : bool
+var candie : bool
 var canStun : bool
 var canSpeedBoost : bool
 var canSwapPosition : bool
@@ -27,19 +36,29 @@ func nocontact():
 func isspecial():
 	add_to_group("guards")
 
-func settype(ft : int):
+func settype(ft : int, growable : bool = false):
 	flowertype = ft
 	var icon = load("res://Ressources/Images/flower_%02d.png" % ft)
 
 	$Sprite2D.texture = icon
-	#var rescale : float
-	#rescale = 32.0 / icon.get_width()
-	#scale.x = rescale
-	#scale.y = rescale
+	cangrow = growable
+	if cangrow :
+		self.scale = Vector2(0.01,0.01)
+		growdirection = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	# Ici on peut essayer de faire grossir les plantes
+	if cangrow:
+		if growdirection > 0 :
+			self.scale +=  Vector2(delta/growspeed,delta/growspeed)
+		else:
+			self.scale -=  Vector2(delta/diespeed,delta/diespeed)
+		
+		if growdirection > 0 and self.scale.x >=1 :
+			growdirection = -1
+		elif growdirection < 0 and self.scale.x < visiblelimit :
+			self.queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("perso") :
