@@ -7,18 +7,18 @@ signal timeout
 func _ready() -> void:
 	pass # Replace with function body.
 
-func start(timeout, text = ""):
+func start(delai, text = ""):
 	self.show()
 	%CountdownProgressBar.show()
-	%CountdownProgressBar.value = timeout*100
-	%CountdownProgressBar.max_value = timeout*100
-	%CountdownLabel.text = "%d" % roundi(timeout)
+	%CountdownProgressBar.value = delai*100
+	%CountdownProgressBar.max_value = delai*100
+	%CountdownLabel.text = "%d" % roundi(delai)
 	if text == "" :
 		$Label.hide()
 	else:
 		$Label.text = text
 		$Label.show()
-	$Timer.start(timeout)
+	$Timer.start(delai)
 
 func _on_timer_timeout() -> void:
 	self.hide()
