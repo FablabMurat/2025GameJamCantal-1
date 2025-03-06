@@ -70,7 +70,6 @@ func newplants(tabspawn : Array, nrandom : int):
 		else:
 			# 50% de plantes de décoration, sans effet
 			addplant(1,newplant)
-		
 
 func addplant(idxplant, newplant):
 	var niveau = $ZoneJeu/MarkerLevel.get_child(0)
@@ -85,7 +84,9 @@ func addplant(idxplant, newplant):
 	var random_cell = available_cells[randi() % available_cells.size()]
 	used_cells[random_cell] = true
 	
+	var ecartmax = 10
 	newplant.position = fleurs_tilemap.map_to_local(random_cell);
+	newplant.position += Vector2(randi_range(-ecartmax,ecartmax),randi_range(-ecartmax,ecartmax))
 
 	#newplant.y_sort_enabled = true
 	#newplant.z_index = 1
