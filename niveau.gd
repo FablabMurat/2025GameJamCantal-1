@@ -142,11 +142,7 @@ func setmission(newmission : Dictionary):
 	# La partie duree max de la mission
 	if newmission.has("duree"):
 		self.dureemax = newmission["duree"]
-		if dureemax > 0.0 :
-			$DureeJeuTimer.start(dureemax)
-			updateduree()
-	else:
-		%LabelDuree.hide()
+		# start du timer dans le _ready
 
 func updateduree():
 	if dureemax > 0 :
