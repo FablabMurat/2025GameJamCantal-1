@@ -56,6 +56,11 @@ tile_set = ExtResource("2_r4xy5")
 [node name="MarkerLevel" type="Marker2D" parent="ZoneJeu"]
 unique_name_in_owner = true
 
+[node name="DureeJeuTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 120.0
+one_shot = true
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 top_level = true
 offset_right = 1296.0
@@ -78,16 +83,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainerCenter" type="VBoxContainer" parent="PanelContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 
-[node name="HBoxMission" type="HBoxContainer" parent="PanelContainer/VBoxContainerCenter"]
+[node name="HBox" type="HBoxContainer" parent="PanelContainer/VBoxContainerCenter"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainerCenter/HBoxMission"]
+[node name="LabelDuree" type="Label" parent="PanelContainer/VBoxContainerCenter/HBox"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_j6o1o")
 theme_override_font_sizes/font_size = 36
@@ -250,3 +255,5 @@ theme_override_constants/margin_bottom = 10
 [node name="VBox_J2" type="VBoxContainer" parent="CanvasLayer/UI/Inventaire_J2/PanelContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[connection signal="timeout" from="DureeJeuTimer" to="." method="_on_duree_jeu_timer_timeout"]

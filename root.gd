@@ -10,11 +10,11 @@ var score : Array[int]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	levels.append({"mission" : [0,1,1,0,0], "delai" : 120})
-	levels.append({"mission" : [0,2,1,1,0], "delai" : 120})
-	levels.append({"mission" : [0,3,2,1,0], "delai" : 120})
-	levels.append({"mission" : [0,3,2,1,1], "delai" : 120})
-	levels.append({"mission" : [0,2,2,2,1], "delai" : 120})
+	levels.append({"mission" : [0,1,1,0,0], "duree" :  40})
+	levels.append({"mission" : [0,2,1,1,0], "duree" :  60})
+	levels.append({"mission" : [0,3,2,1,0], "duree" :  80})
+	levels.append({"mission" : [0,3,2,1,1], "duree" : 100})
+	levels.append({"mission" : [0,2,2,2,1], "duree" : 100})
 	$PauseContainer.hide()
 	resized()
 	intro()

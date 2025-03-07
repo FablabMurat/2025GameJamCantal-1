@@ -4,6 +4,7 @@ var perso1
 var perso2
 
 var mission : Array
+var dureemax : float = 0.0
 var sollayer : TileMapLayer
 var map_rect : Rect2
 var allflowers : Array[int]
@@ -19,6 +20,13 @@ func _ready() -> void:
 	setupLevelYSort()
 	#var nbtotal = mission.reduce(func sum(total,nb): return total+nb*2) + 15
 	newplants(mission.map(func xx(elt): return elt*2),RANDFLOWERS)
+	# Duree max de la mission
+	if dureemax > 0.0 :
+		$DureeJeuTimer.start(dureemax)
+		%LabelDuree.show()
+		updateduree()
+	else:
+		%LabelDuree.hide()
 	
 func setupLevelYSort():
 	var niveau: CanvasItem = $ZoneJeu/MarkerLevel.get_child(0)
@@ -116,8 +124,9 @@ func addplant(idxplant, newplant):
 	$ZoneJeu/MarkerLevel.get_child(0).add_child(newplant)
 	allflowers[idxplant-1] += 1
 
-func setmission(listflowers : Dictionary):
-	self.mission = listflowers["mission"].duplicate()
+func setmission(newmission : Dictionary):
+	# La partie contenu de la mission : fleurs à collecter
+	self.mission = newmission["mission"].duplicate()
 	allflowers.resize(mission.size())
 	
 	for nj in range(1,3) :
@@ -129,6 +138,19 @@ func setmission(listflowers : Dictionary):
 						%VBoxContainer1.add_child(ctrlImage)
 					elif nj == 2 :
 						%VBoxContainer2.add_child(ctrlImage)
+						
+	# La partie duree max de la mission
+	if newmission.has("duree"):
+		self.dureemax = newmission["duree"]
+		if dureemax > 0.0 :
+			$DureeJeuTimer.start(dureemax)
+			updateduree()
+	else:
+		%LabelDuree.hide()
+
+func updateduree():
+	if dureemax > 0 :
+		%LabelDuree.text = "%.1f" % $DureeJeuTimer.time_left
 
 func addlevelmap(level: int):
 	var leveltscn = load("res://niveau_%d.tscn" % level)
@@ -192,12 +214,16 @@ func checkmatchnul():
 				return false
 	return true
 
+func _on_duree_jeu_timer_timeout() -> void:
+	# qui gagne ? FIXME
+	endoflevel(0)
+
 func endoflevel(nperso):
 	niveaufini.emit(nperso)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	updateduree()
 
 func swap_player_positions():
 	var temp_pos = perso1.position
