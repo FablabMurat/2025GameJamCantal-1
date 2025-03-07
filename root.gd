@@ -81,7 +81,7 @@ func endoflevel(winner):
 	
 	if winner == 0 :
 		# ni 1 ni 2, donc pas de gagnant car jeu bloqué
-		%Label.text = "Match nul !   Même niveau..."
+		%Label.text = "Match nul !"
 	else:
 		score[winner-1] += 1
 		%Label.text = "Victoire Joueur %d !" % winner 
@@ -103,7 +103,10 @@ func endoflevel(winner):
 		$TimerInactivite.start()
 	else:
 		$PanelContainer/TextureRectInter.show()
-		%StartButton.text = " Suivant... "
+		if winner == 0 :
+			%StartButton.text = " Même niveau... "
+		else:
+			%StartButton.text = " Suivant... "
 		%StartButton.show()
 		$CenterContainer.show()
 
