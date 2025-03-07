@@ -4,17 +4,17 @@ var level
 
 @export var newlevel_timer : float = 3.0
 
-var missions : Array
+var levels : Array[Dictionary]
 var niveau : Node2D
 var score : Array[int]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	missions.append([0,1,1,0,0])
-	missions.append([0,2,1,1,0])
-	missions.append([0,3,2,1,0])
-	missions.append([0,3,2,1,1])
-	missions.append([0,2,2,2,1])
+	levels.append({"mission" : [0,1,1,0,0], "delai" : 120})
+	levels.append({"mission" : [0,2,1,1,0], "delai" : 120})
+	levels.append({"mission" : [0,3,2,1,0], "delai" : 120})
+	levels.append({"mission" : [0,3,2,1,1], "delai" : 120})
+	levels.append({"mission" : [0,2,2,2,1], "delai" : 120})
 	$PauseContainer.hide()
 	resized()
 	intro()
@@ -55,7 +55,7 @@ func startCountdown(timeout, text = ""):
 	%Countdown.start(timeout,text)
 
 func _on_countdown_timeout() -> void:
-	if level <= missions.size() :
+	if level <= levels.size() :
 		runlevel()
 	else:
 		# A priori on ne devrait jamais passer par là
@@ -69,7 +69,7 @@ func runlevel():
 	niveau = niveautscn.instantiate()
 	niveau.collect.connect(collected.bind())
 	niveau.niveaufini.connect(endoflevel.bind())
-	niveau.setmission(missions[level-1])
+	niveau.setmission(levels[level-1])
 	niveau.addlevelmap(level)
 	niveau.process_mode = Node.PROCESS_MODE_PAUSABLE
 	#add_child(niveau)
@@ -92,7 +92,7 @@ func endoflevel(winner):
 	## TODO :Afficher aussi des scores en plus joli?
 	
 	# Fin de partie ?
-	if level+1 > missions.size() :
+	if level+1 > levels.size() :
 		# Il n'y a plus de niveaux - Fin de partie
 		$PanelContainer/TextureRectIntro.show()
 		%LabelScore.text += "\n-- FIN DE PARTIE --"
@@ -112,8 +112,10 @@ func _on_timer_inactivite_timeout() -> void:
 	intro()
 
 func collected(perso, flowertype):
+	# Ca peut être l'occasion de relancer une fleur...
+	# sous réserve de connecter le signal
 	pass
-
+	
 func _unhandled_input(event: InputEvent):
 	if (event.is_action_released("ui_cancel")):
 		if not get_tree().paused :
@@ -127,8 +129,6 @@ func _unhandled_input(event: InputEvent):
 func topause():
 	# Mise en pause
 	get_tree().paused = true
-	#FIXME Mettre un message comme quoi on est en pause 
-	#FIXME voir si on met un bouton pour restart ou si on 
 	$PauseContainer.show()
 
 func _on_out_pause_button_up() -> void:

@@ -116,8 +116,8 @@ func addplant(idxplant, newplant):
 	$ZoneJeu/MarkerLevel.get_child(0).add_child(newplant)
 	allflowers[idxplant-1] += 1
 
-func setmission(listflowers : Array):
-	mission = listflowers.duplicate()
+func setmission(listflowers : Dictionary):
+	self.mission = listflowers["mission"].duplicate()
 	allflowers.resize(mission.size())
 	
 	for nj in range(1,3) :
