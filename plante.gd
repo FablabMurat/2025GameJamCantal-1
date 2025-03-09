@@ -21,6 +21,8 @@ var effectsuspended : bool = false
 @export var stun_duration : float = 2
 @export var speed_boost_duration : float = 2
 @export_range(0, 1, 0.05) var speed_boost_strength : float = 0.5
+var is_being_picked : bool = false
+var foufouille : float #animation on cueillette
 
 signal attrape(perso,plante)
 signal swapPosition()
@@ -59,12 +61,20 @@ func _process(delta: float) -> void:
 			growdirection = -1
 		elif growdirection < 0 and self.scale.x < visiblelimit :
 			self.queue_free()
+	
+	# la fleur bouge lorsqu'on la pickup
+	if is_being_picked:
+		$Sprite2D.rotation = sin(foufouille) * 0.3
+		foufouille += 0.1
+	else:
+		$Sprite2D.rotation = lerp($Sprite2D.rotation, 0.0, 0.1) #sinon back to rotation 0
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("perso") :
 		# La fleur est ramassée par le perso
 		var perso = body as Perso
 		effetspecial(perso)
+		is_being_picked = true # POUR DEBUG CAR CUEILLIR FAIT DISPARAITRE LA FLEUR AVANT LA FIN DU CAST
 	
 func cueillir(body):
 	#if body.is_in_group("perso") :
@@ -72,6 +82,7 @@ func cueillir(body):
 		var perso = body as Perso
 		attrape.emit(perso, self)
 		effetspecial(perso)
+		is_being_picked = true #si le joueur bouge le cast doit s'interrompre
 
 func effetspecial(surperso):
 		if effectsuspended: return
@@ -94,3 +105,4 @@ func _end_suspend_timer() -> void:
 func _on_body_exited(body: Node2D) -> void:
 	pickable = false
 	pass # Replace with function body.
+	is_being_picked = false
