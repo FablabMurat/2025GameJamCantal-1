@@ -106,7 +106,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_bas",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -123,7 +123,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_droite",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -140,7 +140,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_gauche",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -157,5 +157,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_haut",
-"speed": 5.0
+"speed": 10.0
 }]
