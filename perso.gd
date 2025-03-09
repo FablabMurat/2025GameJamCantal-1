@@ -12,8 +12,8 @@ var dir : String = "bas"
 var picking = false
 
 const SPEED = 200
-const PAUSESTUN = 3.0
-const PAUSECUEILLE = 1.5
+@export_range(0, 3, 0.1) var cast_cueillette = 0.5
+var stun_duration : float
 
 var speedMultiplier = 0
 
@@ -91,16 +91,17 @@ func _process(delta: float) -> void:
 		# Cueillette
 		cueillette()
 	if $PauseBar.visible :
+		print($PauseBar.value)
 		if is_stunned :
-			$PauseBar.value = $StunTimer.time_left
+			$PauseBar.value = 1 - ($StunTimer.time_left / stun_duration)
 		else:
-			$PauseBar.value = $CueilletteTimer.time_left
+			$PauseBar.value = 1 - ($CueilletteTimer.time_left / cast_cueillette)
 
 func cueillette():
 	picking = true
 	speedMultiplier = -1.0  # avec le +1, çà bloque le perso
-	$PauseBar.max_value = int(PAUSECUEILLE)
-	$CueilletteTimer.start(PAUSECUEILLE)
+	#$PauseBar.max_value = float(cast_cueillette)
+	$CueilletteTimer.start(cast_cueillette)
 	$FX_animation.play("pickup")
 	$PauseBar.show()
 	if $AreaCueillette2D.has_overlapping_areas():
@@ -122,10 +123,11 @@ var is_stunned := false
 
 func apply_stun(duration: float):
 	if not is_stunned:
+		stun_duration = duration
 		is_stunned = true
 		stun_timer.start(duration)
-		modulate = Color.RED
-		$PauseBar.max_value = int(duration)
+		#modulate = Color.RED
+		#$PauseBar.max_value = float(duration)
 		$PauseBar.show()
 		$AnimatedSprite2D.stop()
 

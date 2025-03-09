@@ -67,10 +67,11 @@ animations = [{
 }]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_et1fq"]
-bg_color = Color(0.227522, 0.392765, 0.08283, 1)
+bg_color = Color(0.0613671, 0.128947, 0.0120304, 1)
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gm12"]
-bg_color = Color(0.785284, 0.534156, 0.375194, 1)
+bg_color = Color(0.19, 0.433, 1, 1)
 
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 z_index = 1
@@ -82,8 +83,7 @@ script = ExtResource("1_bcq8j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_ubsce")
-animation = &"pickup_haut"
-frame_progress = 0.735703
+animation = &"run_haut"
 offset = Vector2(0, -50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -97,7 +97,6 @@ wait_time = 3.0
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 
 [node name="CueilletteTimer" type="Timer" parent="."]
-wait_time = 2.0
 one_shot = true
 
 [node name="AreaCueillette2D" type="Area2D" parent="."]
@@ -116,12 +115,14 @@ sprite_frames = SubResource("SpriteFrames_5medq")
 animation = &"pickup"
 
 [node name="PauseBar" type="ProgressBar" parent="."]
-offset_left = -28.0
-offset_top = -130.0
-offset_right = 29.0
-offset_bottom = -109.0
+z_index = 2
+offset_left = -40.0
+offset_top = 7.0
+offset_right = 40.0
+offset_bottom = 17.0
 theme_override_styles/background = SubResource("StyleBoxFlat_et1fq")
 theme_override_styles/fill = SubResource("StyleBoxFlat_7gm12")
+max_value = 1.0
 show_percentage = false
 
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
