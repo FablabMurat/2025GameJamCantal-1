@@ -70,8 +70,8 @@ animations = [{
 bg_color = Color(0.0613671, 0.128947, 0.0120304, 1)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gm12"]
-bg_color = Color(0.19, 0.433, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qimqv"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 z_index = 1
@@ -121,7 +121,7 @@ offset_top = 7.0
 offset_right = 40.0
 offset_bottom = 17.0
 theme_override_styles/background = SubResource("StyleBoxFlat_et1fq")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7gm12")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qimqv")
 max_value = 1.0
 show_percentage = false
 
