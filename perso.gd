@@ -10,6 +10,7 @@ var bouger_bas : String
 
 var dir : String = "bas"
 var picking = false
+var plant_being_picked : Area2D
 
 const SPEED = 200
 @export_range(0, 3, 0.1) var cast_cueillette = 0.5
@@ -90,7 +91,7 @@ func _physics_process(delta):
 		$Footsteps.stop()
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned:
+	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned and !velocity:
 		# Cueillette
 		cueillette()
 	if $PauseBar.visible :
@@ -113,6 +114,7 @@ func cueillette():
 		for i in $AreaCueillette2D.get_overlapping_areas():
 			if i is Plante :
 				var plante = i as Plante
+				#plant_being_picked = i as Plante
 				#if plante.flowertype > 1 :
 				plante.cueillir(self)
 	
@@ -121,7 +123,8 @@ func _on_cuillette_timer_timeout() -> void:
 	$FX_animation.play("none")
 	$PauseBar.hide()
 	picking = false
-
+	# cueillir plante ici
+	#plant_being_picked.cueillir(self)
 
 var is_stunned := false
 @onready var stun_timer := $StunTimer
