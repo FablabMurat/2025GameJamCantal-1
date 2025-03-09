@@ -5,6 +5,7 @@ var level
 @export var newlevel_timer : float = 3.0
 @export_range(0, 1, 0.1) var master_volume : float = 1
 @export_range(0, 1, 0.1) var music_volume : float = 0.2
+@export_range(0, 1, 0.1) var SFX_volume : float = 1
 @export var disable_start_countdown : bool = false
 
 var levels : Array[Dictionary]
@@ -150,3 +151,4 @@ func outpause():
 func _process(delta: float) -> void:
 	AudioServer.set_bus_volume_db(0, linear_to_db(master_volume))
 	AudioServer.set_bus_volume_db(1, linear_to_db(music_volume))
+	AudioServer.set_bus_volume_db(2, linear_to_db(SFX_volume))
