@@ -91,13 +91,12 @@ func _process(delta: float) -> void:
 		# Cueillette
 		cueillette()
 	if $PauseBar.visible :
-		print($PauseBar.value)
 		var cast_style = $PauseBar.get_theme_stylebox("fill") as StyleBoxFlat
 		if is_stunned :
-			cast_style.bg_color = Color(255, 0, 0) # ROUGE
+			cast_style.bg_color = Color(0.812, 0.25, 0.222) # ROUGE
 			$PauseBar.value = 1 - ($StunTimer.time_left / stun_duration)
 		else:
-			cast_style.bg_color = Color(0, 0, 255) # BLEU
+			cast_style.bg_color = Color(0, 0.344, 1) # BLEU
 			$PauseBar.value = 1 - ($CueilletteTimer.time_left / cast_cueillette)
 
 func cueillette():

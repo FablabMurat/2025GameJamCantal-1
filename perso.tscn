@@ -71,7 +71,7 @@ bg_color = Color(0.0613671, 0.128947, 0.0120304, 1)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qimqv"]
-bg_color = Color(1, 1, 1, 1)
+bg_color = Color(0.8125, 0.24984, 0.222168, 1)
 
 [node name="Perso" type="CharacterBody2D" groups=["perso"]]
 z_index = 1
@@ -123,6 +123,7 @@ offset_bottom = 17.0
 theme_override_styles/background = SubResource("StyleBoxFlat_et1fq")
 theme_override_styles/fill = SubResource("StyleBoxFlat_qimqv")
 max_value = 1.0
+value = 0.68
 show_percentage = false
 
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
