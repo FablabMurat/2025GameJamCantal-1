@@ -135,6 +135,8 @@ func apply_stun(duration: float):
 		#$PauseBar.max_value = float(duration)
 		$PauseBar.show()
 		$AnimatedSprite2D.stop()
+		if not $Stunned.playing:
+			$Stunned.play()
 
 
 func _on_stun_timer_timeout():
@@ -143,11 +145,15 @@ func _on_stun_timer_timeout():
 	$FX_animation.animation = "none"
 	$PauseBar.hide()
 	$AnimatedSprite2D.play()
+	$Stunned.stop()
 
 @onready var speed_boost_timer := $SpeedBoostTimer
 func apply_speed_boost(duration :float, boostStrength :float):
 	speedMultiplier = boostStrength
 	speed_boost_timer.start(duration)
-
+	if not $Speedboost.playing:
+			$Speedboost.play()
+	
 func _on_speed_boost_timer_timeout() -> void:
 	speedMultiplier = 0
+	$Speedboost.stop()

@@ -66,8 +66,11 @@ func _process(delta: float) -> void:
 	if is_being_picked:
 		$Sprite2D.rotation = sin(foufouille) * 0.3
 		foufouille += 0.1
+		if not $pickup_inprogress.playing:
+			$pickup_inprogress.play()
 	else:
 		$Sprite2D.rotation = lerp($Sprite2D.rotation, 0.0, 0.1) #sinon back to rotation 0
+		$pickup_inprogress.stop()
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("perso") :
