@@ -26,17 +26,23 @@ grow_vertical = 2
 custom_minimum_size = Vector2(400, 200)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="Start" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Demarrer"
 
-[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="Pause" type="Button" parent="PanelContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+text = "Reprendre"
+
+[node name="Controls" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Controles"
 
-[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Quitter	"
