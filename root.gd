@@ -3,6 +3,8 @@ extends Node
 var level
 
 @export var newlevel_timer : float = 3.0
+@export_range(0, 1, 0.1) var master_volume : float = 0.2
+@export var disable_start_countdown : bool = false
 
 var levels : Array[Dictionary]
 var niveau : Node2D
@@ -44,6 +46,8 @@ func _on_start_button_up() -> void:
 
 func start():
 	# Start ou Continue
+	if disable_start_countdown:
+		newlevel_timer = 0.0
 	$TimerInactivite.stop()
 	%LabelScore.hide()
 	%StartButton.hide()
@@ -143,4 +147,4 @@ func outpause():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	AudioServer.set_bus_volume_db(0, linear_to_db(master_volume))
