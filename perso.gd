@@ -76,6 +76,8 @@ func _physics_process(delta):
 	
 	$AnimatedSprite2D.play()
 	if velocity:
+		if not $Footsteps.playing:
+			$Footsteps.play()
 		if velocity.x < 0: dir = "gauche"
 		elif velocity.x > 0: dir = "droite"
 		elif velocity.y > 0: dir = "bas"
@@ -85,6 +87,7 @@ func _physics_process(delta):
 		$AnimatedSprite2D.play("pickup_" + dir)
 	else :
 		$AnimatedSprite2D.play("idle_" + dir)
+		$Footsteps.stop()
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned:

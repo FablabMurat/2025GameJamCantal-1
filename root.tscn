@@ -113,10 +113,11 @@ layout_mode = 2
 theme = ExtResource("5_1hc85")
 text = "Reprendre"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Musique" type="AudioStreamPlayer" parent="."]
 process_mode = 1
 stream = ExtResource("3_hml4y")
 autoplay = true
+bus = &"Music"
 parameters/looping = true
 
 [node name="TimerInactivite" type="Timer" parent="."]
