@@ -73,18 +73,29 @@ func runlevel():
 	zonejeu.process_mode = Node.PROCESS_MODE_PAUSABLE
 	$PanelContainer.add_sibling(zonejeu)
 
-func endoflevel(winner, tabscore):
+func endoflevel(winner, tabscore : Array):
 	zonejeu.call_deferred("queue_free")
 	
-	if winner == 0 :
+	var scorej1 = tabscore[0].reduce(func(accum, number): return accum + number)
+	var scorej2 = tabscore[1].reduce(func(accum, number): return accum + number)
+
+	if winner == 0 and scorej1 == scorej2 :
 		# ni 1 ni 2, donc pas de gagnant car jeu bloqué
 		%Label.text = "Match nul !"
 	else:
+		if winner == 0 :
+			winner = 1 if scorej1 > scorej2 else 2
 		score[winner-1] += 1
 		%Label.text = "Victoire Joueur %d !" % winner 
 		level += 1
 	%Label.show()
-	## TODO :Afficher aussi des scores en plus joli?
+	
+	# Ménage dans la VBoxScore
+	for hbox in %VBoxScore.get_children():
+		if hbox is HBoxContainer :
+			hbox.queue_free()
+	
+	# Affiche du score dans la VBoxScore
 	for joueur in range(2):
 		var hbox = HBoxContainer.new()
 		hbox.alignment = BoxContainer.ALIGNMENT_BEGIN
