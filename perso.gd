@@ -43,7 +43,7 @@ func start(np, _mission):
 	$AnimatedSprite2D.sprite_frames = load("res://joueur_%d.tres" % nperso)
 	
 
-func fleurattrapee(fleur : Plante):
+func fleurcueillie(fleur : Plante):
 	if mission[fleur.flowertype-1] > 0 :
 		# il faut en supprimer une du panier
 		updatepanier.emit(nperso,fleur.flowertype)

@@ -9,11 +9,12 @@ var level
 @export var disable_start_countdown : bool = false
 
 var levels : Array[Dictionary]
-var niveau : Node2D
+var zonejeu : ZoneJeu
 var score : Array[int]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	levels.append({"mission" : [4,0,0,0,0], "grow": true, "duree" :  40})
 	levels.append({"mission" : [0,1,1,0,0], "duree" :  40})
 	levels.append({"mission" : [0,2,1,1,0], "duree" :  60})
 	levels.append({"mission" : [0,3,2,1,0], "duree" :  80})
@@ -71,19 +72,18 @@ func runlevel():
 	$CenterContainer.hide()
 	$PanelContainer/TextureRectIntro.hide()
 	$PanelContainer/TextureRectInter.hide()
-	var niveautscn = load("res://niveau.tscn")
-	niveau = niveautscn.instantiate()
-	niveau.collect.connect(collected.bind())
-	niveau.niveaufini.connect(endoflevel.bind())
-	niveau.setmission(levels[level-1])
-	niveau.addlevelmap(level)
-	niveau.process_mode = Node.PROCESS_MODE_PAUSABLE
+	var zonejeutscn = load("res://zonejeu.tscn")
+	zonejeu = zonejeutscn.instantiate()
+	zonejeu.collect.connect(collected.bind())
+	zonejeu.niveaufini.connect(endoflevel.bind())
+	zonejeu.setmission(levels[level-1])
+	zonejeu.addlevelmap(level)
+	zonejeu.process_mode = Node.PROCESS_MODE_PAUSABLE
 	#add_child(niveau)
-	$PanelContainer.add_sibling(niveau)
+	$PanelContainer.add_sibling(zonejeu)
 
 func endoflevel(winner):
-	niveau.call_deferred("queue_free")
-	
+	zonejeu.call_deferred("queue_free")
 	
 	if winner == 0 :
 		# ni 1 ni 2, donc pas de gagnant car jeu bloqué

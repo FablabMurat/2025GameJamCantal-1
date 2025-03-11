@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://cp8fllwg0m5kk"]
 
-[ext_resource type="Script" path="res://niveau.gd" id="1_evebv"]
-[ext_resource type="FontFile" uid="uid://dev8uh68b6uk" path="res://Ressources/Font/Faune-DisplayBoldItalic.otf" id="2_j6o1o"]
-[ext_resource type="TileSet" uid="uid://i2gurbxbug2t" path="res://Ressources/Images/tileset_wip.tres" id="2_r4xy5"]
+[ext_resource type="Script" path="res://zonejeu.gd" id="1_1no86"]
+[ext_resource type="TileSet" uid="uid://i2gurbxbug2t" path="res://Ressources/Images/tileset_wip.tres" id="2_gaf4e"]
+[ext_resource type="FontFile" uid="uid://dev8uh68b6uk" path="res://Ressources/Font/Faune-DisplayBoldItalic.otf" id="3_e4hnx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_npq7m"]
 
@@ -42,18 +42,18 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Niveau" type="Node2D"]
+[node name="ZoneJeu" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_evebv")
+script = ExtResource("1_1no86")
 
-[node name="ZoneJeu" type="Node2D" parent="."]
+[node name="LayerGazon" type="TileMapLayer" parent="."]
+position = Vector2(30, -24)
+tile_set = ExtResource("2_gaf4e")
+
+[node name="ZoneLevel" type="Node2D" parent="."]
 position = Vector2(150, 40)
 
-[node name="LayerGazon" type="TileMapLayer" parent="ZoneJeu"]
-position = Vector2(-120, -64)
-tile_set = ExtResource("2_r4xy5")
-
-[node name="MarkerLevel" type="Marker2D" parent="ZoneJeu"]
+[node name="MarkerLevel" type="Marker2D" parent="ZoneLevel"]
 unique_name_in_owner = true
 
 [node name="DureeJeuTimer" type="Timer" parent="."]
@@ -76,7 +76,7 @@ size_flags_horizontal = 0
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0.821789, 0.821789, 0.821789, 1)
-theme_override_fonts/font = ExtResource("2_j6o1o")
+theme_override_fonts/font = ExtResource("3_e4hnx")
 theme_override_font_sizes/font_size = 36
 text = "  Joueur 1"
 horizontal_alignment = 1
@@ -94,7 +94,7 @@ layout_mode = 2
 [node name="LabelDuree" type="Label" parent="PanelContainer/VBoxContainerCenter/HBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_j6o1o")
+theme_override_fonts/font = ExtResource("3_e4hnx")
 theme_override_font_sizes/font_size = 36
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer"]
@@ -106,7 +106,7 @@ size_flags_horizontal = 8
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0.709804, 1)
 theme_override_colors/font_shadow_color = Color(0.823529, 0.823529, 0.823529, 1)
-theme_override_fonts/font = ExtResource("2_j6o1o")
+theme_override_fonts/font = ExtResource("3_e4hnx")
 theme_override_font_sizes/font_size = 36
 text = "Joueur 2"
 

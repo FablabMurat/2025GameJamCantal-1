@@ -48,6 +48,24 @@ func settype(ft : int, growable : bool = false):
 		self.scale = Vector2(0.01,0.01)
 		growdirection = 1
 
+	match ft:
+		1:  # décoration, sans effet
+			nocontact()
+		2:  # sans effet, mais ramassables
+			isspecial()
+		3:  # stun, mais ramassables
+			isspecial()
+			canStun = true
+		4:  # speedboost, mais ramassables
+			isspecial()
+			canSpeedBoost = true
+		5:  # téléportation par swap, mais ramassables
+			isspecial()
+			canSwapPosition = true
+		_:
+			nocontact()
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# Ici on peut essayer de faire grossir les plantes
