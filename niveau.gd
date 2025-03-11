@@ -1,7 +1,7 @@
 extends Node2D
 class_name Niveau
 
-@export var mission : Array[int] : # FIXME setter
+@export var mission : Array[int] :
 	set(val) :
 		mission = val.duplicate()
 		allflowers.resize(mission.size())
@@ -17,6 +17,10 @@ var allflowers : Array[int]
 
 func _init():
 	allflowers.resize(mission.size())
+	child_exiting_tree.connect(func (node):
+		if node is Plante :
+			fleurpartie(node.flowertype)
+			)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -117,7 +121,7 @@ func endoflevel(nperso : int):
 		score.append(p.collected)
 	niveaufini.emit(nperso,score) # FIXME : passer le score
 
-#FIXME : ça peut dépendre de l'objectif de la mission
+#FIXME : ça peut dépendre de l'objectif de la mission, ou si des fleurs repoussent
 func checkmatchnul():
 	for perso in persos :
 		for idx in range(perso.mission.size()) :
@@ -128,21 +132,20 @@ func checkmatchnul():
 	return true
 
 func fleurcueillie(perso, fleur):
-	allflowers[fleur.flowertype -1 ] -= 1
-	
 	# Signal vers ZoneJeu
 	cueillette.emit(perso.nperso, fleur.flowertype)
-	fleur.queue_free()
-	
-	#FIXME
+	fleur.queue_free() # fleur partie se appelée automatiquement par signal
+
+func fleurpartie(flowertype):
+	allflowers[flowertype -1 ] -= 1
 	if checkmatchnul() :
-		niveaufini.emit(0)
+		endoflevel(0)
 
 func swapplayers():
 	var temp_pos = persos[1].position
 	persos[1].position = persos[2].position
 	persos[2].position = temp_pos
-	#FIXME : add effects, tempo, suspend flower effect
+	#TODO : add effects, tempo, suspend flower effect
 
 func _input(event: InputEvent):
 	# Astuce pour terminer plus vite un niveau en DEBUG

@@ -1,46 +1,22 @@
 extends Node2D
 class_name ZoneJeu
 
-var mission : Array
 var dureemax : float = 0.0
-var sollayer : TileMapLayer
 var niveau : Niveau
 
 const RANDFLOWERS = 25 
 
 signal niveaufini(winner : Perso)
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	semegazon()
-	#var nbtotal = mission.reduce(func sum(total,nb): return total+nb*2) + 15
-	niveau.spawnplants()
-	# Duree max de la mission
-	if dureemax > 0.0 :
-		$DureeJeuTimer.start(dureemax)
-		%LabelDuree.show()
-		updateduree()
-	else:
-		%LabelDuree.hide()
-	
-func semegazon() :
-	var cells = Array()
-	for x in range(-3,22):
-		for y in range(-1,13):
-			cells.append(Vector2i(x,y))
-	$LayerGazon.set_cells_terrain_connect(cells,0,0,false)
-
-
 func initlevel(level: int):
 	var leveltscn = load("res://niveau_%d.tscn" % level)
 	niveau = leveltscn.instantiate()
 	niveau.cueillette.connect(removeflower.bind())
 	niveau.niveaufini.connect(endoflevel.bind())
-	# TODO : init complète
 	%MarkerLevel.add_child(niveau)
 	
 	# La partie contenu de la mission : fleurs à collecter
-	self.mission = niveau.mission.duplicate()
+	var mission = niveau.mission
 	
 	# Remplissage de la mission à effectuer, TODO : est-ce la cible du jeu ?
 	for nj in range(1,3) :  # pour chaque joueur
@@ -57,6 +33,25 @@ func initlevel(level: int):
 	if niveau.duree != 0:
 		self.dureemax = niveau.duree
 		# start du timer dans le _ready
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	semegazon()
+	niveau.spawnplants()
+	# Duree max de la mission
+	if dureemax > 0.0 :
+		$DureeJeuTimer.start(dureemax)
+		%LabelDuree.show()
+		updateduree()
+	else:
+		%LabelDuree.hide()
+	
+func semegazon() :
+	var cells = Array()
+	for x in range(-3,22):
+		for y in range(-1,13):
+			cells.append(Vector2i(x,y))
+	$LayerGazon.set_cells_terrain_connect(cells,0,0,false)
 
 func updateduree():
 	if dureemax > 0 :
@@ -78,7 +73,7 @@ func removeflower(nperso,flowertype):
 					return
 
 func _on_duree_jeu_timer_timeout() -> void:
-	# qui gagne ? FIXME
+	# qui gagne ? C'est root qui va décider en fonction des collected
 	var score : Array
 	for p in niveau.persos :
 		score.append(p.collected)
