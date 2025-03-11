@@ -5,6 +5,7 @@ class_name Niveau
 	set(val) :
 		mission = val.duplicate()
 		allflowers.resize(mission.size())
+@export var moreflowers : int = 2
 @export var growableplants : bool = true
 @export var duree : int = 120
 
@@ -39,7 +40,9 @@ func setupLevelYSort():
 var plantetscn = preload("res://plante.tscn")
 var used_cells
 	
-func spawnplants(tabspawn : Array, nrandom : int):
+func spawnplants():
+	var tabspawn = mission.map(func xx(elt): return elt*2)
+	
 	used_cells = {}
 	# plantes pour la mission
 	for i in range(tabspawn.size()):
@@ -49,7 +52,7 @@ func spawnplants(tabspawn : Array, nrandom : int):
 				addplant(i+1,newplant)
 
 	# plantes supplémentaires (décor et effets)
-	for i in range(nrandom):
+	for i in range(moreflowers):
 		var newplant = plantetscn.instantiate()
 
 		var rand = randf()
@@ -109,7 +112,10 @@ func spawnpersos():
 
 func endoflevel(nperso : int):
 	# Le perso a fini sa mission
-	niveaufini.emit(nperso) # FIXME : passer le score
+	var score : Array
+	for p in persos :
+		score.append(p.collected)
+	niveaufini.emit(nperso,score) # FIXME : passer le score
 
 #FIXME : ça peut dépendre de l'objectif de la mission
 func checkmatchnul():

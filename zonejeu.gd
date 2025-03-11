@@ -14,7 +14,7 @@ signal niveaufini(winner : Perso)
 func _ready() -> void:
 	semegazon()
 	#var nbtotal = mission.reduce(func sum(total,nb): return total+nb*2) + 15
-	niveau.spawnplants(mission.map(func xx(elt): return elt*2),RANDFLOWERS)
+	niveau.spawnplants()
 	# Duree max de la mission
 	if dureemax > 0.0 :
 		$DureeJeuTimer.start(dureemax)
@@ -79,10 +79,13 @@ func removeflower(nperso,flowertype):
 
 func _on_duree_jeu_timer_timeout() -> void:
 	# qui gagne ? FIXME
-	endoflevel(0)
+	var score : Array
+	for p in niveau.persos :
+		score.append(p.collected)
+	endoflevel(0,score)
 
-func endoflevel(nperso):
-	niveaufini.emit(nperso)
+func endoflevel(nperso,tabscore):
+	niveaufini.emit(nperso,tabscore)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

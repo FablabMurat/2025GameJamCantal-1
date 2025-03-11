@@ -18,7 +18,9 @@ var stun_duration : float
 
 var speedMultiplier = 0
 
-var mission : Array
+var mission : Array[int]
+var collected : Array[int]
+
 signal cueillette(perso : Perso,flower : Plante)
 signal missionfinie(nwinner : int)
 
@@ -34,6 +36,7 @@ func _ready() -> void:
 func start(np, _mission):
 	nperso = np
 	mission = _mission.duplicate()
+	collected.resize(mission.size())
 
 	bouger_droite = "move_right_%d" %  nperso
 	bouger_gauche = "move_left_%d" %  nperso
@@ -114,6 +117,8 @@ func _on_cuillette_timer_timeout() -> void:
 
 func fleurcueillie(fleur : Plante):
 	if mission[fleur.flowertype-1] > 0 :
+		# On ne prend en compte que les fleurs attendues par la mission
+		collected[fleur.flowertype-1] += 1
 		# il faut en supprimer une du panier
 		mission[fleur.flowertype-1] -= 1
 	
