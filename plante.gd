@@ -3,6 +3,8 @@ class_name Plante
 
 var flowertype : int
 
+const MAXSTARTDELAY = 10.0
+var startdelay : float
 var growspeed : int = 5
 var diespeed : int = 15
 var picklimit : float = 0.5
@@ -29,7 +31,10 @@ signal swapPosition()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	if cangrow :
+		self.scale = Vector2(0.01,0.01)
+		$CollisionShape2D.hide()
+		$StartTimer.start(randf_range(1.0,MAXSTARTDELAY))
 
 func nocontact():
 	$CollisionShape2D.queue_free()
@@ -44,9 +49,6 @@ func settype(ft : int, growable : bool = false):
 
 	$Sprite2D.texture = icon
 	cangrow = growable
-	if cangrow :
-		self.scale = Vector2(0.01,0.01)
-		growdirection = 1
 
 	match ft:
 		1:  # décoration, sans effet
@@ -66,13 +68,17 @@ func settype(ft : int, growable : bool = false):
 			nocontact()
 
 
+func _on_start_timer_timeout() -> void:
+	growdirection = 1
+	$CollisionShape2D.show()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# Ici on peut essayer de faire grossir les plantes
 	if cangrow:
 		if growdirection > 0 :
 			self.scale +=  Vector2(delta/growspeed,delta/growspeed)
-		else:
+		elif growdirection < 0:
 			self.scale -=  Vector2(delta/diespeed,delta/diespeed)
 		
 		if growdirection > 0 and self.scale.x >=1 :

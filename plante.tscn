@@ -26,6 +26,10 @@ position = Vector2(0, -24)
 shape = SubResource("CapsuleShape2D_my7bd")
 metadata/_edit_lock_ = true
 
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [node name="SuspendTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -40,4 +44,5 @@ stream = ExtResource("5_1s08i")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="SuspendTimer" to="." method="_end_suspend_timer"]

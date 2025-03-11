@@ -14,7 +14,7 @@ signal niveaufini(winner : Perso)
 func _ready() -> void:
 	semegazon()
 	#var nbtotal = mission.reduce(func sum(total,nb): return total+nb*2) + 15
-	niveau.newplants(mission.map(func xx(elt): return elt*2),RANDFLOWERS)
+	niveau.spawnplants(mission.map(func xx(elt): return elt*2),RANDFLOWERS)
 	# Duree max de la mission
 	if dureemax > 0.0 :
 		$DureeJeuTimer.start(dureemax)

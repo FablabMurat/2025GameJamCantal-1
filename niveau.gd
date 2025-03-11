@@ -5,7 +5,7 @@ class_name Niveau
 	set(val) :
 		mission = val.duplicate()
 		allflowers.resize(mission.size())
-@export var growable : bool = true
+@export var growableplants : bool = true
 @export var duree : int = 120
 
 var persos : Array[Perso]
@@ -39,7 +39,7 @@ func setupLevelYSort():
 var plantetscn = preload("res://plante.tscn")
 var used_cells
 	
-func newplants(tabspawn : Array, nrandom : int):
+func spawnplants(tabspawn : Array, nrandom : int):
 	used_cells = {}
 	# plantes pour la mission
 	for i in range(tabspawn.size()):
@@ -86,11 +86,7 @@ func addplant(idxplant, newplant):
 	newplant.position = fleurs_tilemap.map_to_local(random_cell);
 	newplant.position += Vector2(randi_range(-ecartmax,ecartmax),randi_range(-ecartmax,ecartmax))
 
-	#newplant.y_sort_enabled = true
-	#newplant.z_index = 1
-
-	newplant.settype(idxplant)
-	#newplant.attrape.connect(fleurcueillie)
+	newplant.settype(idxplant,growableplants)
 	newplant.swapPosition.connect(swapplayers)
 	
 	add_child(newplant)
