@@ -86,7 +86,7 @@ func _on_duree_jeu_timer_timeout() -> void:
 
 func endoflevel(nperso,tabscore):
 	niveaufini.emit(nperso,tabscore)
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	updateduree()

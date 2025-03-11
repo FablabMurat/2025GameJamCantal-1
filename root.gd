@@ -73,7 +73,7 @@ func runlevel():
 	zonejeu.process_mode = Node.PROCESS_MODE_PAUSABLE
 	$PanelContainer.add_sibling(zonejeu)
 
-func endoflevel(winner):
+func endoflevel(winner, tabscore):
 	zonejeu.call_deferred("queue_free")
 	
 	if winner == 0 :

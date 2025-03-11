@@ -143,7 +143,12 @@ func swapplayers():
 	persos[1].position = persos[2].position
 	persos[2].position = temp_pos
 	#FIXME : add effects, tempo, suspend flower effect
-	
+
+func _input(event: InputEvent):
+	# Astuce pour terminer plus vite un niveau en DEBUG
+	if (event.is_action_released("ui_endoflevel")):
+		endoflevel(0)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
