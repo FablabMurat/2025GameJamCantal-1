@@ -87,7 +87,7 @@ script = ExtResource("1_bcq8j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_ubsce")
-animation = &"run_haut"
+animation = &"pickup_droite"
 offset = Vector2(0, -50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

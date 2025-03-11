@@ -31,7 +31,7 @@ func intro():
 	$PanelContainer/TextureRectInter.hide()
 	%Countdown.hide()
 	%Label.hide()
-	%LabelScore.hide()
+	%VBoxScore.hide()
 	%StartButton.text = "  Start !  "
 	%StartButton.show()
 	$TimerInactivite.stop()
@@ -46,7 +46,7 @@ func start():
 	if disable_start_countdown:
 		newlevel_timer = 0.0
 	$TimerInactivite.stop()
-	%LabelScore.hide()
+	%VBoxScore.hide()
 	%StartButton.hide()
 	%Label.text = "Niveau %d" % level
 	%Label.show()
@@ -84,15 +84,34 @@ func endoflevel(winner, tabscore):
 		%Label.text = "Victoire Joueur %d !" % winner 
 		level += 1
 	%Label.show()
-	%LabelScore.text = "Joueur 1 : %d \nJoueur 2 : %d" % score
-	%LabelScore.show()
 	## TODO :Afficher aussi des scores en plus joli?
-	
+	for joueur in range(2):
+		var hbox = HBoxContainer.new()
+		hbox.alignment = BoxContainer.ALIGNMENT_BEGIN
+		#var label = Label.new()
+		#label.text = "Joueur %d : " %(joueur +1)
+		#label.add_theme_font_size_override("font_size",24)
+		#label.add_theme_color_override("font_color",Color.DARK_GREEN)
+		#hbox.add_child(label)
+		
+		var textureperso = TextureRect.new()
+		textureperso.texture = load("res://Ressources/Images/character_%02d_profil_down.png" % (joueur+1))		
+		hbox.add_child(textureperso)
+		
+		for flowertype in range(0,tabscore[joueur].size()) :
+			for i in tabscore[joueur][flowertype] :
+				var ctrlImage = TextureRectFlower.new(flowertype+1)
+				ctrlImage.size_flags_vertical = Control.SIZE_SHRINK_END # INUTILE
+		
+				hbox.add_child(ctrlImage)
+		%VBoxScore.add_child(hbox)
+	%VBoxScore.show()
+
 	# Fin de partie ?
 	if level+1 > MAXLEVEL :
 		# Il n'y a plus de niveaux - Fin de partie
 		$PanelContainer/TextureRectIntro.show()
-		%LabelScore.text += "\n-- FIN DE PARTIE --"
+		%VBoxScore/LabelScore.text += "\n-- FIN DE PARTIE --"
 		%StartButton.text = " Restart "
 		level = 1  # On se prépare pour la prochaine partie
 		%StartButton.show()
