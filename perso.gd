@@ -19,8 +19,8 @@ var stun_duration : float
 var speedMultiplier = 0
 
 var mission : Array
-signal updatepanier(nperso,flowertype)
-signal missionfinie(nwinner)
+signal cueillette(perso : Perso,flower : Plante)
+signal missionfinie(nwinner : int)
 
 func _init():
 	nperso = 0
@@ -43,19 +43,6 @@ func start(np, _mission):
 	$AnimatedSprite2D.sprite_frames = load("res://joueur_%d.tres" % nperso)
 	
 
-func fleurcueillie(fleur : Plante):
-	if mission[fleur.flowertype-1] > 0 :
-		# il faut en supprimer une du panier
-		updatepanier.emit(nperso,fleur.flowertype)
-		mission[fleur.flowertype-1] -= 1
-	#
-	# Vérifie si on a rempli la mission
-	#print("%d : " % nperso, mission)
-	if mission[fleur.flowertype-1] <= 0 :
-		if mission.all(func (n): return n<=0):
-			# On a fini la mission
-			missionfinie.emit(nperso)
-	
 func _physics_process(delta):
 	if is_stunned:
 		$FX_animation.play("stun")
@@ -93,7 +80,7 @@ func _physics_process(delta):
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("cueillir_%d" % nperso) and not is_stunned and !velocity:
 		# Cueillette
-		cueillette()
+		startcueillette()
 	if $PauseBar.visible :
 		var cast_style = $PauseBar.get_theme_stylebox("fill") as StyleBoxFlat
 		if is_stunned :
@@ -103,28 +90,43 @@ func _process(delta: float) -> void:
 			cast_style.bg_color = Color(0, 0.344, 1) # BLEU
 			$PauseBar.value = 1 - ($CueilletteTimer.time_left / cast_cueillette)
 
-func cueillette():
+func startcueillette():
 	picking = true
-	speedMultiplier = -1.0  # avec le +1, çà bloque le perso
-	#$PauseBar.max_value = float(cast_cueillette)
+	speedMultiplier = -1.0  # avec le +1, ça bloque le perso
+	#$PauseBar.max_value = float(cast_cueillette) # FIXME
 	$CueilletteTimer.start(cast_cueillette)
 	$FX_animation.play("pickup")
 	$PauseBar.show()
-	if $AreaCueillette2D.has_overlapping_areas():
-		for i in $AreaCueillette2D.get_overlapping_areas():
-			if i is Plante :
-				var plante = i as Plante
-				#plant_being_picked = i as Plante
-				#if plante.flowertype > 1 :
-				plante.cueillir(self)
-	
+
+# Fin de la cueillette, plante vraiment cueillie
 func _on_cuillette_timer_timeout() -> void:
 	speedMultiplier = 0.0
 	$FX_animation.play("none")
 	$PauseBar.hide()
 	picking = false
-	# cueillir plante ici
-	#plant_being_picked.cueillir(self)
+	if $AreaCueillette2D.has_overlapping_areas():
+		for i in $AreaCueillette2D.get_overlapping_areas():
+			if i is Plante :
+				var plante = i as Plante
+				if plante.cueilliepar(self) :
+					fleurcueillie(plante)
+					break # On n'en prend qu'une à la fois
+
+func fleurcueillie(fleur : Plante):
+	if mission[fleur.flowertype-1] > 0 :
+		# il faut en supprimer une du panier
+		mission[fleur.flowertype-1] -= 1
+	
+	cueillette.emit(self,fleur)
+	
+	# TODO Changer la logique de mission remplie ?
+	# Vérifie si on a rempli la mission
+	#print("%d : " % nperso, mission)
+	if mission[fleur.flowertype-1] <= 0 :
+		if mission.all(func (n): return n<=0):
+			# On a fini la mission
+			missionfinie.emit(nperso)
+	
 
 var is_stunned := false
 @onready var stun_timer := $StunTimer

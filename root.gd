@@ -1,5 +1,6 @@
 extends Node
 
+var MAXLEVEL = 5
 var level
 
 @export var newlevel_timer : float = 3.0
@@ -8,18 +9,11 @@ var level
 @export_range(0, 1, 0.1) var SFX_volume : float = 1
 @export var disable_start_countdown : bool = false
 
-var levels : Array[Dictionary]
 var zonejeu : ZoneJeu
 var score : Array[int]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	levels.append({"mission" : [4,0,0,0,0], "grow": true, "duree" :  40})
-	levels.append({"mission" : [0,1,1,0,0], "duree" :  40})
-	levels.append({"mission" : [0,2,1,1,0], "duree" :  60})
-	levels.append({"mission" : [0,3,2,1,0], "duree" :  80})
-	levels.append({"mission" : [0,3,2,1,1], "duree" : 100})
-	levels.append({"mission" : [0,2,2,2,1], "duree" : 100})
 	$PauseContainer.hide()
 	resized()
 	intro()
@@ -62,7 +56,7 @@ func startCountdown(timeout, text = ""):
 	%Countdown.start(timeout,text)
 
 func _on_countdown_timeout() -> void:
-	if level <= levels.size() :
+	if level <= MAXLEVEL :
 		runlevel()
 	else:
 		# A priori on ne devrait jamais passer par là
@@ -74,12 +68,9 @@ func runlevel():
 	$PanelContainer/TextureRectInter.hide()
 	var zonejeutscn = load("res://zonejeu.tscn")
 	zonejeu = zonejeutscn.instantiate()
-	zonejeu.collect.connect(collected.bind())
+	zonejeu.initlevel(level)
 	zonejeu.niveaufini.connect(endoflevel.bind())
-	zonejeu.setmission(levels[level-1])
-	zonejeu.addlevelmap(level)
 	zonejeu.process_mode = Node.PROCESS_MODE_PAUSABLE
-	#add_child(niveau)
 	$PanelContainer.add_sibling(zonejeu)
 
 func endoflevel(winner):
@@ -98,7 +89,7 @@ func endoflevel(winner):
 	## TODO :Afficher aussi des scores en plus joli?
 	
 	# Fin de partie ?
-	if level+1 > levels.size() :
+	if level+1 > MAXLEVEL :
 		# Il n'y a plus de niveaux - Fin de partie
 		$PanelContainer/TextureRectIntro.show()
 		%LabelScore.text += "\n-- FIN DE PARTIE --"
@@ -120,11 +111,6 @@ func _on_timer_inactivite_timeout() -> void:
 	# Se déclenche quand on a fini une partie et qu'on ne fait par Restart
 	intro()
 
-func collected(perso, flowertype):
-	# Ca peut être l'occasion de relancer une fleur...
-	# sous réserve de connecter le signal
-	pass
-	
 func _unhandled_input(event: InputEvent):
 	if (event.is_action_released("ui_cancel")):
 		if not get_tree().paused :

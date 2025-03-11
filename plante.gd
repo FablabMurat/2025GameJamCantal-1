@@ -24,7 +24,7 @@ var effectsuspended : bool = false
 var is_being_picked : bool = false
 var foufouille : float #animation on cueillette
 
-signal attrape(perso,plante)
+##signal attrape(perso,plante)
 signal swapPosition()
 
 # Called when the node enters the scene tree for the first time.
@@ -36,7 +36,7 @@ func nocontact():
 	self.monitorable = false
 
 func isspecial():
-	add_to_group("guards")
+	add_to_group("guards") # TODO : comprendre ce que ça apporte
 
 func settype(ft : int, growable : bool = false):
 	flowertype = ft
@@ -50,7 +50,7 @@ func settype(ft : int, growable : bool = false):
 
 	match ft:
 		1:  # décoration, sans effet
-			nocontact()
+			pass #nocontact()
 		2:  # sans effet, mais ramassables
 			isspecial()
 		3:  # stun, mais ramassables
@@ -95,24 +95,22 @@ func _on_body_entered(body: Node2D) -> void:
 		# La fleur est ramassée par le perso
 		var perso = body as Perso
 		effetspecial(perso)
-		is_being_picked = true # POUR DEBUG CAR CUEILLIR FAIT DISPARAITRE LA FLEUR AVANT LA FIN DU CAST
-	
-func cueillir(body):
-	#if body.is_in_group("perso") :
-		# La fleur est ramassée par le perso
-		var perso = body as Perso
-		attrape.emit(perso, self)
-		effetspecial(perso)
-		is_being_picked = true #si le joueur bouge le cast doit s'interrompre
+		is_being_picked = true # FIXME : POUR DEBUG CAR CUEILLIR FAIT DISPARAITRE LA FLEUR AVANT LA FIN DU CAST
+
+func cueilliepar(body):
+	var perso = body as Perso
+	##effetspecial(perso)
+	is_being_picked = true #si le joueur bouge le cast doit s'interrompre
+	return true # TODO : prévoir des cas où la fleur n'est pas cueillie
 
 func effetspecial(surperso):
-		if effectsuspended: return
-		if canStun:
-			surperso.apply_stun(stun_duration)
-		if canSpeedBoost:
-			surperso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
-		if canSwapPosition:
-			swapPosition.emit()
+	if effectsuspended: return
+	if canStun:
+		surperso.apply_stun(stun_duration)
+	if canSpeedBoost:
+		surperso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
+	if canSwapPosition:
+		swapPosition.emit()
 
 # Suspend les effets de la plante pendant 1.5 s
 func suspendeffect():
