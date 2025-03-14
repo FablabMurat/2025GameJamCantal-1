@@ -10,8 +10,8 @@ var waitingtostart : bool
 @export_range(0, 1, 0.1) var SFX_volume : float = 1
 @export var disable_start_countdown : bool = false
 
-var j1device : int
-var j2device : int
+var j1device : int = -1
+var j2device : int = -1
 
 var zonejeu : ZoneJeu
 var score : Array[int]
@@ -48,6 +48,7 @@ func _on_start_button_up() -> void:
 
 func start():
 	# Start ou Continue
+	waitingtostart = false
 	if disable_start_countdown:
 		newlevel_timer = 0.0
 	$TimerInactivite.stop()
@@ -150,9 +151,10 @@ func _on_timer_inactivite_timeout() -> void:
 func _input(event : InputEvent):
 	if not waitingtostart: return
 	if event.is_action_pressed("choose_1"):
-		# Une manette a actionné le bouton rond ou B
-		# Ce sera la joueur 1
+		# Une manette a actionné le X (bleu) sur la manette XBox
+		# Ce sera la joueur 1 (en rouge) FIXME
 		print ("J1=",event.device," from ",Input.get_connected_joypads())
+		print ("event=",event.as_text())
 		j1device = event.device
 		for joypad in Input.get_connected_joypads():
 			if joypad != j1device:
@@ -160,8 +162,10 @@ func _input(event : InputEvent):
 				break
 		start()
 	elif event.is_action_pressed("choose_2"):
-		# Une manette a actionné le bouton carré ou X
+		# Une manette a actionné le B (rouge) sur la manette XBox
+		# Ce sera la joueur 2 (en bleu) FIXME
 		print ("J2=",event.device," from ",Input.get_connected_joypads())
+		print ("event=",event.as_text())
 		j2device = event.device
 		for joypad in Input.get_connected_joypads():
 			if joypad != j2device:

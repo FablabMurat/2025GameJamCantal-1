@@ -44,16 +44,18 @@ func start(np, _mission):
 	bouger_gauche = "move_left_%d" %  nperso
 	bouger_haut = "move_up_%d" %  nperso
 	bouger_bas = "move_down_%d" %  nperso
-	bouger_bas = "cueillir_%d" %  nperso
+	cueillir = "cueillir_%d" %  nperso
 	
 	$AnimatedSprite2D.sprite_frames = load("res://joueur_%d.tres" % nperso)
 	
 func setdevice(jdev):
-	device == jdev
+	device = jdev
 	# Recopie l'InputMap de cueillir dans cueillir_1
-	for action in InputMap.action_get_events("cueillir"):
-		action.device = jdev
-		InputMap.action_add_event(cueillir,action)
+	for action in ["move_right","move_left","move_up","move_down", "cueillir"] :
+		for event in InputMap.action_get_events(action):
+			var newevent : InputEvent = event.duplicate()
+			newevent.device = jdev
+			InputMap.action_add_event(action+"_%d" %nperso, newevent)
 
 func _physics_process(delta):
 	if is_stunned:
