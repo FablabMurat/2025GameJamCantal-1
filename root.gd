@@ -2,12 +2,16 @@ extends Node
 
 var MAXLEVEL = 5
 var level
+var waitingtostart : bool
 
 @export var newlevel_timer : float = 3.0
 @export_range(0, 1, 0.1) var master_volume : float = 1
 @export_range(0, 1, 0.1) var music_volume : float = 0.2
 @export_range(0, 1, 0.1) var SFX_volume : float = 1
 @export var disable_start_countdown : bool = false
+
+var j1device : int
+var j2device : int
 
 var zonejeu : ZoneJeu
 var score : Array[int]
@@ -36,6 +40,7 @@ func intro():
 	%StartButton.show()
 	$TimerInactivite.stop()
 	#TODO : il faudrait aussi que le start soit déclenché par une action manette
+	waitingtostart = true
 
 # Click sur bouton Start/Restart
 func _on_start_button_up() -> void:
@@ -48,6 +53,7 @@ func start():
 	$TimerInactivite.stop()
 	%VBoxScore.hide()
 	%StartButton.hide()
+	%HBoxChoiceJoy.hide()
 	%Label.text = "Niveau %d" % level
 	%Label.show()
 	startCountdown(newlevel_timer," Prêts ? ")
@@ -68,7 +74,7 @@ func runlevel():
 	$PanelContainer/TextureRectInter.hide()
 	var zonejeutscn = load("res://zonejeu.tscn")
 	zonejeu = zonejeutscn.instantiate()
-	zonejeu.initlevel(level)
+	zonejeu.initlevel(level,j1device,j2device)
 	zonejeu.niveaufini.connect(endoflevel.bind())
 	zonejeu.process_mode = Node.PROCESS_MODE_PAUSABLE
 	$PanelContainer.add_sibling(zonejeu)
@@ -141,6 +147,20 @@ func _on_timer_inactivite_timeout() -> void:
 	# Se déclenche quand on a fini une partie et qu'on ne fait par Restart
 	intro()
 
+func _input(event : InputEvent):
+	if not waitingtostart: return
+	if event.is_action_pressed("choose_1"):
+		# Une manette a actionné le bouton rond ou B
+		# Ce sera la joueur 1
+		print ("J1=",event.device)
+		j1device = event.device
+		start()
+	elif event.is_action_pressed("choose_2"):
+		# Une manette a actionné le bouton carré ou X
+		print ("J2=",event.device)
+		j2device = event.device
+		start()
+	
 func _unhandled_input(event: InputEvent):
 	if (event.is_action_released("ui_cancel")):
 		if not get_tree().paused :

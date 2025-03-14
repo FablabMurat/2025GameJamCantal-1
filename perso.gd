@@ -20,6 +20,7 @@ var speedMultiplier = 0
 
 var mission : Array[int]
 var collected : Array[int]
+var device : int
 
 signal cueillette(perso : Perso,flower : Plante)
 signal missionfinie(nwinner : int)
@@ -45,6 +46,8 @@ func start(np, _mission):
 	
 	$AnimatedSprite2D.sprite_frames = load("res://joueur_%d.tres" % nperso)
 	
+func setdevice(jdev):
+	device == jdev
 
 func _physics_process(delta):
 	if is_stunned:

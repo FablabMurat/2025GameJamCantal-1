@@ -6,11 +6,12 @@ var niveau : Niveau
 
 signal niveaufini(winner : Perso)
 
-func initlevel(level: int):
+func initlevel(level: int, j1dev:int = 0, j2dev:int = 0):
 	var leveltscn = load("res://niveau_%d.tscn" % level)
 	niveau = leveltscn.instantiate()
 	niveau.cueillette.connect(removeflower.bind())
 	niveau.niveaufini.connect(endoflevel.bind())
+	niveau.addjoy(j1dev,j2dev)
 	%MarkerLevel.add_child(niveau)
 	
 	# La partie contenu de la mission : fleurs à collecter
@@ -47,7 +48,7 @@ func _ready() -> void:
 		#FIXME joueur plutôt sur la HBox
 		#%LabelDuree.hide()
 		%ProgressBarDuree.hide()
-	
+
 func semegazon() :
 	var cells = Array()
 	for x in range(-3,22):

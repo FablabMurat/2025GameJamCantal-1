@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ci206nb0ldfju"]
+[gd_scene load_steps=10 format=3 uid="uid://ci206nb0ldfju"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_1h7cp"]
 [ext_resource type="Texture2D" uid="uid://dfn7pwk6rhdg1" path="res://Ressources/Images/titre.png" id="2_2v8v8"]
@@ -6,6 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://b8qv8j44wxj5e" path="res://Ressources/Sons/les fleurs.mp3" id="3_hml4y"]
 [ext_resource type="PackedScene" uid="uid://di5rfh0qr07fm" path="res://countdown.tscn" id="4_a785y"]
 [ext_resource type="Theme" uid="uid://mcmvysh7s1ap" path="res://design.tres" id="5_1hc85"]
+[ext_resource type="Texture2D" uid="uid://c6ukonhwxuqiq" path="res://Ressources/Images/character_01_face.png" id="6_rq5pv"]
+[ext_resource type="Texture2D" uid="uid://c0qsnkcjycig1" path="res://Ressources/Images/character_02_face.png" id="7_foaso"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqx0i"]
 bg_color = Color(0.180392, 0.305882, 0.243137, 0.752941)
@@ -89,6 +91,47 @@ unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_1hc85")
 text = "Start !"
+
+[node name="HBoxChoiceJoy" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="VBoxJ1" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TextureRectJ1" type="TextureRect" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ1"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("6_rq5pv")
+expand_mode = 5
+
+[node name="LabelJ1" type="Label" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ1"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0.25098, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Press B ou <--"
+
+[node name="VBoxJ2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TextureRectJ2" type="TextureRect" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ2"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("7_foaso")
+expand_mode = 5
+
+[node name="LabelJ2" type="Label" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ2"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0, 0.25098, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Press 1 ou -->"
 
 [node name="PauseContainer" type="PanelContainer" parent="."]
 process_mode = 3

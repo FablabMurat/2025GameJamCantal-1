@@ -10,6 +10,7 @@ class_name Niveau
 @export var duree : int = 120
 
 var persos : Array[Perso]
+var jdevice : Array[int]
 
 signal niveaufini
 signal cueillette(nperso : int, flowertype : int)
@@ -21,6 +22,10 @@ func _init():
 		if node is Plante :
 			fleurpartie(node.flowertype)
 			)
+
+func addjoy(j1dev, j2dev):
+	jdevice.append(j1dev)
+	jdevice.append(j2dev)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -111,6 +116,7 @@ func spawnpersos():
 		perso.start(i,mission)
 		perso.cueillette.connect(fleurcueillie.bind())
 		perso.missionfinie.connect(endoflevel.bind())
+		perso.setdevice(jdevice[i-1])
 		persos.append(perso)
 		add_child(perso)
 
