@@ -152,13 +152,21 @@ func _input(event : InputEvent):
 	if event.is_action_pressed("choose_1"):
 		# Une manette a actionné le bouton rond ou B
 		# Ce sera la joueur 1
-		print ("J1=",event.device)
+		print ("J1=",event.device," from ",Input.get_connected_joypads())
 		j1device = event.device
+		for joypad in Input.get_connected_joypads():
+			if joypad != j1device:
+				j2device = joypad
+				break
 		start()
 	elif event.is_action_pressed("choose_2"):
 		# Une manette a actionné le bouton carré ou X
-		print ("J2=",event.device)
+		print ("J2=",event.device," from ",Input.get_connected_joypads())
 		j2device = event.device
+		for joypad in Input.get_connected_joypads():
+			if joypad != j2device:
+				j1device = joypad
+				break
 		start()
 	
 func _unhandled_input(event: InputEvent):

@@ -7,6 +7,7 @@ var bouger_droite : String
 var bouger_gauche : String
 var bouger_haut : String
 var bouger_bas : String
+var cueillir : String
 
 var dir : String = "bas"
 var picking = false
@@ -43,11 +44,16 @@ func start(np, _mission):
 	bouger_gauche = "move_left_%d" %  nperso
 	bouger_haut = "move_up_%d" %  nperso
 	bouger_bas = "move_down_%d" %  nperso
+	bouger_bas = "cueillir_%d" %  nperso
 	
 	$AnimatedSprite2D.sprite_frames = load("res://joueur_%d.tres" % nperso)
 	
 func setdevice(jdev):
 	device == jdev
+	# Recopie l'InputMap de cueillir dans cueillir_1
+	for action in InputMap.action_get_events("cueillir"):
+		action.device = jdev
+		InputMap.action_add_event(cueillir,action)
 
 func _physics_process(delta):
 	if is_stunned:
