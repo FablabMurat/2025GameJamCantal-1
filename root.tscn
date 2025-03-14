@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ci206nb0ldfju"]
+[gd_scene load_steps=18 format=3 uid="uid://ci206nb0ldfju"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_1h7cp"]
 [ext_resource type="Texture2D" uid="uid://dfn7pwk6rhdg1" path="res://Ressources/Images/titre.png" id="2_2v8v8"]
@@ -8,6 +8,7 @@
 [ext_resource type="Theme" uid="uid://mcmvysh7s1ap" path="res://design.tres" id="5_1hc85"]
 [ext_resource type="Texture2D" uid="uid://c6ukonhwxuqiq" path="res://Ressources/Images/character_01_face.png" id="6_rq5pv"]
 [ext_resource type="Texture2D" uid="uid://c0qsnkcjycig1" path="res://Ressources/Images/character_02_face.png" id="7_foaso"]
+[ext_resource type="LabelSettings" uid="uid://dwlgw4xoax2tk" path="res://label_settings.tres" id="7_rpk6x"]
 
 [sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_nyrvt"]
 button_index = 1
@@ -20,6 +21,19 @@ pressed = true
 
 [sub_resource type="Shortcut" id="Shortcut_ny3mq"]
 events = [SubResource("InputEventJoypadButton_nyrvt"), SubResource("InputEventJoypadButton_drmux")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cy35l"]
+bg_color = Color(0.45389, 0.593897, 0.888689, 1)
+
+[sub_resource type="Theme" id="Theme_tsdxd"]
+/colors/LabelBleu = Color(0, 0, 0, 1)
+Label/styles/normal = SubResource("StyleBoxFlat_cy35l")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aij10"]
+bg_color = Color(0.797174, 0.520665, 0.432085, 1)
+
+[sub_resource type="Theme" id="Theme_0g3t2"]
+label/styles/LabelRouge = SubResource("StyleBoxFlat_aij10")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqx0i"]
 bg_color = Color(0.180392, 0.305882, 0.243137, 0.752941)
@@ -113,7 +127,9 @@ layout_mode = 2
 
 [node name="VBoxJ1" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 0
+theme = SubResource("Theme_tsdxd")
 
 [node name="TextureRectJ1" type="TextureRect" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ1"]
 custom_minimum_size = Vector2(80, 0)
@@ -128,10 +144,14 @@ size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "X to Start"
+label_settings = ExtResource("7_rpk6x")
+horizontal_alignment = 1
 
 [node name="VBoxJ2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy"]
 layout_mode = 2
+size_flags_horizontal = 8
 size_flags_vertical = 0
+theme = SubResource("Theme_0g3t2")
 
 [node name="TextureRectJ2" type="TextureRect" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ2"]
 custom_minimum_size = Vector2(80, 0)
@@ -143,9 +163,10 @@ expand_mode = 5
 [node name="LabelJ2" type="Label" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ2"]
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_colors/font_color = Color(0, 0.25098, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "B to Start"
+label_settings = ExtResource("7_rpk6x")
+horizontal_alignment = 1
 
 [node name="PauseContainer" type="PanelContainer" parent="."]
 process_mode = 3
