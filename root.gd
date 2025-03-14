@@ -38,6 +38,7 @@ func intro():
 	%VBoxScore.hide()
 	%StartButton.text = "  Start !  "
 	%StartButton.show()
+	%StartButton.grab_focus()
 	$TimerInactivite.stop()
 	#TODO : il faudrait aussi que le start soit déclenché par une action manette
 	waitingtostart = true
@@ -139,6 +140,7 @@ func endoflevel(winner, tabscore : Array):
 		%StartButton.text = " Restart "
 		level = 1  # On se prépare pour la prochaine partie
 		%StartButton.show()
+		%StartButton.grab_focus()
 		$CenterContainer.show()
 		$TimerInactivite.start()
 	else:
@@ -148,6 +150,7 @@ func endoflevel(winner, tabscore : Array):
 		else:
 			%StartButton.text = " Suivant... "
 		%StartButton.show()
+		%StartButton.grab_focus()
 		$CenterContainer.show()
 
 func _on_timer_inactivite_timeout() -> void:
