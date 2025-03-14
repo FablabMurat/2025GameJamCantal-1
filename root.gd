@@ -46,6 +46,10 @@ func _on_start_button_pressed() -> void:
 	if waitingtostart: return
 	start()
 
+# Horreur qui permet de distinguer le shortcut (via manette) du clic sur le bouton de la souris
+func _on_start_button_up() -> void:
+	start()
+
 func start():
 	# Start ou Continue
 	waitingtostart = false

@@ -195,7 +195,7 @@ wait_time = 60.0
 one_shot = true
 
 [connection signal="timeout" from="CenterContainer/VBoxContainer/Countdown" to="." method="_on_countdown_timeout"]
-[connection signal="button_up" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="button_up" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_up"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="button_up" from="PauseContainer/PauseCenterContainer/VBoxContainer/OutPauseButton" to="." method="_on_out_pause_button_up"]
 [connection signal="timeout" from="TimerInactivite" to="." method="_on_timer_inactivite_timeout"]
