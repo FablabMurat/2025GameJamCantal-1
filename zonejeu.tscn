@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cp8fllwg0m5kk"]
+[gd_scene load_steps=16 format=3 uid="uid://cp8fllwg0m5kk"]
 
 [ext_resource type="Script" path="res://zonejeu.gd" id="1_1no86"]
 [ext_resource type="TileSet" uid="uid://i2gurbxbug2t" path="res://Ressources/Images/tileset_wip.tres" id="2_gaf4e"]
@@ -7,13 +7,21 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_npq7m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pfds"]
-bg_color = Color(0.389287, 0.389287, 0.389287, 0.0431373)
+bg_color = Color(0.403922, 0.403922, 0.403922, 0.686275)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_haxq8"]
 bg_color = Color(0.117821, 0.618786, 0.127736, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nn4h"]
 bg_color = Color(0.894118, 0.0705882, 0.211765, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2kn6"]
 bg_color = Color(0.862745, 0.776471, 0.0235294, 1)
@@ -25,6 +33,44 @@ ProgressBarAlert/base_type = &"ProgressBar"
 ProgressBarAlert/styles/fill = SubResource("StyleBoxFlat_7nn4h")
 ProgressBarWarning/base_type = &"ProgressBar"
 ProgressBarWarning/styles/fill = SubResource("StyleBoxFlat_n2kn6")
+
+[sub_resource type="Animation" id="Animation_63pac"]
+resource_name = "blink"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%HBox:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_a4lfm"]
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%HBox:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rqf2e"]
+_data = {
+"RESET": SubResource("Animation_a4lfm"),
+"blink": SubResource("Animation_63pac")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io48j"]
 bg_color = Color(0.84, 0.80752, 0.3528, 1)
@@ -119,12 +165,18 @@ theme_override_font_sizes/font_size = 36
 
 [node name="ProgressBarDuree" type="ProgressBar" parent="PanelContainer/VBoxContainerCenter/HBox"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 20)
+custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
 size_flags_vertical = 4
 theme = SubResource("Theme_hyxdw")
 step = 0.1
 show_percentage = false
+
+[node name="AnimationPlayerDuree" type="AnimationPlayer" parent="PanelContainer/VBoxContainerCenter"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_rqf2e")
+}
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer"]
 unique_name_in_owner = true

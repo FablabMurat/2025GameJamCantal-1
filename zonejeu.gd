@@ -63,6 +63,7 @@ func updateduree():
 		%ProgressBarDuree.value = timeleft
 		if timeleft <= 5:
 			%ProgressBarDuree.set_theme_type_variation("ProgressBarAlert")
+			%AnimationPlayerDuree.play("blink")
 		elif timeleft <= 10:
 			%ProgressBarDuree.set_theme_type_variation("ProgressBarWarning")
 		else:
