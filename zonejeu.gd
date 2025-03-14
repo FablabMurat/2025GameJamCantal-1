@@ -4,8 +4,6 @@ class_name ZoneJeu
 var dureemax : float = 0.0
 var niveau : Niveau
 
-const RANDFLOWERS = 25 
-
 signal niveaufini(winner : Perso)
 
 func initlevel(level: int):
@@ -41,10 +39,14 @@ func _ready() -> void:
 	# Duree max de la mission
 	if dureemax > 0.0 :
 		$DureeJeuTimer.start(dureemax)
-		%LabelDuree.show()
+		#%LabelDuree.show()
+		%ProgressBarDuree.max_value = dureemax # FIXME : pas idéal
+		%ProgressBarDuree.show()
 		updateduree()
 	else:
-		%LabelDuree.hide()
+		#FIXME joueur plutôt sur la HBox
+		#%LabelDuree.hide()
+		%ProgressBarDuree.hide()
 	
 func semegazon() :
 	var cells = Array()
@@ -55,8 +57,16 @@ func semegazon() :
 
 func updateduree():
 	if dureemax > 0 :
-		%LabelDuree.text = "%.1f" % $DureeJeuTimer.time_left
-
+		var timeleft = $DureeJeuTimer.time_left
+		#%LabelDuree.text = "%.1f" % timeleft
+		
+		%ProgressBarDuree.value = timeleft
+		if timeleft <= 5:
+			%ProgressBarDuree.set_theme_type_variation("ProgressBarAlert")
+		elif timeleft <= 10:
+			%ProgressBarDuree.set_theme_type_variation("ProgressBarWarning")
+		else:
+			%ProgressBarDuree.set_theme_type_variation("")
 
 func removeflower(nperso,flowertype):
 	if nperso == 1 :

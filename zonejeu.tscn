@@ -1,10 +1,30 @@
-[gd_scene load_steps=8 format=3 uid="uid://cp8fllwg0m5kk"]
+[gd_scene load_steps=13 format=3 uid="uid://cp8fllwg0m5kk"]
 
 [ext_resource type="Script" path="res://zonejeu.gd" id="1_1no86"]
 [ext_resource type="TileSet" uid="uid://i2gurbxbug2t" path="res://Ressources/Images/tileset_wip.tres" id="2_gaf4e"]
 [ext_resource type="FontFile" uid="uid://dev8uh68b6uk" path="res://Ressources/Font/Faune-DisplayBoldItalic.otf" id="3_e4hnx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_npq7m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pfds"]
+bg_color = Color(0.389287, 0.389287, 0.389287, 0.0431373)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_haxq8"]
+bg_color = Color(0.117821, 0.618786, 0.127736, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7nn4h"]
+bg_color = Color(0.894118, 0.0705882, 0.211765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2kn6"]
+bg_color = Color(0.862745, 0.776471, 0.0235294, 1)
+
+[sub_resource type="Theme" id="Theme_hyxdw"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_3pfds")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_haxq8")
+ProgressBarAlert/base_type = &"ProgressBar"
+ProgressBarAlert/styles/fill = SubResource("StyleBoxFlat_7nn4h")
+ProgressBarWarning/base_type = &"ProgressBar"
+ProgressBarWarning/styles/fill = SubResource("StyleBoxFlat_n2kn6")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io48j"]
 bg_color = Color(0.84, 0.80752, 0.3528, 1)
@@ -96,6 +116,15 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_e4hnx")
 theme_override_font_sizes/font_size = 36
+
+[node name="ProgressBarDuree" type="ProgressBar" parent="PanelContainer/VBoxContainerCenter/HBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 20)
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_hyxdw")
+step = 0.1
+show_percentage = false
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer"]
 unique_name_in_owner = true
