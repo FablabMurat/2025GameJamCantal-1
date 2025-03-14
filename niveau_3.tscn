@@ -29,7 +29,7 @@ tile_map_data = PackedByteArray("AAABAAEAAAAFAAQAAAABAAIAAAAFAAQAAAABAAMAAAAFAAQ
 tile_set = ExtResource("1_nck4k")
 
 [node name="Pos_J1" type="Marker2D" parent="."]
-position = Vector2(844, 129)
+position = Vector2(841, 577)
 
 [node name="Pos_J2" type="Marker2D" parent="."]
-position = Vector2(841, 577)
+position = Vector2(844, 129)

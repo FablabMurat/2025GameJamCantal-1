@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ci206nb0ldfju"]
+[gd_scene load_steps=13 format=3 uid="uid://ci206nb0ldfju"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_1h7cp"]
 [ext_resource type="Texture2D" uid="uid://dfn7pwk6rhdg1" path="res://Ressources/Images/titre.png" id="2_2v8v8"]
@@ -8,6 +8,18 @@
 [ext_resource type="Theme" uid="uid://mcmvysh7s1ap" path="res://design.tres" id="5_1hc85"]
 [ext_resource type="Texture2D" uid="uid://c6ukonhwxuqiq" path="res://Ressources/Images/character_01_face.png" id="6_rq5pv"]
 [ext_resource type="Texture2D" uid="uid://c0qsnkcjycig1" path="res://Ressources/Images/character_02_face.png" id="7_foaso"]
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_nyrvt"]
+button_index = 1
+pressed = true
+
+[sub_resource type="InputEventJoypadButton" id="InputEventJoypadButton_drmux"]
+device = -1
+button_index = 2
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_ny3mq"]
+events = [SubResource("InputEventJoypadButton_nyrvt"), SubResource("InputEventJoypadButton_drmux")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqx0i"]
 bg_color = Color(0.180392, 0.305882, 0.243137, 0.752941)
@@ -90,6 +102,8 @@ justification_flags = 160
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_1hc85")
+action_mode = 0
+shortcut = SubResource("Shortcut_ny3mq")
 text = "Start !"
 
 [node name="HBoxChoiceJoy" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
@@ -105,7 +119,7 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-texture = ExtResource("6_rq5pv")
+texture = ExtResource("7_foaso")
 expand_mode = 5
 
 [node name="LabelJ1" type="Label" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ1"]
@@ -113,7 +127,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0, 0.25098, 0, 1)
 theme_override_font_sizes/font_size = 16
-text = "Press B ou <--"
+text = "X to Start"
 
 [node name="VBoxJ2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy"]
 layout_mode = 2
@@ -123,7 +137,7 @@ size_flags_vertical = 0
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-texture = ExtResource("7_foaso")
+texture = ExtResource("6_rq5pv")
 expand_mode = 5
 
 [node name="LabelJ2" type="Label" parent="CenterContainer/VBoxContainer/HBoxChoiceJoy/VBoxJ2"]
@@ -131,7 +145,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0, 0.25098, 0, 1)
 theme_override_font_sizes/font_size = 16
-text = "Press 1 ou -->"
+text = "B to Start"
 
 [node name="PauseContainer" type="PanelContainer" parent="."]
 process_mode = 3
@@ -175,6 +189,7 @@ wait_time = 60.0
 one_shot = true
 
 [connection signal="timeout" from="CenterContainer/VBoxContainer/Countdown" to="." method="_on_countdown_timeout"]
-[connection signal="button_up" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_up"]
+[connection signal="button_up" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="button_up" from="PauseContainer/PauseCenterContainer/VBoxContainer/OutPauseButton" to="." method="_on_out_pause_button_up"]
 [connection signal="timeout" from="TimerInactivite" to="." method="_on_timer_inactivite_timeout"]

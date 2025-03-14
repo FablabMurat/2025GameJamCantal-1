@@ -42,8 +42,8 @@ func intro():
 	#TODO : il faudrait aussi que le start soit déclenché par une action manette
 	waitingtostart = true
 
-# Click sur bouton Start/Restart
-func _on_start_button_up() -> void:
+func _on_start_button_pressed() -> void:
+	if waitingtostart: return
 	start()
 
 func start():
@@ -90,10 +90,12 @@ func endoflevel(winner, tabscore : Array):
 		# ni 1 ni 2, donc pas de gagnant car jeu bloqué
 		%Label.text = "Match nul !"
 	else:
+		%Label.text = ""
 		if winner == 0 :
+			%Label.text = "Timeout ! "
 			winner = 1 if scorej1 > scorej2 else 2
 		score[winner-1] += 1
-		%Label.text = "Victoire Joueur %d !" % winner 
+		%Label.text += "Victoire %s !" % Perso.colorname(winner)
 		level += 1
 	%Label.show()
 	
@@ -151,8 +153,8 @@ func _on_timer_inactivite_timeout() -> void:
 func _input(event : InputEvent):
 	if not waitingtostart: return
 	if event.is_action_pressed("choose_1"):
-		# Une manette a actionné le X (bleu) sur la manette XBox
-		# Ce sera la joueur 1 (en rouge) FIXME
+		# Une manette a actionné le B (rouge) sur la manette XBox
+		# Ce sera le joueur 1 (en rouge) FIXME
 		print ("J1=",event.device," from ",Input.get_connected_joypads())
 		print ("event=",event.as_text())
 		j1device = event.device
@@ -162,8 +164,8 @@ func _input(event : InputEvent):
 				break
 		start()
 	elif event.is_action_pressed("choose_2"):
-		# Une manette a actionné le B (rouge) sur la manette XBox
-		# Ce sera la joueur 2 (en bleu) FIXME
+		# Une manette a actionné le X (bleu) sur la manette XBox
+		# Ce sera le joueur 2 (en bleu) FIXME
 		print ("J2=",event.device," from ",Input.get_connected_joypads())
 		print ("event=",event.as_text())
 		j2device = event.device

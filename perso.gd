@@ -26,6 +26,15 @@ var device : int
 signal cueillette(perso : Perso,flower : Plante)
 signal missionfinie(nwinner : int)
 
+static func colorname(numero):
+	match numero:
+		1:
+			return "Rouge"
+		2:
+			return "Bleu"
+		_:
+			return "inconnu"
+
 func _init():
 	nperso = 0
 
