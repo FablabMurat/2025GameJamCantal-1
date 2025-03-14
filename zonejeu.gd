@@ -12,6 +12,7 @@ func initlevel(level: int, j1dev:int = 0, j2dev:int = 0):
 	niveau.cueillette.connect(removeflower.bind())
 	niveau.niveaufini.connect(endoflevel.bind())
 	niveau.addjoy(j1dev,j2dev)
+	%LabelNiveau.text = "Niveau %d  " % level
 	%MarkerLevel.add_child(niveau)
 	
 	# La partie contenu de la mission : fleurs à collecter
