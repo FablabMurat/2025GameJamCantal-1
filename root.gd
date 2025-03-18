@@ -2,6 +2,7 @@ extends Node
 
 var MAXLEVEL = 5
 var level
+## true si en attente du tout premier Start du jeu avant le niveau 1
 var waitingtostart : bool
 
 @export var newlevel_timer : float = 3.0
@@ -38,10 +39,26 @@ func intro():
 	%VBoxScore.hide()
 	%StartButton.text = "  Start !  "
 	%StartButton.show()
+	%AideButton.show()
 	%StartButton.grab_focus()
 	$TimerInactivite.stop()
-	#TODO : il faudrait aussi que le start soit déclenché par une action manette
 	waitingtostart = true
+
+func _on_aide_button_pressed() -> void:
+	showaide() # Replace with function body.
+
+func _on_aide_button_gui_input(event: InputEvent) -> void:
+	if %AideButton.visible and event is InputEventJoypadButton:
+		showaide()
+
+func _on_popup_child_exiting_tree(node: Node) -> void:
+	$CenterContainer.show()
+	%StartButton.grab_focus()
+
+func showaide():
+	const aideScene = preload("res://aide.tscn")
+	$CenterContainer.hide()
+	$Popup.add_child(aideScene.instantiate())
 
 func _on_start_button_pressed() -> void:
 	if waitingtostart: return
@@ -49,7 +66,8 @@ func _on_start_button_pressed() -> void:
 
 # Horreur qui permet de distinguer le shortcut (via manette) du clic sur le bouton de la souris
 func _on_start_button_up() -> void:
-	start()
+	if %StartButton.visible:
+		start()
 
 func start():
 	# Start ou Continue
@@ -59,6 +77,7 @@ func start():
 	$TimerInactivite.stop()
 	%VBoxScore.hide()
 	%StartButton.hide()
+	%AideButton.hide()
 	%HBoxChoiceJoy.hide()
 	%Label.text = "Niveau %d" % level
 	%Label.show()
@@ -141,6 +160,7 @@ func endoflevel(winner, tabscore : Array):
 		level = 1  # On se prépare pour la prochaine partie
 		%StartButton.show()
 		%StartButton.grab_focus()
+		%AideButton.show()
 		$CenterContainer.show()
 		$TimerInactivite.start()
 	else:
@@ -150,6 +170,7 @@ func endoflevel(winner, tabscore : Array):
 		else:
 			%StartButton.text = " Suivant... "
 		%StartButton.show()
+		%AideButton.show()
 		%StartButton.grab_focus()
 		$CenterContainer.show()
 

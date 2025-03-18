@@ -99,12 +99,20 @@ theme_override_colors/font_color = Color(0.588235, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 justification_flags = 160
 
+[node name="AideButton" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("5_1hc85")
+action_mode = 0
+text = "Aide"
+
 [node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_1hc85")
 action_mode = 0
 shortcut = SubResource("Shortcut_ny3mq")
+shortcut_in_tooltip = false
 text = "Start !"
 
 [node name="HBoxChoiceJoy" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
@@ -194,8 +202,13 @@ process_mode = 1
 wait_time = 60.0
 one_shot = true
 
+[node name="Popup" type="Node" parent="."]
+
 [connection signal="timeout" from="CenterContainer/VBoxContainer/Countdown" to="." method="_on_countdown_timeout"]
+[connection signal="gui_input" from="CenterContainer/VBoxContainer/AideButton" to="." method="_on_aide_button_gui_input"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/AideButton" to="." method="_on_aide_button_pressed"]
 [connection signal="button_up" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_up"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="button_up" from="PauseContainer/PauseCenterContainer/VBoxContainer/OutPauseButton" to="." method="_on_out_pause_button_up"]
 [connection signal="timeout" from="TimerInactivite" to="." method="_on_timer_inactivite_timeout"]
+[connection signal="child_exiting_tree" from="Popup" to="." method="_on_popup_child_exiting_tree"]

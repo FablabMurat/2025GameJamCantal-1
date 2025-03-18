@@ -1,4 +1,16 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://mcmvysh7s1ap"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://mcmvysh7s1ap"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rrla3"]
+bg_color = Color(0.0980392, 0.368627, 0.176471, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.942823, 0.942823, 0.942823, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yjcra"]
 bg_color = Color(0.0980392, 0.368627, 0.176471, 1)
@@ -10,4 +22,5 @@ corner_radius_bottom_left = 3
 
 [resource]
 Button/font_sizes/font_size = 24
+Button/styles/focus = SubResource("StyleBoxFlat_rrla3")
 Button/styles/normal = SubResource("StyleBoxFlat_yjcra")

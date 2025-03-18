@@ -59,12 +59,13 @@ func start(np, _mission):
 	
 func setdevice(jdev):
 	device = jdev
-	# Recopie l'InputMap de cueillir dans cueillir_1
-	for action in ["move_right","move_left","move_up","move_down", "cueillir"] :
-		for event in InputMap.action_get_events(action):
-			var newevent : InputEvent = event.duplicate()
-			newevent.device = jdev
-			InputMap.action_add_event(action+"_%d" %nperso, newevent)
+	if device >= 0 :
+		# Recopie l'InputMap de cueillir dans cueillir_1
+		for action in ["move_right","move_left","move_up","move_down", "cueillir"] :
+			for event in InputMap.action_get_events(action):
+				var newevent : InputEvent = event.duplicate()
+				newevent.device = jdev
+				InputMap.action_add_event(action+"_%d" %nperso, newevent)
 
 func _physics_process(delta):
 	if is_stunned:

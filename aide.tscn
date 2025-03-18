@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=3 uid="uid://3i1he7oi4k73"]
+
+[ext_resource type="Theme" uid="uid://mcmvysh7s1ap" path="res://design.tres" id="1_u8qen"]
+[ext_resource type="Script" path="res://aide.gd" id="2_birqf"]
+[ext_resource type="Texture2D" uid="uid://c6ukonhwxuqiq" path="res://Ressources/Images/character_01_face.png" id="3_6xcvp"]
+[ext_resource type="Texture2D" uid="uid://fja4ncp4tt3i" path="res://Ressources/Images/flower_03.png" id="4_cuhdy"]
+[ext_resource type="Texture2D" uid="uid://ct74d7j8xaxss" path="res://Ressources/Images/flower_04.png" id="5_pyy3l"]
+[ext_resource type="Texture2D" uid="uid://2yma7vkhniei" path="res://Ressources/Images/flower_02.png" id="5_rwc1y"]
+[ext_resource type="Texture2D" uid="uid://c0qsnkcjycig1" path="res://Ressources/Images/character_02_face.png" id="7_24tf4"]
+
+[node name="Aide" type="PanelContainer"]
+offset_right = 1155.0
+offset_bottom = 647.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_u8qen")
+script = ExtResource("2_birqf")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0784314, 0.313726, 0.313726, 1)
+theme_override_font_sizes/font_size = 30
+text = "Les règles du jeu"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RichText" type="RichTextLabel" parent="CenterContainer/VBoxContainer/HBox"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[b]Objectif[/b] : Ramasser les fleurs demandées avant  l'autre joueur
+
+Pour ramasser une fleur, il faut se mettre à côté et déclencher l'action.
+L'objectif visé apparait à droite et à gauche, et se réduit à chaque fleur cueillie.
+Le temps est limité dans chaque niveau.
+Le niveau est remporté si la mission est complètement remplie ou si on a plus de fleurs que l'autre à la fin du temps de jeu.
+Attention, certaines fleurs ont des pouvoirs spéciaux.
+
+[u][b]Commandes :[/b][/u]
+- [b]se déplacer[/b] :
+    Joueur Bleu : le bloc QSZD sur le clavier Azerty, le joystick de la manette
+    Joueur Rouge : les flèches du clavier, le bloc IJKL sur le clavier Azerty, le joystick de la manette
+- [b]cueillir une fleur[/b] : 
+    Joueur Bleu : la touche Tab, le bouton [color=green](A)[/color] de la manette XBox
+    Joueur Rouge : la touche Control, le bouton [color=green](A)[/color] de la manette XBox
+- [b]pause[/b] : Echap
+
+[center][b][color=#d36d00][font_size=24]Bonne chance ![/font_size][/color][/b][/center]
+"
+fit_content = true
+scroll_active = false
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/VBoxContainer/HBox"]
+layout_mode = 2
+
+[node name="TextureFleur03" type="TextureRect" parent="CenterContainer/VBoxContainer/HBox/VBox"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+texture = ExtResource("4_cuhdy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureFleur04" type="TextureRect" parent="CenterContainer/VBoxContainer/HBox/VBox"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+texture = ExtResource("5_pyy3l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureFleur02" type="TextureRect" parent="CenterContainer/VBoxContainer/HBox/VBox"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+texture = ExtResource("5_rwc1y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureJoueurRouge" type="TextureRect" parent="CenterContainer/VBoxContainer/HBox/VBox"]
+layout_mode = 2
+texture = ExtResource("3_6xcvp")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureJoueurBleu" type="TextureRect" parent="CenterContainer/VBoxContainer/HBox/VBox"]
+layout_mode = 2
+texture = ExtResource("7_24tf4")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="FermerButton" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fermer"
+
+[connection signal="gui_input" from="CenterContainer/VBoxContainer/FermerButton" to="." method="_on_fermer_button_gui_input"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/FermerButton" to="." method="_on_fermer_pressed"]
