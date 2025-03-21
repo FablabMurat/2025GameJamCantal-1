@@ -5,7 +5,7 @@
 
 [node name="Niveau_1" type="Node2D"]
 script = ExtResource("1_ry3bt")
-mission = Array[int]([5, 5])
+mission = Array[int]([1, 1, 1, 1, 1])
 duree = 20
 
 [node name="Sol" type="TileMapLayer" parent="."]

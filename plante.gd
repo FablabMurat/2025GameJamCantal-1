@@ -18,7 +18,8 @@ var canSpeedBoost : bool
 var canSwapPosition : bool
 var pickable : bool = false
 
-var effectsuspended : bool = false
+var effectSuspended : bool = false
+const suspendDuration : float = 2.0
 
 @export var stun_duration : float = 2
 @export var speed_boost_duration : float = 2
@@ -110,22 +111,23 @@ func cueilliepar(body):
 	return true # TODO : prévoir des cas où la fleur n'est pas cueillie
 
 func effetspecial(surperso):
-	if effectsuspended: return
+	if effectSuspended: return
 	if canStun:
 		surperso.apply_stun(stun_duration)
 	if canSpeedBoost:
 		surperso.apply_speed_boost(speed_boost_duration, speed_boost_strength)
 	if canSwapPosition:
+		suspendEffect()
 		swapPosition.emit()
+		
 
 # Suspend les effets de la plante pendant 1.5 s
-func suspendeffect():
-	$SuspendTimer.start(1.5)
-	effectsuspended = true
+func suspendEffect():
+	$SuspendTimer.start(suspendDuration)
+	effectSuspended = true
 
 func _end_suspend_timer() -> void:
-	effectsuspended = false
-	pass # Replace with function body.
+	effectSuspended = false
 
 func _on_body_exited(body: Node2D) -> void:
 	pickable = false

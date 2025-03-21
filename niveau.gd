@@ -152,14 +152,14 @@ func fleurcueillie(perso, fleur):
 
 func fleurpartie(flowertype):
 	allflowers[flowertype -1 ] -= 1
-	if checkmatchnul() :
-		endoflevel(0)
+	# TODO : ci-dessous en commentaire car ça déclenche une fin de partie à chaque disparation de plante
+	#if checkmatchnul() :
+		#endoflevel(0)
 
 func swapplayers():
 	var temp_pos = persos[1].position
-	persos[1].position = persos[2].position
-	persos[2].position = temp_pos
-	#TODO : add effects, tempo, suspend flower effect
+	persos[1].position = persos[0].position
+	persos[0].position = temp_pos
 
 func _input(event: InputEvent):
 	# Astuce pour terminer plus vite un niveau en DEBUG
