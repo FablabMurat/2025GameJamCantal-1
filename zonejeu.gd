@@ -93,6 +93,7 @@ func _on_duree_jeu_timer_timeout() -> void:
 	endoflevel(0,score)
 
 func endoflevel(nperso,tabscore):
+	niveau.finished = true
 	niveaufini.emit(nperso,tabscore)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

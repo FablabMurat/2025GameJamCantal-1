@@ -10,13 +10,13 @@ var diespeed : int = 15
 var picklimit : float = 0.5
 var visiblelimit : float = 0.1
 var growdirection : int = 0
+var cell
 
 var cangrow : bool
 var candie : bool
 var canStun : bool
 var canSpeedBoost : bool
 var canSwapPosition : bool
-var pickable : bool = false
 
 var effectSuspended : bool = false
 const suspendDuration : float = 2.0
@@ -24,7 +24,9 @@ const suspendDuration : float = 2.0
 @export var stun_duration : float = 2
 @export var speed_boost_duration : float = 2
 @export_range(0, 1, 0.05) var speed_boost_strength : float = 0.5
-var is_being_picked : bool = false
+@export var minsizepickable = 0.3
+
+var is_pickable : bool = false
 var foufouille : float #animation on cueillette
 
 ##signal attrape(perso,plante)
@@ -35,7 +37,7 @@ func _ready() -> void:
 	if cangrow :
 		self.scale = Vector2(0.01,0.01)
 		$CollisionShape2D.hide()
-		$StartTimer.start(randf_range(1.0,MAXSTARTDELAY))
+		$StartTimer.start(randf_range(0.1,MAXSTARTDELAY))
 
 func nocontact():
 	$CollisionShape2D.queue_free()
@@ -68,6 +70,8 @@ func settype(ft : int, growable : bool = false):
 		_:
 			nocontact()
 
+func setcell(cellpos):
+	cell = cellpos
 
 func _on_start_timer_timeout() -> void:
 	growdirection = 1
@@ -87,8 +91,8 @@ func _process(delta: float) -> void:
 		elif growdirection < 0 and self.scale.x < visiblelimit :
 			self.queue_free()
 	
-	# la fleur bouge lorsqu'on la pickup
-	if is_being_picked:
+	# la fleur bouge lorsqu'on est assez proche pour la cueillir
+	if is_pickable :
 		$Sprite2D.rotation = sin(foufouille) * 0.3
 		foufouille += 0.1
 		if not $pickup_inprogress.playing:
@@ -97,18 +101,29 @@ func _process(delta: float) -> void:
 		$Sprite2D.rotation = lerp($Sprite2D.rotation, 0.0, 0.1) #sinon back to rotation 0
 		$pickup_inprogress.stop()
 
+func pickable():
+	return self.scale.x > minsizepickable
+	
+	
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("perso") :
-		# La fleur est ramassée par le perso
+		# La fleur est approchée par le perso
 		var perso = body as Perso
 		effetspecial(perso)
-		is_being_picked = true # FIXME : POUR DEBUG CAR CUEILLIR FAIT DISPARAITRE LA FLEUR AVANT LA FIN DU CAST
+		is_pickable = true
 
+func _on_body_exited(body: Node2D) -> void:
+	# A priori, c'est un Perso qui part
+	# FIXME mais on est peut-être 2 à côté de la plante
+	# FIXME donc il ne faudrait certes pas arrêter l'animation
+	is_pickable = false
+
+# Cueillette effective par un des Perso
 func cueilliepar(body):
 	var perso = body as Perso
-	##effetspecial(perso)
-	is_being_picked = true #si le joueur bouge le cast doit s'interrompre
-	return true # TODO : prévoir des cas où la fleur n'est pas cueillie
+	if not pickable() : # fleur trop petite par exemple
+		return false
+	return true
 
 func effetspecial(surperso):
 	if effectSuspended: return
@@ -128,8 +143,3 @@ func suspendEffect():
 
 func _end_suspend_timer() -> void:
 	effectSuspended = false
-
-func _on_body_exited(body: Node2D) -> void:
-	pickable = false
-	pass # Replace with function body.
-	is_being_picked = false

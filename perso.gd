@@ -11,7 +11,6 @@ var cueillir : String
 
 var dir : String = "bas"
 var picking = false
-var plant_being_picked : Area2D
 
 const SPEED = 200
 @export_range(0, 3, 0.1) var cast_cueillette = 0.5
@@ -132,7 +131,7 @@ func _on_cuillette_timer_timeout() -> void:
 		for i in $AreaCueillette2D.get_overlapping_areas():
 			if i is Plante :
 				var plante = i as Plante
-				if plante.cueilliepar(self) :
+				if plante.cueilliepar(self) : # Ca peut échouer si fleur trop petite
 					fleurcueillie(plante)
 					break # On n'en prend qu'une à la fois
 

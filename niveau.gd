@@ -16,6 +16,8 @@ class_name Niveau
 ## Durée maximale pour compléter le niveau.
 ## A la fin, celui qui a collecté le plus de fleurs de la mission gagnera.
 @export var duree : int = 120
+## Pourcentage de repousse ailleurs auprès disparition
+@export var repoussePct : int = 50
 
 var persos : Array[Perso]
 var jdevice : Array[int]
@@ -23,12 +25,13 @@ var jdevice : Array[int]
 signal niveaufini
 signal cueillette(nperso : int, flowertype : int)
 var allflowers : Array[int]
+var finished : bool = false
 
 func _init():
 	allflowers.resize(mission.size())
 	child_exiting_tree.connect(func (node):
 		if node is Plante :
-			fleurpartie(node.flowertype)
+			fleurpartie(node.flowertype,node.cell)
 			)
 
 func addjoy(j1dev, j2dev):
@@ -55,7 +58,7 @@ func setupLevelYSort():
 
 
 var plantetscn = preload("res://plante.tscn")
-var used_cells
+var used_cells : Dictionary
 	
 func spawnplants():
 	var tabspawn = mission.map(func xx(elt): return elt*2)
@@ -107,9 +110,10 @@ func addplant(idxplant, newplant):
 	newplant.position += Vector2(randi_range(-ecartmax,ecartmax),randi_range(-ecartmax,ecartmax))
 
 	newplant.settype(idxplant,growablePlants)
+	newplant.setcell(random_cell) # pour permettre une repousse sur cette case
 	newplant.swapPosition.connect(swapplayers)
 	
-	add_child(newplant)
+	add_child.call_deferred(newplant)
 	allflowers[idxplant-1] += 1
 
 func spawnpersos():
@@ -129,6 +133,7 @@ func spawnpersos():
 		add_child(perso)
 
 func endoflevel(nperso : int):
+	finished = true
 	# Le perso a fini sa mission
 	var score : Array
 	for p in persos :
@@ -150,11 +155,18 @@ func fleurcueillie(perso, fleur):
 	cueillette.emit(perso.nperso, fleur.flowertype)
 	fleur.queue_free() # fleur partie se appelée automatiquement par signal
 
-func fleurpartie(flowertype):
+func fleurpartie(flowertype,cell):
 	allflowers[flowertype -1 ] -= 1
-	# TODO : ci-dessous en commentaire car ça déclenche une fin de partie à chaque disparation de plante
-	#if checkmatchnul() :
-		#endoflevel(0)
+	used_cells.erase(cell)
+	
+	if finished == true : return
+	
+	if randi_range(0,99) < repoussePct :
+		var newplant = plantetscn.instantiate()
+		addplant(flowertype,newplant)
+
+	if checkmatchnul() :
+		endoflevel(0)
 
 func swapplayers():
 	var temp_pos = persos[1].position
